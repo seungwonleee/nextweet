@@ -1,0 +1,33 @@
+{
+  "name": "front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build"
+  },
+  "author": "seungwon",
+  "license": "ISC",
+  "dependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "antd": "^4.15.4",
+    "next": "^10.2.0",
+    "next-redux-wrapper": "^6.0.2",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "^7.3.6",
+    "react-redux": "^7.2.4",
+    "react-slick": "^0.28.1",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "styled-components": "^5.2.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0"
+  }
+}
