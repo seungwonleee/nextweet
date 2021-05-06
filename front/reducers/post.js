@@ -7,7 +7,7 @@ export const initialState = {
         id: 1,
         nickname: "seungwon",
       },
-      content: "첫 번째 게시글",
+      content: "첫 번째 게시글 #오늘 #첫번째#두번째 ###세번째",
       Images: [
         {
           src:
