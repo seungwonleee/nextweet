@@ -42,7 +42,7 @@ const PostCard = ({ post }) => {
                 {id && post.User.id === id ? (
                   <>
                     <Button>수정</Button>
-                    <Button type="dander">삭제</Button>
+                    <Button type="danger">삭제</Button>
                   </>
                 ) : (
                   <Button>신고</Button>
@@ -64,7 +64,7 @@ const PostCard = ({ post }) => {
         <>
           <CommentForm post={post} />
           <List
-            header={`${post.Comments.length} 댓글`}
+            header={post.Comments.length >= 1 ? `${post.Comments.length}개의 댓글` : '댓글 없음'}
             itemLayout="horizontal"
             dataSource={post.Comments}
             renderItem={item => (

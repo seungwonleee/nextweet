@@ -1,9 +1,9 @@
-import React from "react";
-import AppLayout from "../components/AppLayout";
-import NicknameEditForm from "../components/NicknameEditForm";
-import FollowList from "../components/FollowList";
-import Head from "next/head";
-import { useSelector } from "react-redux";
+import React from 'react';
+import Head from 'next/head';
+import { useSelector } from 'react-redux';
+import AppLayout from '../components/AppLayout';
+import NicknameEditForm from '../components/NicknameEditForm';
+import FollowList from '../components/FollowList';
 // import Link from "next/link";
 
 const Profile = () => {

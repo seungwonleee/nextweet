@@ -26,6 +26,7 @@
     "linebreak-style": "off",
     "no-param-reassign": "off",
     "arrow-parens": "off",
-    "react/require-default-props":"off"
+    "react/require-default-props":"off",
+    "consistent-return":"off"
   }
 }

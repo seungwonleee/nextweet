@@ -15,11 +15,13 @@ import {
 // }
 
 function* addPost(action) {
+  // console.log('saga addPost action data ===>', action.data);
   try {
     // const result = yield call(addPostAPI, action.data);
     yield delay(1000);
     yield put({
       type: ADD_POST_SUCCESS,
+      data: action.data,
     });
   } catch (err) {
     console.error(err);
@@ -40,6 +42,7 @@ function* addComment(action) {
     yield delay(1000);
     yield put({
       type: ADD_COMMENT_SUCCESS,
+      data: action.data,
     });
   } catch (err) {
     yield put({
