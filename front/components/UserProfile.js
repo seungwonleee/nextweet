@@ -1,8 +1,8 @@
-import React, { useCallback } from "react";
-import { Card, Avatar, Button } from "antd";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutRequestAction } from "../reducers/user";
+import React, { useCallback } from 'react';
+import { Card, Avatar, Button } from 'antd';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutRequestAction } from '../reducers/user';
 
 const { Meta } = Card;
 
@@ -12,7 +12,7 @@ const CardWrapper = styled(Card)`
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const { me, logOutLoading } = useSelector((state) => state.user);
+  const { me, logOutLoading } = useSelector(state => state.user);
 
   const handleLogout = useCallback(() => {
     dispatch(logoutRequestAction());

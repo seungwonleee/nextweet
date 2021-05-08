@@ -1,15 +1,15 @@
-import { HYDRATE } from "next-redux-wrapper";
-import { combineReducers } from "redux";
+import { HYDRATE } from 'next-redux-wrapper';
+import { combineReducers } from 'redux';
 
-import user from "./user";
-import post from "./post";
+import user from './user';
+import post from './post';
 
 const rootReducer = combineReducers({
-  //serside rendering 위해서 index 작성
+  // serside rendering 위해서 index 작성
   index: (state = {}, action) => {
     switch (action.type) {
       case HYDRATE:
-        console.log("HYDRATE", action);
+        console.log('HYDRATE', action);
         return {
           ...state,
           ...action.payload,

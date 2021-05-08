@@ -1,4 +1,4 @@
-import { all, delay, fork, put, takeLatest } from "@redux-saga/core/effects";
+import { all, delay, fork, put, takeLatest } from 'redux-saga/effects';
 import {
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
@@ -9,7 +9,7 @@ import {
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
-} from "../reducers/user";
+} from '../reducers/user';
 // function logInAPI(data) {
 //   return axios.post("/api/login", data);
 // }
@@ -26,18 +26,18 @@ import {
 // export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 // export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 
-export const FOLLOW_REQUEST = "FOLLOW_REQUEST";
-export const FOLLOW_SUCCESS = "FOLLOW_SUCCESS";
-export const FOLLOW_FAILURE = "FOLLOW_FAILURE";
+export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
+export const FOLLOW_SUCCESS = 'FOLLOW_SUCCESS';
+export const FOLLOW_FAILURE = 'FOLLOW_FAILURE';
 
-export const UNFOLLOW_REQUEST = "UNFOLLOW_REQUEST";
-export const UNFOLLOW_SUCCESS = "UNFOLLOW_SUCCESS";
-export const UNFOLLOW_FAILURE = "UNFOLLOW_FAILURE";
+export const UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST';
+export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS';
+export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
 
 function* logIn(action) {
   try {
-    console.log("saga logIn");
-    console.log("saga logIn", action);
+    console.log('saga logIn');
+    console.log('saga logIn', action);
     // const result = yield call(logInAPI);
     yield delay(1000);
     yield put({

@@ -1,15 +1,15 @@
-import React from "react";
-import Link from "next/link";
-import PropTypes from "prop-types";
+import React from 'react';
+import Link from 'next/link';
+import PropTypes from 'prop-types';
 
 const PostCardContent = ({ postData }) => (
   <div>
-    {postData.split(/(#[^\s#]+)/g).map((text, index) => {
+    {postData.split(/(#[^\s#]+)/g).map((text) => {
       if (text.match(/(#[^\s]+)/)) {
         return (
           <Link
-            key={index}
-            href={{ pathname: "/hashtag", query: { tag: text.slice(1) } }}
+            key={text}
+            href={{ pathname: '/hashtag', query: { tag: text.slice(1) } }}
             as={`/hashtag/${text.slice(1)}`}
           >
             <a>{text}</a>

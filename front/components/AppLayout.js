@@ -1,14 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Link from "next/link";
-import styled from "styled-components";
-import { useSelector } from "react-redux";
-import { createGlobalStyle } from "styled-components";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Link from 'next/link';
+import styled, { createGlobalStyle } from 'styled-components';
+import { useSelector } from 'react-redux';
 
-import LoginForm from "./LoginForm";
-import UserProfile from "./UserProfile";
-
-import { Menu, Input, Row, Col } from "antd";
+import { Menu, Input, Row, Col } from 'antd';
+import LoginForm from './LoginForm';
+import UserProfile from './UserProfile';
 
 const { Search } = Input;
 
@@ -17,7 +15,7 @@ const SearchInput = styled(Search)`
   vertical-align: middle;
 `;
 
-//하단 스크롤바 없애기 antd gutter 문제
+// 하단 스크롤바 없애기 antd gutter 문제
 const Global = createGlobalStyle`
    .ant-row {
     margin-right: 0 !important;
@@ -35,7 +33,7 @@ const Global = createGlobalStyle`
 
 // 공통 메뉴
 const AppLayout = ({ children }) => {
-  const { me } = useSelector((state) => state.user);
+  const { me } = useSelector(state => state.user);
 
   return (
     <div>
@@ -77,11 +75,7 @@ const AppLayout = ({ children }) => {
           {children}
         </Col>
         <Col xs={24} md={6}>
-          <a
-            href="https://github.com/seungwonleee"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
+          <a href="https://github.com/seungwonleee" target="_blank" rel="noreferrer noopener">
             Made By seungwonleee
           </a>
         </Col>

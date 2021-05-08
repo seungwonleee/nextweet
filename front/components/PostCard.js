@@ -1,17 +1,12 @@
-import React, { useState, useCallback } from "react";
-import PropTypes from "prop-types";
-import { Button, Card, Avatar, Popover, List, Comment } from "antd";
-import {
-  RetweetOutlined,
-  HeartOutlined,
-  MessageOutlined,
-  EllipsisOutlined,
-  HeartTwoTone,
-} from "@ant-design/icons";
-import { useSelector } from "react-redux";
-import PostImages from "../components/PostImages";
-import CommentForm from "../components/CommentForm";
-import PostCardContent from "../components/PostCardContent";
+import React, { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { Button, Card, Avatar, Popover, List, Comment } from 'antd';
+import { RetweetOutlined, HeartOutlined, MessageOutlined, EllipsisOutlined, HeartTwoTone } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
+import PostImages from './PostImages';
+import CommentForm from './CommentForm';
+import PostCardContent from './PostCardContent';
+
 const { Meta } = Card;
 
 const PostCard = ({ post }) => {
@@ -19,34 +14,30 @@ const PostCard = ({ post }) => {
   const [commentFormOpened, setCommentFormOpened] = useState(false);
 
   const onToggleLike = useCallback(() => {
-    setLiked((prev) => !prev);
+    setLiked(prev => !prev);
   }, []);
 
   const onToggleComment = useCallback(() => {
-    setCommentFormOpened((prev) => !prev);
+    setCommentFormOpened(prev => !prev);
   }, []);
 
-  const id = useSelector((state) => state.user.me?.id);
+  const id = useSelector(state => state.user.me?.id);
 
   return (
-    <div style={{ marginBottom: "20px" }}>
+    <div style={{ marginBottom: '20px' }}>
       <Card
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
           <RetweetOutlined key="retweet" />,
           liked ? (
-            <HeartTwoTone
-              twoToneColor="#eb2f96"
-              key="heart"
-              onClick={onToggleLike}
-            />
+            <HeartTwoTone twoToneColor="#eb2f96" key="heart" onClick={onToggleLike} />
           ) : (
             <HeartOutlined key="heart" onClick={onToggleLike} />
           ),
           <MessageOutlined key="comment" onClick={onToggleComment} />,
           <Popover
             key="more"
-            content={
+            content={(
               <Button.Group>
                 {id && post.User.id === id ? (
                   <>
@@ -57,7 +48,7 @@ const PostCard = ({ post }) => {
                   <Button>신고</Button>
                 )}
               </Button.Group>
-            }
+            )}
           >
             <EllipsisOutlined />
           </Popover>,
@@ -67,7 +58,7 @@ const PostCard = ({ post }) => {
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
           title={post.User.nickname}
           description={<PostCardContent postData={post.content} />}
-        ></Meta>
+        />
       </Card>
       {commentFormOpened && (
         <>
@@ -76,7 +67,7 @@ const PostCard = ({ post }) => {
             header={`${post.Comments.length} 댓글`}
             itemLayout="horizontal"
             dataSource={post.Comments}
-            renderItem={(item) => (
+            renderItem={item => (
               <List.Item>
                 <Comment
                   author={item.User.nickname}
