@@ -4,15 +4,20 @@ import { Form, Input, Button, Checkbox } from "antd";
 import styled from "styled-components";
 import AppLayout from "../components/AppLayout";
 import useInput from "../components/hooks/useInput";
+import { useDispatch, useSelector } from "react-redux";
+import { SIGN_UP_REQUEST } from "../reducers/user";
 
 const ErrorMessage = styled.div`
   color: red;
 `;
 
 const Signup = () => {
-  const [id, setId] = useInput("");
-  const [nickname, setNickname] = useInput("");
+  const dispatch = useDispatch();
+  const { signUpLoading } = useSelector((state) => state.user);
+
+  const [email, setEmail] = useInput("");
   const [password, setPassword] = useInput("");
+  const [nickname, setNickname] = useInput("");
 
   const [passwordCheck, setPasswordCheck] = useState("");
   const [passwordError, setPasswordError] = useState(false);
@@ -39,8 +44,12 @@ const Signup = () => {
     if (!term) {
       return setTermError(true);
     }
-    console.log(id, nickname, password);
-  }, [password, passwordCheck, term]);
+    console.log(email, nickname, password);
+    dispatch({
+      type: SIGN_UP_REQUEST,
+      data: { email, password, nickname },
+    });
+  }, [email, password, passwordCheck, term]);
 
   return (
     <AppLayout>
@@ -54,9 +63,9 @@ const Signup = () => {
           <Input
             name="user-email"
             type="email"
-            value={id}
+            value={email}
             required
-            onChange={setId}
+            onChange={setEmail}
           />
         </div>
         <div>
@@ -101,7 +110,7 @@ const Signup = () => {
           {termError && <ErrorMessage>약관에 동의하셔야 합니다.</ErrorMessage>}
         </div>
         <div style={{ marginTop: 10 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={signUpLoading}>
             가입하기
           </Button>
         </div>

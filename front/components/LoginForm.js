@@ -15,29 +15,29 @@ const ButtonWrapper = styled.div`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { isLoggingIn } = useSelector((state) => state.user);
-  const [id, setId] = useInput("");
+  const { logInLoading } = useSelector((state) => state.user);
+  const [email, setEmail] = useInput("");
   const [password, setPassword] = useInput("");
 
   const onSubmit = useCallback(() => {
     console.log({
-      id,
+      email,
       password,
     });
-    dispatch(loginRequestAction({ id, password }));
-  }, [id, password]);
+    dispatch(loginRequestAction({ email, password }));
+  }, [email, password]);
 
   return (
     <FormWrapper onFinish={onSubmit}>
       <div>
-        <label htmlFor="user-id">이메일</label>
+        <label htmlFor="user-email">이메일</label>
         <br />
         <Input
-          name="user-id"
+          name="user-email"
           type="email"
-          value={id}
+          value={email}
           required
-          onChange={setId}
+          onChange={setEmail}
         />
       </div>
 
@@ -53,7 +53,7 @@ const LoginForm = () => {
         />
       </div>
       <ButtonWrapper>
-        <Button type="primary" htmlType="submit" loading={isLoggingIn}>
+        <Button type="primary" htmlType="submit" loading={logInLoading}>
           로그인
         </Button>
         <Link href="/signup">

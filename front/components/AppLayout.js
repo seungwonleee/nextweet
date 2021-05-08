@@ -35,7 +35,7 @@ const Global = createGlobalStyle`
 
 // 공통 메뉴
 const AppLayout = ({ children }) => {
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.user);
 
   return (
     <div>
@@ -49,7 +49,7 @@ const AppLayout = ({ children }) => {
         <Menu.Item key="search">
           <SearchInput placeholder="#해쉬 태그로 검색하세요." onSearch />
         </Menu.Item>
-        {isLoggedIn ? (
+        {me ? (
           <Menu.Item key="profile">
             <Link href="/profile">
               <a>프로필</a>
@@ -71,7 +71,7 @@ const AppLayout = ({ children }) => {
 
       <Row gutter={16}>
         <Col xs={24} md={6}>
-          {isLoggedIn ? <UserProfile /> : <LoginForm />}
+          {me ? <UserProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {children}
