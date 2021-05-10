@@ -33,14 +33,16 @@ export const initialState = {
         },
       ],
       Comments: [
-        { id: shortId.generate(),
+        {
+          id: shortId.generate(),
           User: {
             id: shortId.generate(),
             nickname: 'park',
           },
           content: '댓글1 내용입니다~~!',
         },
-        { id: shortId.generate(),
+        {
+          id: shortId.generate(),
           User: {
             id: shortId.generate(),
             nickname: 'kim',
@@ -137,7 +139,7 @@ const reducer = (state = initialState, action) => {
     case REMOVE_POST_SUCCESS:
       return {
         ...state,
-        mainPosts: state.mainPosts.filter(post => post.id !== action.data),
+        mainPosts: state.mainPosts.filter((post) => post.id !== action.data),
         removePostLoading: false,
         removePostDone: true,
       };
@@ -156,7 +158,9 @@ const reducer = (state = initialState, action) => {
         addCommentError: null,
       };
     case ADD_COMMENT_SUCCESS: {
-      const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
+      const postIndex = state.mainPosts.findIndex(
+        (v) => v.id === action.data.postId,
+      );
       const post = { ...state.mainPosts[postIndex] };
       post.Comments = [dummyComment(action.data.content), ...post.Comments];
       const mainPosts = [...state.mainPosts];

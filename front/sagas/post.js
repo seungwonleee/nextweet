@@ -105,9 +105,5 @@ function* watchAddComment() {
 }
 
 export default function* postSaga() {
-  yield all([
-    fork(watchAddPost),
-    fork(watchRemovePost),
-    fork(watchAddComment),
-  ]);
+  yield all([fork(watchAddPost), fork(watchRemovePost), fork(watchAddComment)]);
 }

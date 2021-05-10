@@ -16,7 +16,7 @@ const ButtonWrapper = styled.div`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { logInLoading } = useSelector(state => state.user);
+  const { logInLoading } = useSelector((state) => state.user);
   const [email, setEmail] = useInput('');
   const [password, setPassword] = useInput('');
 
@@ -33,13 +33,25 @@ const LoginForm = () => {
       <div>
         <label htmlFor="user-email">이메일</label>
         <br />
-        <Input name="user-email" type="email" value={email} required onChange={setEmail} />
+        <Input
+          name="user-email"
+          type="email"
+          value={email}
+          required
+          onChange={setEmail}
+        />
       </div>
 
       <div>
         <label htmlFor="user-password">비밀번호</label>
         <br />
-        <Input name="user-password" type="password" value={password} required onChange={setPassword} />
+        <Input
+          name="user-password"
+          type="password"
+          value={password}
+          required
+          onChange={setPassword}
+        />
       </div>
       <ButtonWrapper>
         <Button type="primary" htmlType="submit" loading={logInLoading}>

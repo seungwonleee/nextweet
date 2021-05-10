@@ -9,9 +9,10 @@ import rootSaga from '../sagas';
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [sagaMiddleware];
-  const enhandcer = process.env.NODE_ENV === 'production'
-    ? compose(applyMiddleware(...middlewares))
-    : composeWithDevTools(applyMiddleware(...middlewares));
+  const enhandcer =
+    process.env.NODE_ENV === 'production'
+      ? compose(applyMiddleware(...middlewares))
+      : composeWithDevTools(applyMiddleware(...middlewares));
   const store = createStore(reducer, enhandcer);
   store.sagaTask = sagaMiddleware.run(rootSaga);
   return store;

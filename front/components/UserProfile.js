@@ -12,7 +12,7 @@ const CardWrapper = styled(Card)`
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const { me, logOutLoading } = useSelector(state => state.user);
+  const { me, logOutLoading } = useSelector((state) => state.user);
 
   const handleLogout = useCallback(() => {
     dispatch(logoutRequestAction());

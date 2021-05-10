@@ -33,7 +33,7 @@ const Global = createGlobalStyle`
 
 // 공통 메뉴
 const AppLayout = ({ children }) => {
-  const { me } = useSelector(state => state.user);
+  const { me } = useSelector((state) => state.user);
 
   return (
     <div>
@@ -75,7 +75,11 @@ const AppLayout = ({ children }) => {
           {children}
         </Col>
         <Col xs={24} md={6}>
-          <a href="https://github.com/seungwonleee" target="_blank" rel="noreferrer noopener">
+          <a
+            href="https://github.com/seungwonleee"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             Made By seungwonleee
           </a>
         </Col>

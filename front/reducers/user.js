@@ -49,16 +49,24 @@ export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
 export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
-const dummyUser = data => ({
+const dummyUser = (data) => ({
   ...data,
   nickname: 'seungwon',
   id: 1,
   Posts: [{ id: 1 }],
-  Followings: [{ nickname: 'person1' }, { nickname: 'person2' }, { nickname: 'person3' }],
-  Followers: [{ nickname: 'person1' }, { nickname: 'person2' }, { nickname: 'person3' }],
+  Followings: [
+    { nickname: 'person1' },
+    { nickname: 'person2' },
+    { nickname: 'person3' },
+  ],
+  Followers: [
+    { nickname: 'person1' },
+    { nickname: 'person2' },
+    { nickname: 'person3' },
+  ],
 });
 
-export const loginRequestAction = data => ({
+export const loginRequestAction = (data) => ({
   type: 'LOG_IN_REQUEST',
   data,
 });

@@ -4,8 +4,5 @@ import postSaga from './post';
 import userSaga from './user';
 
 export default function* rootSaga() {
-  yield all([
-    fork(postSaga),
-    fork(userSaga),
-  ]);
+  yield all([fork(postSaga), fork(userSaga)]);
 }
