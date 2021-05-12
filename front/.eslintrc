@@ -14,7 +14,7 @@
   },
   "ignorePatterns": ["node_modules/"],
   "extends": ["airbnb", "plugin:prettier/recommended"],
-  "plugins": ["import", "react-hooks"],
+  "plugins": ["import", "react-hooks", "prettier"],
   "rules": {
     "jsx-a11y/label-has-associated-control": "off",
     "jsx-a11y/anchor-is-valid": "off",
