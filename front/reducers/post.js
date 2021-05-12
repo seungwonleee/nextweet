@@ -1,5 +1,6 @@
-import shortId from 'shortid';
+import shortId, { generate } from 'shortid';
 import produce from 'immer';
+import faker, { fake } from 'faker';
 
 // dummy data
 export const initialState = {
@@ -14,23 +15,19 @@ export const initialState = {
       Images: [
         {
           id: shortId.generate(),
-          src:
-            'https://lh3.googleusercontent.com/-QM-YKaNC4sU/YJL_kxzjK8I/AAAAAAAABD8/v4FR7LLfu1sWeRW2zyFgHmPc4T_vuMMhgCLcBGAsYHQ/mine.png',
+          src: 'https://lh3.googleusercontent.com/-QM-YKaNC4sU/YJL_kxzjK8I/AAAAAAAABD8/v4FR7LLfu1sWeRW2zyFgHmPc4T_vuMMhgCLcBGAsYHQ/mine.png',
         },
         {
           id: shortId.generate(),
-          src:
-            'https://lh3.googleusercontent.com/-xdIdn5mGuQU/YJL_kh2PHMI/AAAAAAAABEA/HpcmGT79egskPgJUBq4uvE6rU5BOfHNKgCLcBGAsYHQ/node.png',
+          src: 'https://lh3.googleusercontent.com/-xdIdn5mGuQU/YJL_kh2PHMI/AAAAAAAABEA/HpcmGT79egskPgJUBq4uvE6rU5BOfHNKgCLcBGAsYHQ/node.png',
         },
         {
           id: shortId.generate(),
-          src:
-            'https://lh3.googleusercontent.com/-KPJcyuvVuqU/YJL_2ovVlGI/AAAAAAAABEI/gGzBM88v-Msigj1-b6aclUSvsaiZl12pQCLcBGAsYHQ/next.png',
+          src: 'https://lh3.googleusercontent.com/-KPJcyuvVuqU/YJL_2ovVlGI/AAAAAAAABEI/gGzBM88v-Msigj1-b6aclUSvsaiZl12pQCLcBGAsYHQ/next.png',
         },
         {
           id: shortId.generate(),
-          src:
-            'https://lh3.googleusercontent.com/-5tCrJKmqzxs/YJL_2pakYjI/AAAAAAAABEM/DIHLpxcgpM4RreQGRtr5QYmz_bEClTCYwCLcBGAsYHQ/react.png',
+          src: 'https://lh3.googleusercontent.com/-5tCrJKmqzxs/YJL_2pakYjI/AAAAAAAABEM/DIHLpxcgpM4RreQGRtr5QYmz_bEClTCYwCLcBGAsYHQ/react.png',
         },
       ],
       Comments: [
@@ -64,6 +61,34 @@ export const initialState = {
   addCommentDone: false,
   addCommentError: null,
 };
+
+initialState.mainPosts = initialState.mainPosts.concat(
+  Array(20)
+    .fill()
+    .map((value, index) => ({
+      id: shortId.generate(),
+      User: {
+        id: shortId.generate(),
+        nickname: faker.name.findName(),
+      },
+      content: faker.lorem.paragraph(),
+      Images: [
+        {
+          src: faker.image.image(),
+        },
+      ],
+      Comments: [
+        {
+          id: shortId.generate(),
+          User: {
+            id: shortId.generate(),
+            nickname: faker.name.findName(),
+          },
+          content: faker.lorem.sentence(),
+        },
+      ],
+    })),
+);
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
