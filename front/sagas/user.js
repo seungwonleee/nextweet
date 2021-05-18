@@ -22,7 +22,6 @@ import {
 // }
 
 function* follow(action) {
-  console.log(action);
   try {
     // const result = yield call(followAPI);
     yield delay(1000);

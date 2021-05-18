@@ -53,7 +53,6 @@ function* loadPosts(action) {
 // }
 
 function* addPost(action) {
-  // console.log('saga addPost action data ===>', action.data);
   try {
     // const result = yield call(addPostAPI, action.data);
     yield delay(1000);
@@ -83,7 +82,6 @@ function* addPost(action) {
 // }
 
 function* removePost(action) {
-  // console.log('saga removePost action data ===>', action.data);
   try {
     // const result = yield call(removePostAPI, action.data);
     yield delay(1000);
