@@ -26,16 +26,19 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = (db) => {
     db.User.hasMany(db.Post); // User와 Post는 1:N 관계
     db.User.hasMany(db.Comment);
-    db.User.belongsToMany(db.Post, { through: "Like", as: "Liked" }); // 사용자가 좋아요 누른 게시글들
+    db.User.belongsToMany(db.Post, {
+      through: "Like",
+      as: "Liked",
+    }); // 사용자가 좋아요 누른 게시글들
     db.User.belongsToMany(db.User, {
       through: "Follow", // 테이블명
       as: "Followers", // 별칭
-      foreignkey: "FollowingId", // 컬럼명
+      foreignKey: "FollowingId", // 컬럼명
     });
     db.User.belongsToMany(db.User, {
       through: "Follow",
       as: "Followings",
-      foreignkey: "FollowerId",
+      foreignKey: "FollowerId",
     });
   };
   return User;
