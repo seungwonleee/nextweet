@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      // belongsTo를 사용하면 속해있는 모델의 Id 컬럼 생성
+      // UserId:{}
+      // PostId:{}
     },
     {
       charset: "utf8mb4", // 이모티콘 사용하려면 mb4 작성
@@ -15,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Comment.associate = (db) => {
-    db.Comment.belongsTo(db.User); //belongsTo 작성시 UserId 가 저장된다.
-    db.Comment.belongsTo(db.Post); //belongsTo 작성시 PostId 가 저장된다.
+    db.Comment.belongsTo(db.User); //User에 속한 Comment
+    db.Comment.belongsTo(db.Post); //Post에 속한 Comment
   };
   return Comment;
 };

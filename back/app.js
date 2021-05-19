@@ -1,5 +1,13 @@
 const express = require("express");
 const app = express();
+const db = require("./models");
+
+db.sequelize
+  .sync()
+  .then(() => {
+    console.log("db 연결 성공");
+  })
+  .catch(console.error);
 
 app.get("/api/post", (req, res) => {
   res.json([
