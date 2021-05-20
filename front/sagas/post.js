@@ -1,13 +1,6 @@
-import {
-  all,
-  delay,
-  fork,
-  put,
-  takeLatest,
-  throttle,
-} from 'redux-saga/effects';
+import { all, delay, fork, put, takeLatest } from 'redux-saga/effects';
 import shortId from 'shortid';
-import axios from 'axios';
+// import axios from 'axios';
 
 import {
   ADD_POST_REQUEST,
@@ -31,7 +24,7 @@ import { REMOVE_POST_OF_ME, ADD_POST_TO_ME } from '../reducers/user';
 //   return axios.get("/api/posts", data);
 // }
 
-function* loadPosts(action) {
+function* loadPosts() {
   try {
     // const result = yield call(loadPostsAPI, action.data);
     yield delay(1000);

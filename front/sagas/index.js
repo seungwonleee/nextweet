@@ -3,7 +3,7 @@ import axios from 'axios';
 import postSaga from './post';
 import userSaga from './user';
 
-//axios 요청 기본 주소
+// axios 요청 기본 주소
 axios.defaults.baseURL = 'http://localhost:3065';
 
 export default function* rootSaga() {

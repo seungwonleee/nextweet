@@ -13,7 +13,7 @@
     "es6": true
   },
   "ignorePatterns": ["node_modules/"],
-  "extends": ["airbnb", "plugin:prettier/recommended"],
+  "extends": ["airbnb", "prettier"],
   "plugins": ["import", "react-hooks", "prettier"],
   "rules": {
     "jsx-a11y/label-has-associated-control": "off",
@@ -25,6 +25,8 @@
     "react/jsx-one-expression-per-line": "off",
     "object-curly-newline": "off",
     "linebreak-style": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "consistent-return":"off",
+    "prettier/prettier": ["error"]
   }
 }

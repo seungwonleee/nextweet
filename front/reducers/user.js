@@ -77,8 +77,8 @@ export const logoutRequestAction = () => ({
   type: 'LOG_OUT_REQUEST',
 });
 
-const reducer = (state = initialState, action) => {
-  return produce(state, (draft) => {
+const reducer = (state = initialState, action) =>
+  produce(state, (draft) => {
     switch (action.type) {
       case FOLLOW_REQUEST:
         draft.followLoading = true;
@@ -182,6 +182,5 @@ const reducer = (state = initialState, action) => {
         break;
     }
   });
-};
 
 export default reducer;

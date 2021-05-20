@@ -9,7 +9,7 @@ const FollowButton = ({ post }) => {
   const { me, followLoading, unfollowLoading } = useSelector(
     (state) => state.user,
   );
-  //팔로잉한 유저인지 아닌지 확인
+  // 팔로잉한 유저인지 아닌지 확인
   const isFollowing = me?.Followings.find(
     (FollowingUser) => FollowingUser.id === post.User.id,
   );

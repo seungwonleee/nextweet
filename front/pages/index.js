@@ -31,7 +31,7 @@ const Home = () => {
         }
       }
     }
-    //컴포넌트 내부에서 addEventListener 사용시 return removeEventListener 해야한다. 안할시 메모리 문제 발생
+    // 컴포넌트 내부에서 addEventListener 사용시 return removeEventListener 해야한다. 안할시 메모리 문제 발생
     window.addEventListener('scroll', hanldeScroll);
     return () => {
       window.removeEventListener('scroll', hanldeScroll);

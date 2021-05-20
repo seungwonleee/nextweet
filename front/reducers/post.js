@@ -1,4 +1,4 @@
-import shortId, { generate } from 'shortid';
+import shortId from 'shortid';
 import produce from 'immer';
 import faker from 'faker';
 
@@ -24,7 +24,7 @@ export const initialState = {
 export const generateDummyPost = (number) =>
   Array(number)
     .fill()
-    .map((value, index) => ({
+    .map(() => ({
       id: shortId.generate(),
       User: {
         id: shortId.generate(),
@@ -101,8 +101,8 @@ const dummyComment = (data) => ({
 });
 
 // 이전 상태를 액션을 통해 다음 상태로 만들어내는 함수
-const reducer = (state = initialState, action) => {
-  return produce(state, (draft) => {
+const reducer = (state = initialState, action) =>
+  produce(state, (draft) => {
     switch (action.type) {
       case LOAD_POSTS_REQUEST:
         draft.loadPostsLoading = true;
@@ -155,9 +155,7 @@ const reducer = (state = initialState, action) => {
         draft.addCommentError = null;
         break;
       case ADD_COMMENT_SUCCESS: {
-        const post = draft.mainPosts.find(
-          (post) => post.id === action.data.postId,
-        );
+        const post = draft.mainPosts.find((v) => v.id === action.data.postId);
         post.Comments.unshift(dummyComment(action.data.content));
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
@@ -171,6 +169,5 @@ const reducer = (state = initialState, action) => {
         break;
     }
   });
-};
 
 export default reducer;
