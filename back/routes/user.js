@@ -1,10 +1,34 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
+const passport = require("passport");
 const { User } = require("../models");
 
+// signin 로그인
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    //서버 에러
+    if (err) {
+      console.error(err);
+      return next(err);
+    }
+    //client 에러
+    if (info) {
+      return res.status(401).send(info.reason);
+    }
+    //로그인 성공
+    return req.login(user, async (loginErr) => {
+      if (loginErr) {
+        console.error(loginErr);
+        return next(loginErr);
+      }
+      return res.status(200).json(user);
+    });
+  })(req, res, next);
+});
+
+// signup 회원가입
 router.post("/", async (req, res, next) => {
-  console.log(req.body);
   try {
     // 중복 email 체크
     const existedUser = await User.findOne({

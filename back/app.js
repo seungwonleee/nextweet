@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const db = require("./models");
 const userRouter = require("./routes/user");
+const passportConfig = require("./passport");
 
 db.sequelize
   .sync()
@@ -10,6 +11,9 @@ db.sequelize
     console.log("db 연결 성공");
   })
   .catch(console.error);
+
+//passport 설정
+passportConfig();
 
 // req.body
 app.use(express.json());
