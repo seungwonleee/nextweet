@@ -1,6 +1,8 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const db = require("./models");
+const userRouter = require("./routes/user");
 
 db.sequelize
   .sync()
@@ -9,14 +11,20 @@ db.sequelize
   })
   .catch(console.error);
 
-app.get("/api/post", (req, res) => {
-  res.json([
-    { id: 1, content: "post content1" },
-    { id: 2, content: "post content2" },
-    { id: 3, content: "post content3" },
-  ]);
-});
+// req.body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.listen(5000, () => {
+// Access-Control-Allow-Origin
+app.use(
+  cors({
+    origin: "*",
+    credentials: false,
+  })
+);
+
+app.use("/user", userRouter);
+
+app.listen(3065, () => {
   console.log("server running...");
 });

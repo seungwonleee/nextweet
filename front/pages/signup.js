@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { Form, Input, Button, Checkbox } from 'antd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,8 +13,23 @@ const ErrorMessage = styled.div`
 `;
 
 const Signup = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
-  const { signUpLoading } = useSelector((state) => state.user);
+  const { signUpLoading, signUpDone, signUpError } = useSelector(
+    (state) => state.user,
+  );
+
+  useEffect(() => {
+    if (signUpDone) {
+      router.push('/');
+    }
+  }, [signUpDone]);
+
+  useEffect(() => {
+    if (signUpError) {
+      alert(signUpError);
+    }
+  }, [signUpError]);
 
   const [email, setEmail] = useInput('');
   const [password, setPassword] = useInput('');
