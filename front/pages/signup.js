@@ -21,6 +21,7 @@ const Signup = () => {
 
   useEffect(() => {
     if (signUpDone) {
+      alert('회원가입에 성공했습니다.');
       router.push('/');
     }
   }, [signUpDone]);
@@ -65,7 +66,7 @@ const Signup = () => {
       type: SIGN_UP_REQUEST,
       data: { email, password, nickname },
     });
-  }, [email, password, passwordCheck, term]);
+  }, [email, password, nickname, passwordCheck, term]);
 
   return (
     <AppLayout>

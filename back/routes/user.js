@@ -32,7 +32,7 @@ router.post("/", async (req, res, next) => {
       nickname: req.body.nickname,
       password: hashedPassword,
     });
-    res.status(201).json({ signUp: success });
+    res.status(201).json({ signUpSuccess: true });
   } catch (error) {
     console.log(error);
     next(error); // status 500 서버측 에러
