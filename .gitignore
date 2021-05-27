@@ -2,7 +2,7 @@
 .next
 
 # back folder
-config
+.env
 
 # common part
 node_modules

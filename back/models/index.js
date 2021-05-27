@@ -1,6 +1,6 @@
-const { Sequelize } = require("sequelize");
-const env = process.env.NODE_ENV || "development";
-const config = require("../config/config.json")[env];
+const { Sequelize } = require('sequelize');
+const env = process.env.NODE_ENV || 'development';
+const config = require('../config/config')[env];
 const db = {};
 
 const sequelize = new Sequelize(
@@ -10,11 +10,11 @@ const sequelize = new Sequelize(
   config
 );
 
-db.Comment = require("./comment")(sequelize, Sequelize);
-db.Hashtag = require("./hastag")(sequelize, Sequelize);
-db.Image = require("./image")(sequelize, Sequelize);
-db.Post = require("./post")(sequelize, Sequelize);
-db.User = require("./user")(sequelize, Sequelize);
+db.Comment = require('./comment')(sequelize, Sequelize);
+db.Hashtag = require('./hastag')(sequelize, Sequelize);
+db.Image = require('./image')(sequelize, Sequelize);
+db.Post = require('./post')(sequelize, Sequelize);
+db.User = require('./user')(sequelize, Sequelize);
 
 //생성한 model들이 반복문을 돌면서 associate를 실행하여 관계가 설정되도록 해준다.
 Object.keys(db).forEach((modelName) => {

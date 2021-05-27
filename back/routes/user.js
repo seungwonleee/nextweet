@@ -1,12 +1,12 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const bcrypt = require("bcrypt");
-const passport = require("passport");
-const { User } = require("../models");
+const bcrypt = require('bcrypt');
+const passport = require('passport');
+const { User } = require('../models');
 
 // signin 로그인
-router.post("/login", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
     //서버 에러
     if (err) {
       console.error(err);
@@ -22,13 +22,14 @@ router.post("/login", (req, res, next) => {
         console.error(loginErr);
         return next(loginErr);
       }
+      //cookie와 사용자 정보를 보낸다.
       return res.status(200).json(user);
     });
   })(req, res, next);
 });
 
 // signup 회원가입
-router.post("/", async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     // 중복 email 체크
     const existedUser = await User.findOne({
@@ -44,10 +45,10 @@ router.post("/", async (req, res, next) => {
     });
 
     if (existedUser) {
-      return res.status(403).send("이미 사용중인 아이디 입니다.");
+      return res.status(403).send('이미 사용중인 아이디 입니다.');
     }
     if (existedNickname) {
-      return res.status(403).send("이미 사용중인 닉네임 입니다.");
+      return res.status(403).send('이미 사용중인 닉네임 입니다.');
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
