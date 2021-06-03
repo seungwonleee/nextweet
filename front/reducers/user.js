@@ -125,20 +125,16 @@ const reducer = (state = initialState, action) =>
         draft.logInError = action.error;
         break;
       case LOG_OUT_REQUEST:
-        return {
-          ...state,
-          logOutLoading: true,
-          logOutDone: false,
-          logOutError: null,
-        };
+        draft.logOutLoading = true;
+        draft.logOutDone = false;
+        draft.logOutError = null;
+        break;
       case LOG_OUT_SUCCESS:
-        return {
-          ...state,
-          logOutLoading: false,
-          logOutDone: true,
-          isLoggedIn: false,
-          me: null,
-        };
+        draft.logOutLoading = false;
+        draft.logOutDone = true;
+        draft.isLoggedIn = false;
+        draft.me = null;
+        break;
       case LOG_OUT_FAILURE:
         draft.logOutLoading = false;
         draft.logOutError = action.error;
