@@ -4,13 +4,15 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const { User, Post } = require('../models');
 const db = require('../models');
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 // signin 로그인
-router.post('/login', (req, res, next) => {
+router.post('/login', isNotLoggedIn, (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     //서버 에러
     if (err) {
       console.error(err);
+      // error 처리 미들웨어는 따로 작성하지 않아도 기본적으로 내장되어있다.
       return next(err);
     }
     //client 에러
@@ -50,7 +52,7 @@ router.post('/login', (req, res, next) => {
 });
 
 // signup 회원가입
-router.post('/', async (req, res, next) => {
+router.post('/', isNotLoggedIn, async (req, res, next) => {
   try {
     // 중복 email 체크
     const existedUser = await User.findOne({
@@ -85,7 +87,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.post('/logout', (req, res) => {
+router.post('/logout', isLoggedIn, (req, res) => {
   req.logout();
   req.session.destroy();
   res.send('ok');
