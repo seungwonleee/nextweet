@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 
 const db = require('./models');
 const userRouter = require('./routes/user');
+const postRouter = require('./routes/post');
 const passportConfig = require('./passport');
 const passport = require('passport');
 
@@ -37,14 +38,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Access-Control-Allow-Origin
+// 다른 도메인간(프론트에서 전달된) cookie를 전달받고자 할 때 credentials: true 작성해야 한다.
+// 프론트쪽에서 cookie를 전달하기 위해서는 withCredentials: true 를 설정해야 한다.
 app.use(
   cors({
-    origin: '*',
-    credentials: false,
+    origin: 'http://localhost:3060',
+    credentials: true,
   })
 );
 
 app.use('/user', userRouter);
+app.use('/post', postRouter);
 
 app.listen(3065, () => {
   console.log('server running...');
