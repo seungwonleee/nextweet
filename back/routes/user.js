@@ -6,6 +6,44 @@ const { User, Post } = require('../models');
 const db = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
+// GET /user
+router.get('/', async (req, res, next) => {
+  try {
+    // 사용자가 로그인 되어있는 경우
+    if (req.user) {
+      const fullUserWithoutPassoword = await User.findOne({
+        where: { id: req.user.id },
+        attributes: {
+          //passoword를 제외한 모든 column 가져오기
+          exclude: ['password'],
+        },
+        include: [
+          {
+            model: Post,
+            attributes: ['id'], // attributes 사용해서 필요한 데이터만 전송
+          },
+          {
+            model: User,
+            as: 'Followings',
+            attributes: ['id'],
+          },
+          {
+            model: User,
+            as: 'Followers',
+            attributes: ['id'],
+          },
+        ],
+      });
+      res.status(200).json(fullUserWithoutPassoword);
+    } else {
+      res.status(200).json(null);
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 // signin 로그인
 router.post('/login', isNotLoggedIn, (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
@@ -34,14 +72,17 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         include: [
           {
             model: Post,
+            attributes: ['id'],
           },
           {
             model: User,
             as: 'Followings',
+            attributes: ['id'],
           },
           {
             model: User,
             as: 'Followers',
+            attributes: ['id'],
           },
         ],
       });

@@ -4,6 +4,7 @@ import AppLayout from '../components/AppLayout';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import { LOAD_POSTS_REQUEST } from '../reducers/post';
+import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,11 @@ const Home = () => {
   );
 
   useEffect(() => {
+    // 사용자 정보 요청
+    dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+    // 게시글 정보 요청
     dispatch({
       type: LOAD_POSTS_REQUEST,
     });
