@@ -16,7 +16,21 @@ export const initialState = {
   addCommentLoading: false,
   addCommentDone: false,
   addCommentError: null,
+  likePostLoading: false,
+  likePostDone: false,
+  likePostError: null,
+  unlikePostLoading: false,
+  unlikePostDone: false,
+  unlikePostError: null,
 };
+
+export const LIKE_POST_REQUEST = 'LIKE_POST_REQUEST';
+export const LIKE_POST_SUCCESS = 'LIKE_POST_SUCCESS';
+export const LIKE_POST_FAILURE = 'LIKE_POST_FAILURE';
+
+export const UNLIKE_POST_REQUEST = 'UNLIKE_POST_REQUEST';
+export const UNLIKE_POST_SUCCESS = 'UNLIKE_POST_SUCCESS';
+export const UNLIKE_POST_FAILURE = 'UNLIKE_POST_FAILURE';
 
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
@@ -48,6 +62,38 @@ export const addComment = (data) => ({
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case LIKE_POST_REQUEST:
+        draft.likePostLoading = true;
+        draft.likePostDone = false;
+        draft.likePostError = null;
+        break;
+      case LIKE_POST_SUCCESS: {
+        draft.likePostLoading = false;
+        draft.likePostDone = true;
+        const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+        post.Likers.push({ id: action.data.UserId });
+        break;
+      }
+      case LIKE_POST_FAILURE:
+        draft.likePostLoading = false;
+        draft.likePostError = action.error;
+        break;
+      case UNLIKE_POST_REQUEST:
+        draft.unlikePostLoading = true;
+        draft.unlikePostDone = false;
+        draft.unlikePostError = null;
+        break;
+      case UNLIKE_POST_SUCCESS: {
+        draft.unlikePostLoading = false;
+        draft.unlikePostDone = true;
+        const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+        post.Likers = post.Likers.filter((v) => v.id !== action.data.UserId);
+        break;
+      }
+      case UNLIKE_POST_FAILURE:
+        draft.unlikePostLoading = false;
+        draft.unlikePostError = action.error;
+        break;
       case LOAD_POSTS_REQUEST:
         draft.loadPostsLoading = true;
         draft.loadPostsDone = false;

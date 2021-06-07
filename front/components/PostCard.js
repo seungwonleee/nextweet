@@ -12,7 +12,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import PostImages from './PostImages';
 import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
-import { REMOVE_POST_REQUEST } from '../reducers/post';
+import {
+  REMOVE_POST_REQUEST,
+  LIKE_POST_REQUEST,
+  UNLIKE_POST_REQUEST,
+} from '../reducers/post';
 import FollowButton from './FollowButton';
 
 const { Meta } = Card;
@@ -20,13 +24,22 @@ const { Meta } = Card;
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.user.me?.id);
+  const liked = post.Likers.find((v) => v.id === id);
   const { removePostLoading } = useSelector((state) => state.post);
-
-  const [liked, setLiked] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
 
-  const onToggleLike = useCallback(() => {
-    setLiked((prev) => !prev);
+  const handleLike = useCallback(() => {
+    dispatch({
+      type: LIKE_POST_REQUEST,
+      data: post.id,
+    });
+  }, []);
+
+  const handleUnlike = useCallback(() => {
+    dispatch({
+      type: UNLIKE_POST_REQUEST,
+      data: post.id,
+    });
   }, []);
 
   const onToggleComment = useCallback(() => {
@@ -50,10 +63,10 @@ const PostCard = ({ post }) => {
             <HeartTwoTone
               twoToneColor="#eb2f96"
               key="heart"
-              onClick={onToggleLike}
+              onClick={handleUnlike}
             />
           ) : (
-            <HeartOutlined key="heart" onClick={onToggleLike} />
+            <HeartOutlined key="heart" onClick={handleLike} />
           ),
           <MessageOutlined key="comment" onClick={onToggleComment} />,
           <Popover
@@ -123,6 +136,7 @@ PostCard.propTypes = {
     createdAt: PropTypes.string,
     Comments: PropTypes.arrayOf(PropTypes.any),
     Images: PropTypes.arrayOf(PropTypes.any),
+    Likers: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
 };
 
