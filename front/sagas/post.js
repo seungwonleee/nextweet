@@ -14,22 +14,21 @@ import {
   LOAD_POSTS_REQUEST,
   LOAD_POSTS_SUCCESS,
   LOAD_POSTS_FAILURE,
-  generateDummyPost,
 } from '../reducers/post';
 
 import { REMOVE_POST_OF_ME, ADD_POST_TO_ME } from '../reducers/user';
 
-// function loadPostsAPI(data) {
-//   return axios.get("/api/posts", data);
-// }
+function loadPostsAPI(data) {
+  return axios.get('/posts', data);
+}
 
-function* loadPosts() {
+function* loadPosts(action) {
   try {
-    // const result = yield call(loadPostsAPI, action.data);
-    yield delay(1000);
+    const result = yield call(loadPostsAPI, action.data);
+
     yield put({
       type: LOAD_POSTS_SUCCESS,
-      data: generateDummyPost(10),
+      data: result.data,
     });
   } catch (err) {
     console.error(err);
@@ -91,6 +90,7 @@ function* removePost(action) {
 }
 
 function addCommentAPI(data) {
+  // console.log(data);
   return axios.post(`/post/${data.postId}/comment`, data); // POST /post/1/comment
 }
 
@@ -102,6 +102,7 @@ function* addComment(action) {
       data: result.data,
     });
   } catch (err) {
+    console.error(err);
     yield put({
       type: ADD_COMMENT_FAILURE,
       data: err.response.data,

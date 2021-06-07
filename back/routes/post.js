@@ -37,7 +37,7 @@ router.post('/', isLoggedIn, async (req, res, next) => {
 // 게시글별 댓글 작성
 router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
   try {
-    await Post.findOne({
+    const post = await Post.findOne({
       where: { id: req.params.postId },
     });
     //없는 게시글에 댓글 작성할 경우
@@ -50,7 +50,16 @@ router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
       PostId: req.params.postId,
       UserId: req.user.id,
     });
-    res.status(201).json(post);
+    const fullComment = await Comment.findOne({
+      where: { id: comment.id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'nickname'],
+        },
+      ],
+    });
+    res.status(201).json(fullComment);
   } catch (error) {
     console.error(error);
     next(error);

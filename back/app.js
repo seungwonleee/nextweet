@@ -4,10 +4,12 @@ const cors = require('cors');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 
 const db = require('./models');
 const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
+const postsRouter = require('./routes/posts');
 const passportConfig = require('./passport');
 const passport = require('passport');
 
@@ -46,9 +48,12 @@ app.use(
     credentials: true,
   })
 );
+// 프론트쪽 요청 확인
+app.use(morgan('dev'));
 
 app.use('/user', userRouter);
 app.use('/post', postRouter);
+app.use('/posts', postsRouter);
 
 app.listen(3065, () => {
   console.log('server running...');
