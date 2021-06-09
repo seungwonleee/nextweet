@@ -106,8 +106,17 @@ router.delete('/:postId/like', async (req, res, next) => {
   }
 });
 
-router.delete('/', (req, res) => {
-  res.json({ id: 1 });
+router.delete('/:postId', async (req, res, next) => {
+  // DELETE /post/10
+  try {
+    await Post.destroy({
+      where: { id: req.params.postId },
+    });
+    res.status(200).json({ PostId: parseInt(req.params.postId, 10) }); //params는 문자열로 취급된다.
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
 });
 
 module.exports = router;
