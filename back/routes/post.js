@@ -106,11 +106,11 @@ router.delete('/:postId/like', async (req, res, next) => {
   }
 });
 
-router.delete('/:postId', async (req, res, next) => {
+router.delete('/:postId', isLoggedIn, async (req, res, next) => {
   // DELETE /post/10
   try {
     await Post.destroy({
-      where: { id: req.params.postId },
+      where: { id: req.params.postId, UserId: req.user.id },
     });
     res.status(200).json({ PostId: parseInt(req.params.postId, 10) }); //params는 문자열로 취급된다.
   } catch (error) {
