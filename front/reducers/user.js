@@ -28,6 +28,10 @@ export const initialState = {
   loadFollowersLoading: false, // follower 목록 가져오기 시도중
   loadFollowersDone: false,
   loadFollowersError: null,
+
+  removeFollowerLoading: false, // follower 목록 가져오기 시도중
+  removeFollowerDone: false,
+  removeFollowerError: null,
   me: null,
   signUpData: {},
   loginData: {},
@@ -71,6 +75,10 @@ export const LOAD_FOLLOWINGS_FAILURE = 'LOAD_FOLLOWINGS_FAILURE';
 export const LOAD_FOLLOWERS_REQUEST = 'LOAD_FOLLOWERS_REQUEST';
 export const LOAD_FOLLOWERS_SUCCESS = 'LOAD_FOLLOWERS_SUCCESS';
 export const LOAD_FOLLOWERS_FAILURE = 'LOAD_FOLLOWERS_FAILURE';
+
+export const REMOVE_FOLLOWER_REQUEST = 'REMOVE_FOLLOWER_REQUEST';
+export const REMOVE_FOLLOWER_SUCCESS = 'REMOVE_FOLLOWER_SUCCESS';
+export const REMOVE_FOLLOWER_FAILURE = 'REMOVE_FOLLOWER_FAILURE';
 
 export const loginRequestAction = (data) => ({
   type: 'LOG_IN_REQUEST',
@@ -224,6 +232,23 @@ const reducer = (state = initialState, action) =>
         draft.loadFollowersLoading = false;
         draft.loadFollowersError = action.error;
         break;
+      case REMOVE_FOLLOWER_REQUEST:
+        draft.removeFollowerLoading = true;
+        draft.removeFollowerError = null;
+        draft.removeFollowerDone = false;
+        break;
+      case REMOVE_FOLLOWER_SUCCESS:
+        draft.me.Followers = draft.me.Followers.filter(
+          (v) => v.id !== action.data.UserId,
+        );
+        draft.removeFollowerLoading = false;
+        draft.removeFollowerDone = true;
+        break;
+      case REMOVE_FOLLOWER_FAILURE:
+        draft.removeFollowerLoading = false;
+        draft.removeFollowerError = action.error;
+        break;
+
       default:
         break;
     }

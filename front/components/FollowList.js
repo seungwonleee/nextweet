@@ -3,15 +3,24 @@ import { Button, Card, List } from 'antd';
 import { StopOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { UNFOLLOW_REQUEST } from '../reducers/user';
+import { REMOVE_FOLLOWER_REQUEST, UNFOLLOW_REQUEST } from '../reducers/user';
 
 const FollowList = ({ header, data }) => {
   const dispatch = useDispatch();
   const cancelFollowing = (id) => () => {
-    dispatch({
-      type: UNFOLLOW_REQUEST,
-      data: id,
-    });
+    if (header === '팔로잉') {
+      // 언팔로우
+      dispatch({
+        type: UNFOLLOW_REQUEST,
+        data: id,
+      });
+    } else {
+      // 팔로워 차단(삭제)
+      dispatch({
+        type: REMOVE_FOLLOWER_REQUEST,
+        data: id,
+      });
+    }
   };
 
   return (

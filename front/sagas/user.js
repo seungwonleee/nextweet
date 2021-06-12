@@ -28,6 +28,9 @@ import {
   LOAD_FOLLOWINGS_FAILURE,
   LOAD_FOLLOWERS_SUCCESS,
   LOAD_FOLLOWERS_FAILURE,
+  REMOVE_FOLLOWER_FAILURE,
+  REMOVE_FOLLOWER_SUCCESS,
+  REMOVE_FOLLOWER_REQUEST,
 } from '../reducers/user';
 
 function loadMyInfoAPI() {
@@ -201,6 +204,25 @@ function* loadFollowers(action) {
   }
 }
 
+function removeFollowerAPI(data) {
+  return axios.delete(`/user/follower/${data}`);
+}
+
+function* removeFollower(action) {
+  try {
+    const result = yield call(removeFollowerAPI, action.data);
+    yield put({
+      type: REMOVE_FOLLOWER_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: REMOVE_FOLLOWER_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function* watchLoadMyInfo() {
   yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyInfo);
 }
@@ -235,6 +257,10 @@ function* watchLoadFollowers() {
   yield takeLatest(LOAD_FOLLOWERS_REQUEST, loadFollowers);
 }
 
+function* watchRemoveFollower() {
+  yield takeLatest(REMOVE_FOLLOWER_REQUEST, removeFollower);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchLoadMyInfo),
@@ -246,5 +272,6 @@ export default function* userSaga() {
     fork(watchChangeNickname),
     fork(watchLoadFollowings),
     fork(watchLoadFollowers),
+    fork(watchRemoveFollower),
   ]);
 }
