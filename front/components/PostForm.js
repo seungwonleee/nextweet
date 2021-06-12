@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import { Form, Input, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { addPost } from '../reducers/post';
+import { addPost, UPLOAD_IMAGES_REQUEST } from '../reducers/post';
 import useInput from './hooks/useInput';
 
 const { TextArea } = Input;
@@ -27,6 +27,18 @@ const PostForm = () => {
     imageInput.current.click();
   }, [imageInput.current]);
 
+  const handleChangeImages = useCallback((e) => {
+    console.log('images', e.target.files); // image에 대한 정보
+    const imageFormData = new FormData(); // multipart로 백엔드로 전송가능, 백엔드에서 multer가 처리하기 위해서는 FormData로 전송하기
+    [].forEach.call(e.target.files, (file) => {
+      imageFormData.append('image', file);
+    });
+    dispatch({
+      type: UPLOAD_IMAGES_REQUEST,
+      data: imageFormData,
+    });
+  });
+
   return (
     <Form
       style={{ margin: '10px 0 20px' }}
@@ -40,7 +52,14 @@ const PostForm = () => {
         placeholder="어떤 신기한 일이 있었나요?"
       />
       <div>
-        <input type="file" multiple hidden ref={imageInput} />
+        <input
+          type="file"
+          name="image"
+          multiple
+          hidden
+          ref={imageInput}
+          onChange={handleChangeImages}
+        />
         <Button onClick={handleImageUpload}>이미지 업로드</Button>
         <Button type="primary" style={{ float: 'right' }} htmlType="submit">
           트윗
