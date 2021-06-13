@@ -148,9 +148,18 @@ router.delete('/:postId/like', isLoggedIn, async (req, res, next) => {
 router.delete('/:postId', isLoggedIn, async (req, res, next) => {
   // DELETE /post/10
   try {
+    //게시글을 참조하고있는 모든 사진경로 삭제
+    await Image.destroy({
+      where: { PostId: req.params.postId },
+    });
+    //게시글을 참조하고있는 모든 댓글 삭제
+    await Comment.destroy({
+      where: { PostId: req.params.postId },
+    });
     await Post.destroy({
       where: { id: req.params.postId, UserId: req.user.id },
     });
+
     res.status(200).json({ PostId: parseInt(req.params.postId, 10) }); //params는 문자열로 취급된다.
   } catch (error) {
     console.error(error);
