@@ -1,7 +1,11 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import { Form, Input, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { addPost, UPLOAD_IMAGES_REQUEST } from '../reducers/post';
+import {
+  UPLOAD_IMAGES_REQUEST,
+  REMOVE_IMAGE,
+  ADD_POST_REQUEST,
+} from '../reducers/post';
 import useInput from './hooks/useInput';
 
 const { TextArea } = Input;
@@ -19,8 +23,20 @@ const PostForm = () => {
   }, [addPostDone]);
 
   const handleSubmit = useCallback(() => {
-    dispatch(addPost(text));
-  }, [text]);
+    if (!text || !text.trim()) {
+      return alert('게시글을 작성하세요.');
+    }
+    const formData = new FormData();
+    imagePaths.forEach((path) => {
+      formData.append('image', path); // backend에서 req.body.image로 받을 수 있다.
+    });
+    formData.append('content', text); // backend에서 req.body.content로 받을 수 있다.
+
+    return dispatch({
+      type: ADD_POST_REQUEST,
+      data: formData,
+    });
+  }, [text, imagePaths]);
 
   const imageInput = useRef();
   const handleImageUpload = useCallback(() => {
@@ -36,6 +52,13 @@ const PostForm = () => {
     dispatch({
       type: UPLOAD_IMAGES_REQUEST,
       data: imageFormData,
+    });
+  });
+
+  const handleRemoveImage = useCallback((index) => () => {
+    dispatch({
+      type: REMOVE_IMAGE,
+      data: index,
     });
   });
 
@@ -66,14 +89,18 @@ const PostForm = () => {
         </Button>
       </div>
       <div>
-        {imagePaths.map((value) => (
+        {imagePaths.map((value, index) => (
           <div key={value} style={{ display: 'inline-block' }}>
-            <img src={value} style={{ width: '200px' }} alt={value} />
+            <img
+              src={`http://localhost:3065/${value}`}
+              style={{ width: '200px' }}
+              alt={value}
+            />
+            <div>
+              <Button onClick={handleRemoveImage(index)}>제거</Button>
+            </div>
           </div>
         ))}
-        <div>
-          <Button>제거</Button>
-        </div>
       </div>
     </Form>
   );

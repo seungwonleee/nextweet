@@ -49,7 +49,8 @@ function* loadPosts(action) {
 }
 
 function addPostAPI(data) {
-  return axios.post('/post', { content: data });
+  // FormData는 { content: data } 이런식으로 작성하면 x. 바로 전달해야 한다.
+  return axios.post('/post', data);
 }
 
 function* addPost(action) {

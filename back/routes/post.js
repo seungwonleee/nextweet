@@ -8,14 +8,50 @@ const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
+try {
+  fs.accessSync('uploads');
+} catch (error) {
+  console.log('폴더가 존재하지 않으므로 uploads 폴더를 생성합니다.');
+  fs.mkdirSync('uploads');
+}
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, done) {
+      done(null, 'uploads');
+    },
+    filename(req, file, done) {
+      //기존 파일을 덮어쓰지 않기위해서 업로드 날짜 붙이기
+      const ext = path.extname(file.originalname); // 확장자 추출(.png)
+      const basename = path.basename(file.originalname, ext);
+      done(null, basename + '_' + new Date().getTime() + ext); // 사진명14523423.png
+    },
+    limits: { fileSize: 20 * 1024 * 1024 }, // 업로드 20MB 제한
+  }),
+});
+
 // 게시글 작성
-router.post('/', isLoggedIn, async (req, res, next) => {
+router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
   try {
     //생성과 동시에 데이터가 post에 담긴다.
     const post = await Post.create({
       content: req.body.content,
       UserId: req.user.id,
     });
+
+    if (req.body.image) {
+      if (Array.isArray(req.body.image)) {
+        // 이미지를 여러개 올리면 image: [사진1.png, 사진2.png]
+        const images = await Promise.all(
+          req.body.image.map((image) => Image.create({ src: image }))
+        );
+        await post.addImages(images);
+      } else {
+        // 이미지를 하나만 올리면 image: 사진1.png
+        const image = await Image.create({ src: req.body.image });
+        await post.addImages(image);
+      }
+    }
     const fullPost = await Post.findOne({
       where: { id: post.id },
       include: [
@@ -122,32 +158,10 @@ router.delete('/:postId', isLoggedIn, async (req, res, next) => {
   }
 });
 
-try {
-  fs.accessSync('uploads');
-} catch (error) {
-  console.log('폴더가 존재하지 않으므로 uploads 폴더를 생성합니다.');
-  fs.mkdirSync('uploads');
-}
-
-const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, done) {
-      done(null, 'uploads');
-    },
-    filename(req, file, done) {
-      //기존 파일을 덮어쓰지 않기위해서 업로드 날짜 붙이기
-      const ext = path.extname(file.originalname); // 확장자 추출(.png)
-      const basename = path.basename(file.originalname, ext);
-      done(null, basename + new Date().getTime + ext); // 사진명14523423.png
-    },
-    limits: { fileSize: 20 * 1024 * 1024 }, // 업로드 20MB 제한
-  }),
-});
-
 router.post(
   '/images',
   isLoggedIn,
-  upload.array('image'),
+  upload.array('image'), // 사진 한장만 올리게 하려면 single 메서드 사용
   async (req, res, next) => {
     //POST /post/images
     console.log(req.files); //업로드된 이미지 정보들이 들이었다.
