@@ -70,6 +70,7 @@ function* addPost(action) {
     });
   } catch (err) {
     console.error(err);
+    alert(err.response.data);
     yield put({
       type: ADD_POST_FAILURE,
       data: err.response.data,
@@ -94,6 +95,7 @@ function* removePost(action) {
     });
   } catch (err) {
     console.error(err);
+    alert(err.response.data);
     yield put({
       type: REMOVE_POST_FAILURE,
       data: err.response.data,
@@ -115,6 +117,7 @@ function* addComment(action) {
     });
   } catch (err) {
     console.error(err);
+    alert(err.response.data);
     yield put({
       type: ADD_COMMENT_FAILURE,
       data: err.response.data,
@@ -135,6 +138,7 @@ function* likePost(action) {
     });
   } catch (err) {
     console.error(err);
+    alert(err.response.data);
     yield put({
       type: LIKE_POST_FAILURE,
       data: err.response.data,
@@ -155,6 +159,7 @@ function* unlikePost(action) {
     });
   } catch (err) {
     console.error(err);
+    alert(err.response.data);
     yield put({
       type: UNLIKE_POST_FAILURE,
       data: err.response.data,
@@ -175,6 +180,7 @@ function* uploadImages(action) {
     });
   } catch (err) {
     console.error(err);
+    alert(err.response.data);
     yield put({
       type: UPLOAD_IMAGES_FAILURE,
       data: err.response.data,

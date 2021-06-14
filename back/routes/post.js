@@ -141,6 +141,7 @@ router.patch('/:postId/like', isLoggedIn, async (req, res, next) => {
     res.json({ PostId: post.id, UserId: req.user.id });
   } catch (error) {
     console.error(error);
+    next(error);
   }
 });
 
@@ -155,6 +156,7 @@ router.delete('/:postId/like', isLoggedIn, async (req, res, next) => {
     res.json({ PostId: post.id, UserId: req.user.id });
   } catch (error) {
     console.error(error);
+    next(error);
   }
 });
 
