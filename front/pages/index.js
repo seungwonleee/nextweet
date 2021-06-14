@@ -31,8 +31,11 @@ const Home = () => {
         document.documentElement.scrollHeight - 300
       ) {
         if (hasMorePosts && !loadPostsLoading) {
+          // 게시글이 하나도 없을 경우를 생각해서 처리
+          const lastId = mainPosts[mainPosts.length - 1]?.id;
           dispatch({
             type: LOAD_POSTS_REQUEST,
+            lastId,
           });
         }
       }

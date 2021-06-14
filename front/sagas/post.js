@@ -30,13 +30,14 @@ import {
 
 import { REMOVE_POST_OF_ME, ADD_POST_TO_ME } from '../reducers/user';
 
-function loadPostsAPI(data) {
-  return axios.get('/posts', data);
+function loadPostsAPI(lastId) {
+  // lastId가 undefined인경우 0으로 처리
+  return axios.get(`/posts?lastId=${lastId || 0}`);
 }
 
 function* loadPosts(action) {
   try {
-    const result = yield call(loadPostsAPI, action.data);
+    const result = yield call(loadPostsAPI, action.lastId);
 
     yield put({
       type: LOAD_POSTS_SUCCESS,
