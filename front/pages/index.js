@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
+import axios from 'axios';
 import AppLayout from '../components/AppLayout';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
@@ -62,6 +63,14 @@ const Home = () => {
 // next ssr setting. reducer index.js의 hydrate 실행
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
+    // front server에서 backend server로 쿠키 전달
+    const cookie = context.req ? context.req.headers.cookie : '';
+    // front server Cookie 공유 방지 (*중요*)
+    // 프론트 서버는 하나이므로 axios.defaults.headers.Cookie=cookie 로 쿠키를 설정하게 되면 프론트 서버에 이 쿠키가 설정되어 버린다. 그러면 다른 사용자가 타인의 계정으로 접근이 가능해진다. 그러므로 axios.defaults.headers.Cookie = ''; 로 쿠키를 비워주어야한다.
+    axios.defaults.headers.Cookie = '';
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
     // 사용자 정보 요청
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,

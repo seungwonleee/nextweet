@@ -28,13 +28,10 @@ export const initialState = {
   loadFollowersLoading: false, // follower 목록 가져오기 시도중
   loadFollowersDone: false,
   loadFollowersError: null,
-
   removeFollowerLoading: false, // follower 목록 가져오기 시도중
   removeFollowerDone: false,
   removeFollowerError: null,
   me: null,
-  signUpData: {},
-  loginData: {},
 };
 
 export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';

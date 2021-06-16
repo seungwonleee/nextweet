@@ -6,8 +6,9 @@ const { User, Post } = require('../models');
 const db = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
-// GET /user
+// GET /user 내 정보 가져오기
 router.get('/', async (req, res, next) => {
+  console.log(req.headers);
   try {
     // 사용자가 로그인 되어있는 경우
     if (req.user) {
