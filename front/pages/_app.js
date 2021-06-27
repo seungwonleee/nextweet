@@ -9,6 +9,7 @@ const App = ({ Component }) => (
   <>
     <Head>
       <title>nextweet</title>
+      {/* <link rel="shortcut icon" href="/favicon.ico" /> */}
     </Head>
     <Component />
   </>

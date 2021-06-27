@@ -2,6 +2,7 @@ import produce from 'immer';
 
 export const initialState = {
   mainPosts: [],
+  singlePost: null,
   hasMorePosts: true,
   imagePaths: [],
   loadPostsLoading: false,
@@ -28,6 +29,9 @@ export const initialState = {
   retweetLoading: false,
   retweetDone: false,
   retweetError: null,
+  loadPostLoading: false,
+  loadPostDone: false,
+  loadPostError: null,
 };
 
 export const LIKE_POST_REQUEST = 'LIKE_POST_REQUEST';
@@ -63,6 +67,10 @@ export const RETWEET_SUCCESS = 'RETWEET_SUCCESS';
 export const RETWEET_FAILURE = 'RETWEET_FAILURE';
 
 export const REMOVE_IMAGE = 'REMOVE_IMAGE';
+
+export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
+export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 
 // 이전 상태를 액션을 통해 다음 상태로 만들어내는 함수
 const reducer = (state = initialState, action) =>
@@ -194,6 +202,21 @@ const reducer = (state = initialState, action) =>
         break;
       case REMOVE_IMAGE:
         draft.imagePaths = draft.imagePaths.filter((v, i) => i !== action.data);
+        break;
+      case LOAD_POST_REQUEST:
+        draft.loadPostLoading = true;
+        draft.loadPostDone = false;
+        draft.loadPostError = null;
+        break;
+      case LOAD_POST_SUCCESS: {
+        draft.loadPostLoading = false;
+        draft.loadPostDone = true;
+        draft.singlePost = action.data;
+        break;
+      }
+      case LOAD_POST_FAILURE:
+        draft.loadPostLoading = false;
+        draft.loadPostError = action.error;
         break;
       default:
         break;

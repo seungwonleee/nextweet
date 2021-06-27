@@ -60,7 +60,7 @@ const Home = () => {
   );
 };
 
-// next ssr setting. reducer index.js의 hydrate 실행
+// next ssr setting. dispatch시 reducer index.js의 hydrate 실행
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     // front server에서 backend server로 쿠키 전달
