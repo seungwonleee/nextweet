@@ -4,7 +4,7 @@ import { Form, Input, Button } from 'antd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import useInput from './hooks/useInput';
-import { loginRequestAction } from '../reducers/user';
+import { LOG_IN_REQUEST } from '../reducers/user';
 
 const FormWrapper = styled(Form)`
   padding: 10px;
@@ -31,7 +31,10 @@ const LoginForm = () => {
       email,
       password,
     });
-    dispatch(loginRequestAction({ email, password }));
+    dispatch({
+      type: LOG_IN_REQUEST,
+      data: { email, password },
+    });
   }, [email, password]);
 
   return (

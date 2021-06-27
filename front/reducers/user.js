@@ -77,15 +77,6 @@ export const REMOVE_FOLLOWER_REQUEST = 'REMOVE_FOLLOWER_REQUEST';
 export const REMOVE_FOLLOWER_SUCCESS = 'REMOVE_FOLLOWER_SUCCESS';
 export const REMOVE_FOLLOWER_FAILURE = 'REMOVE_FOLLOWER_FAILURE';
 
-export const loginRequestAction = (data) => ({
-  type: 'LOG_IN_REQUEST',
-  data,
-});
-
-export const logoutRequestAction = () => ({
-  type: 'LOG_OUT_REQUEST',
-});
-
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {

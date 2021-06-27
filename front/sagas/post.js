@@ -47,7 +47,7 @@ function* loadPosts(action) {
     console.error(err);
     yield put({
       type: LOAD_POSTS_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -74,7 +74,7 @@ function* addPost(action) {
     alert(err.response.data);
     yield put({
       type: ADD_POST_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -99,13 +99,12 @@ function* removePost(action) {
     alert(err.response.data);
     yield put({
       type: REMOVE_POST_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
 
 function addCommentAPI(data) {
-  // console.log(data);
   return axios.post(`/post/${data.postId}/comment`, data); // POST /post/1/comment
 }
 
@@ -121,7 +120,7 @@ function* addComment(action) {
     alert(err.response.data);
     yield put({
       type: ADD_COMMENT_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -142,7 +141,7 @@ function* likePost(action) {
     alert(err.response.data);
     yield put({
       type: LIKE_POST_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -163,7 +162,7 @@ function* unlikePost(action) {
     alert(err.response.data);
     yield put({
       type: UNLIKE_POST_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -184,7 +183,7 @@ function* uploadImages(action) {
     alert(err.response.data);
     yield put({
       type: UPLOAD_IMAGES_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -205,7 +204,7 @@ function* retweet(action) {
     alert(err.response.data);
     yield put({
       type: RETWEET_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }

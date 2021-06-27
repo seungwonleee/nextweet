@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   // MySQL에는 images 테이블 생성
   const Image = sequelize.define(
-    "Image",
+    'Image',
     {
       //image별 식별 id는 MySQL에서 자동으로 입력해준다.
       src: {
@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      charset: "utf8",
-      collate: "utf8_general_ci", // 한글 저장
+      charset: 'utf8',
+      collate: 'utf8_general_ci', // 한글 저장
     }
   );
   Image.associate = (db) => {

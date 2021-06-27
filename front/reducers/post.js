@@ -64,16 +64,6 @@ export const RETWEET_FAILURE = 'RETWEET_FAILURE';
 
 export const REMOVE_IMAGE = 'REMOVE_IMAGE';
 
-export const addPost = (data) => ({
-  type: ADD_POST_REQUEST,
-  data,
-});
-
-export const addComment = (data) => ({
-  type: ADD_COMMENT_REQUEST,
-  data,
-});
-
 // 이전 상태를 액션을 통해 다음 상태로 만들어내는 함수
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
