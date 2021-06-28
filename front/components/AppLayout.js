@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useSelector } from 'react-redux';
+import Router from 'next/router';
 
 import { Menu, Input, Row, Col } from 'antd';
 import LoginForm from './LoginForm';
 import UserProfile from './UserProfile';
+import useInput from './hooks/useInput';
 
 const { Search } = Input;
 
@@ -34,6 +36,11 @@ const Global = createGlobalStyle`
 // 공통 메뉴
 const AppLayout = ({ children }) => {
   const { me } = useSelector((state) => state.user);
+  const [searchText, onChangeSearchText] = useInput();
+
+  const onSearch = useCallback(() => {
+    Router.push(`/hashtag/${searchText}`);
+  }, [searchText]);
 
   return (
     <div>
@@ -45,7 +52,12 @@ const AppLayout = ({ children }) => {
           </Link>
         </Menu.Item>
         <Menu.Item key="search">
-          <SearchInput placeholder="#해쉬 태그로 검색하세요." onSearch />
+          <SearchInput
+            placeholder="#해쉬 태그로 검색하세요."
+            value={searchText}
+            onChange={onChangeSearchText}
+            onSearch={onSearch}
+          />
         </Menu.Item>
         {me ? (
           <Menu.Item key="profile">
