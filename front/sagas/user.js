@@ -31,6 +31,9 @@ import {
   REMOVE_FOLLOWER_FAILURE,
   REMOVE_FOLLOWER_SUCCESS,
   REMOVE_FOLLOWER_REQUEST,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILURE,
 } from '../reducers/user';
 
 function loadMyInfoAPI() {
@@ -223,6 +226,26 @@ function* removeFollower(action) {
   }
 }
 
+function loadUserAPI(data) {
+  return axios.get(`/user/${data}`);
+}
+
+function* loadUser(action) {
+  try {
+    const result = yield call(loadUserAPI, action.data);
+    yield put({
+      type: LOAD_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_USER_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function* watchLoadMyInfo() {
   yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyInfo);
 }
@@ -261,6 +284,10 @@ function* watchRemoveFollower() {
   yield takeLatest(REMOVE_FOLLOWER_REQUEST, removeFollower);
 }
 
+function* watchLoadUser() {
+  yield takeLatest(LOAD_USER_REQUEST, loadUser);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchLoadMyInfo),
@@ -273,5 +300,6 @@ export default function* userSaga() {
     fork(watchLoadFollowings),
     fork(watchLoadFollowers),
     fork(watchRemoveFollower),
+    fork(watchLoadUser),
   ]);
 }

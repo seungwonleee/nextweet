@@ -11,6 +11,7 @@ const db = require('./models');
 const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
+const hashtagRouter = require('./routes/hashtag');
 const passportConfig = require('./passport');
 const passport = require('passport');
 
@@ -56,6 +57,7 @@ app.use(morgan('dev'));
 app.use('/user', userRouter);
 app.use('/post', postRouter);
 app.use('/posts', postsRouter);
+app.use('/hashtag', hashtagRouter);
 
 app.listen(3065, () => {
   console.log('server running...');

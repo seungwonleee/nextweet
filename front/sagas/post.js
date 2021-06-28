@@ -29,6 +29,12 @@ import {
   LOAD_POST_REQUEST,
   LOAD_POST_SUCCESS,
   LOAD_POST_FAILURE,
+  LOAD_USER_POSTS_REQUEST,
+  LOAD_HASHTAG_POSTS_REQUEST,
+  LOAD_USER_POSTS_SUCCESS,
+  LOAD_USER_POSTS_FAILURE,
+  LOAD_HASHTAG_POSTS_SUCCESS,
+  LOAD_HASHTAG_POSTS_FAILURE,
 } from '../reducers/post';
 
 import { REMOVE_POST_OF_ME, ADD_POST_TO_ME } from '../reducers/user';
@@ -51,6 +57,52 @@ function* loadPosts(action) {
     yield put({
       type: LOAD_POSTS_FAILURE,
       error: err.response.data,
+    });
+  }
+}
+
+// 특정 사용자의 모든 게시글
+function loadUserPostsAPI(data, lastId) {
+  return axios.get(`/user/${data}/posts?lastId=${lastId || 0}`);
+}
+
+function* loadUserPosts(action) {
+  try {
+    const result = yield call(loadUserPostsAPI, action.data, action.lastId);
+    yield put({
+      type: LOAD_USER_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_USER_POSTS_FAILURE,
+      data: err.response.data,
+    });
+  }
+}
+
+// 특정 해시태그 관련 모든 게시글
+function loadHashtagPostsAPI(data, lastId) {
+  return axios.get(
+    `/hashtag/${encodeURIComponent(data)}?lastId=${lastId || 0}`,
+    // 서버에 요청시 한글이 들어가면 오류 발생. encodeURIComponent로 한글을 감싸야한다. 한글 변환 => %EB%B0%B0%EA%B3%A0%ED%8C%8C
+    // 서버에서 decodeURIComponent 해줘서 db에서 검색해야한다.
+  );
+}
+
+function* loadHashtagPosts(action) {
+  try {
+    const result = yield call(loadHashtagPostsAPI, action.data, action.lastId);
+    yield put({
+      type: LOAD_HASHTAG_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_HASHTAG_POSTS_FAILURE,
+      data: err.response.data,
     });
   }
 }
@@ -237,6 +289,14 @@ function* watchLoadPosts() {
   yield takeLatest(LOAD_POSTS_REQUEST, loadPosts);
 }
 
+function* watchLoadUserPosts() {
+  yield takeLatest(LOAD_USER_POSTS_REQUEST, loadUserPosts);
+}
+
+function* watchLoadHashtagPosts() {
+  yield takeLatest(LOAD_HASHTAG_POSTS_REQUEST, loadHashtagPosts);
+}
+
 function* watchAddPost() {
   yield takeLatest(ADD_POST_REQUEST, addPost);
 }
@@ -272,6 +332,8 @@ function* watchLoadPost() {
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
+    fork(watchLoadUserPosts),
+    fork(watchLoadHashtagPosts),
     fork(watchAddPost),
     fork(watchRemovePost),
     fork(watchAddComment),

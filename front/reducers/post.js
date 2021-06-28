@@ -72,6 +72,14 @@ export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
 export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
 export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 
+export const LOAD_USER_POSTS_REQUEST = 'LOAD_USER_POSTS_REQUEST';
+export const LOAD_USER_POSTS_SUCCESS = 'LOAD_USER_POSTS_SUCCESS';
+export const LOAD_USER_POSTS_FAILURE = 'LOAD_USER_POSTS_FAILURE';
+
+export const LOAD_HASHTAG_POSTS_REQUEST = 'LOAD_HASHTAG_POSTS_REQUEST';
+export const LOAD_HASHTAG_POSTS_SUCCESS = 'LOAD_HASHTAG_POSTS_SUCCESS';
+export const LOAD_HASHTAG_POSTS_FAILURE = 'LOAD_HASHTAG_POSTS_FAILURE';
+
 // 이전 상태를 액션을 통해 다음 상태로 만들어내는 함수
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -108,17 +116,23 @@ const reducer = (state = initialState, action) =>
         draft.unlikePostLoading = false;
         draft.unlikePostError = action.error;
         break;
+      case LOAD_USER_POSTS_REQUEST:
+      case LOAD_HASHTAG_POSTS_REQUEST:
       case LOAD_POSTS_REQUEST:
         draft.loadPostsLoading = true;
         draft.loadPostsDone = false;
         draft.loadPostsError = null;
         break;
+      case LOAD_USER_POSTS_SUCCESS:
+      case LOAD_HASHTAG_POSTS_SUCCESS:
       case LOAD_POSTS_SUCCESS:
         draft.mainPosts = draft.mainPosts.concat(action.data);
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
         draft.hasMorePosts = action.data.length === 10;
         break;
+      case LOAD_USER_POSTS_FAILURE:
+      case LOAD_HASHTAG_POSTS_FAILURE:
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false;
         draft.loadPostsError = action.error;

@@ -31,6 +31,9 @@ export const initialState = {
   removeFollowerLoading: false, // follower 목록 가져오기 시도중
   removeFollowerDone: false,
   removeFollowerError: null,
+  loadUserLoading: false, // 유저 정보 가져오기 시도중
+  loadUserDone: false,
+  loadUserError: null,
   me: null,
 };
 
@@ -76,6 +79,10 @@ export const LOAD_FOLLOWERS_FAILURE = 'LOAD_FOLLOWERS_FAILURE';
 export const REMOVE_FOLLOWER_REQUEST = 'REMOVE_FOLLOWER_REQUEST';
 export const REMOVE_FOLLOWER_SUCCESS = 'REMOVE_FOLLOWER_SUCCESS';
 export const REMOVE_FOLLOWER_FAILURE = 'REMOVE_FOLLOWER_FAILURE';
+
+export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
+export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
+export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -236,7 +243,20 @@ const reducer = (state = initialState, action) =>
         draft.removeFollowerLoading = false;
         draft.removeFollowerError = action.error;
         break;
-
+      case LOAD_USER_REQUEST:
+        draft.loadUserLoading = true;
+        draft.loadUserError = null;
+        draft.loadUserDone = false;
+        break;
+      case LOAD_USER_SUCCESS:
+        draft.loadUserLoading = false;
+        draft.userInfo = action.data;
+        draft.loadUserDone = true;
+        break;
+      case LOAD_USER_FAILURE:
+        draft.loadUserLoading = false;
+        draft.loadUserError = action.error;
+        break;
       default:
         break;
     }
