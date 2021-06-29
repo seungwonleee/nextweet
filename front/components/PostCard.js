@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 import { Button, Card, Avatar, Popover, List, Comment } from 'antd';
 import {
   RetweetOutlined,
@@ -118,15 +119,35 @@ const PostCard = ({ post }) => {
             }
           >
             <Meta
-              avatar={<Avatar>{post.Retweet.User.nickname[0]}</Avatar>}
-              title={post.Retweet.User.nickname}
+              avatar={
+                <Link href={`/user/${post.Retweet.User.id}`}>
+                  <a>
+                    <Avatar>{post.Retweet.User.nickname[0]}</Avatar>
+                  </a>
+                </Link>
+              }
+              title={
+                <Link href={`/user/${post.Retweet.User.id}`}>
+                  <a style={{ color: 'black' }}>{post.Retweet.User.nickname}</a>
+                </Link>
+              }
               description={<PostCardContent postData={post.Retweet.content} />}
             />
           </Card>
         ) : (
           <Meta
-            avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
-            title={post.User.nickname}
+            avatar={
+              <Link href={`/user/${post.User.id}`}>
+                <a>
+                  <Avatar>{post.User.nickname[0]}</Avatar>
+                </a>
+              </Link>
+            }
+            title={
+              <Link href={`/user/${post.User.id}`}>
+                <a style={{ color: 'black' }}>{post.User.nickname}</a>
+              </Link>
+            }
             description={<PostCardContent postData={post.content} />}
           />
         )}
@@ -145,8 +166,18 @@ const PostCard = ({ post }) => {
             renderItem={(item) => (
               <List.Item>
                 <Comment
-                  author={item.User.nickname}
-                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                  author={
+                    <Link href={`/user/${item.User.id}`}>
+                      <a>{item.User.nickname}</a>
+                    </Link>
+                  }
+                  avatar={
+                    <Link href={`/user/${item.User.id}`}>
+                      <a>
+                        <Avatar>{item.User.nickname[0]}</Avatar>
+                      </a>
+                    </Link>
+                  }
                   content={item.content}
                 />
               </List.Item>
