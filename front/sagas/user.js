@@ -226,8 +226,8 @@ function* removeFollower(action) {
   }
 }
 
-function loadUserAPI(data) {
-  return axios.get(`/user/${data}`);
+function loadUserAPI(userId) {
+  return axios.get(`/user/${userId}`);
 }
 
 function* loadUser(action) {

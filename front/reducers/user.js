@@ -35,6 +35,7 @@ export const initialState = {
   loadUserDone: false,
   loadUserError: null,
   me: null,
+  userInfo: null,
 };
 
 export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
