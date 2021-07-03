@@ -10,6 +10,7 @@ import {
   HeartTwoTone,
 } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
+import moment from 'moment';
 import PostImages from './PostImages';
 import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
@@ -22,6 +23,8 @@ import {
 import FollowButton from './FollowButton';
 
 const { Meta } = Card;
+
+moment.locale('ko');
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
@@ -118,6 +121,11 @@ const PostCard = ({ post }) => {
               )
             }
           >
+            <div
+              style={{ float: 'right', fontSize: '0.5rem', color: '#808080' }}
+            >
+              {moment(post.createdAt).format('LLL')}
+            </div>
             <Meta
               avatar={
                 <Link href={`/user/${post.Retweet.User.id}`}>
@@ -135,21 +143,28 @@ const PostCard = ({ post }) => {
             />
           </Card>
         ) : (
-          <Meta
-            avatar={
-              <Link href={`/user/${post.User.id}`}>
-                <a>
-                  <Avatar>{post.User.nickname[0]}</Avatar>
-                </a>
-              </Link>
-            }
-            title={
-              <Link href={`/user/${post.User.id}`}>
-                <a style={{ color: 'black' }}>{post.User.nickname}</a>
-              </Link>
-            }
-            description={<PostCardContent postData={post.content} />}
-          />
+          <>
+            <div
+              style={{ float: 'right', fontSize: '0.5rem', color: '#808080' }}
+            >
+              {moment(post.createdAt).format('LLL')}
+            </div>
+            <Meta
+              avatar={
+                <Link href={`/user/${post.User.id}`}>
+                  <a>
+                    <Avatar>{post.User.nickname[0]}</Avatar>
+                  </a>
+                </Link>
+              }
+              title={
+                <Link href={`/user/${post.User.id}`}>
+                  <a style={{ color: 'black' }}>{post.User.nickname}</a>
+                </Link>
+              }
+              description={<PostCardContent postData={post.content} />}
+            />
+          </>
         )}
       </Card>
       {commentFormOpened && (
@@ -178,7 +193,21 @@ const PostCard = ({ post }) => {
                       </a>
                     </Link>
                   }
-                  content={item.content}
+                  content={
+                    <>
+                      <div>{item.content}</div>
+                      <br />
+                      <div
+                        style={{
+                          float: 'right',
+                          fontSize: '0.3rem',
+                          color: '#808080',
+                        }}
+                      >
+                        {moment(item.createdAt).format('LLL')}
+                      </div>
+                    </>
+                  }
                 />
               </List.Item>
             )}
