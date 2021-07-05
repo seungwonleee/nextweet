@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const path = require('path');
+const compression = require('compression');
 
 const db = require('./models');
 const userRouter = require('./routes/user');
@@ -27,6 +28,8 @@ db.sequelize
 //passport 설정
 passportConfig();
 
+// compress all responses
+app.use(compression());
 // req.body
 app.use('/', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
@@ -58,6 +61,17 @@ app.use('/user', userRouter);
 app.use('/post', postRouter);
 app.use('/posts', postsRouter);
 app.use('/hashtag', hashtagRouter);
+
+// 404 응답 처리 미들웨어
+app.use(function (req, res, next) {
+  res.status(404).send('해당 주소로 접근할 수 없습니다.');
+});
+
+// 오류 처리 미들웨어
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
+});
 
 app.listen(3065, () => {
   console.log('server running...');
