@@ -1,11 +1,12 @@
 const passport = require('passport');
 const local = require('./local');
 const { User } = require('../models');
+const google = require('./google');
 
 module.exports = () => {
   //서버 메모리에 cookie와 사용자 id만 저장
   passport.serializeUser((user, done) => {
-    //done 호출시 res.setHeader cookie 전달
+    //done 호출시 자동으로 브라우저에 cookie 전달
     done(null, user.id);
   });
 
@@ -21,4 +22,5 @@ module.exports = () => {
   });
 
   local();
+  google();
 };

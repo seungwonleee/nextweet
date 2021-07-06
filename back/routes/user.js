@@ -99,6 +99,24 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
   })(req, res, next);
 });
 
+// GET /user/auth/google (passport google 로그인)
+router.get('/auth/google', (req, res, next) => {
+  passport.authenticate('google', {
+    // 권한 범위
+    scope: ['https://www.googleapis.com/auth/plus.login', 'email'],
+  })(req, res, next);
+});
+
+// GET /user/auth/google/callback (google 로그인 redirect url)
+router.get(
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: 'http://localhost:3060' }),
+  // 성공시 redirect
+  function (req, res) {
+    res.redirect('http://localhost:3060');
+  }
+);
+
 // POST /user 회원가입
 router.post('/', isNotLoggedIn, async (req, res, next) => {
   try {
@@ -136,10 +154,11 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
   }
 });
 
+// POST /user/logout 로그아웃
 router.post('/logout', isLoggedIn, (req, res) => {
-  req.logout();
   // 세션에 저장된 cookie와 id 삭제
   req.session.destroy();
+  req.logout();
   res.send('logout success');
 });
 

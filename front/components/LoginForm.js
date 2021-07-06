@@ -72,6 +72,7 @@ const LoginForm = () => {
           </a>
         </Link>
       </ButtonWrapper>
+      <a href="http://localhost:3065/user/auth/google">Sign In with Google</a>
     </FormWrapper>
   );
 };
