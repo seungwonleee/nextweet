@@ -39,6 +39,7 @@ import {
 
 import { REMOVE_POST_OF_ME, ADD_POST_TO_ME } from '../reducers/user';
 
+// 메인 페이지 게시글 모두 로딩
 function loadPostsAPI(lastId) {
   // lastId가 undefined인경우 0으로 처리
   return axios.get(`/posts?lastId=${lastId || 0}`);
@@ -61,7 +62,7 @@ function* loadPosts(action) {
   }
 }
 
-// 특정 사용자의 모든 게시글
+// 특정 사용자의 모든 게시글 불러오기
 function loadUserPostsAPI(data, lastId) {
   return axios.get(`/user/${data}/posts?lastId=${lastId || 0}`);
 }
@@ -82,7 +83,7 @@ function* loadUserPosts(action) {
   }
 }
 
-// 특정 해시태그 관련 모든 게시글
+// 특정 해시태그 관련 모든 게시글 불러오기
 function loadHashtagPostsAPI(data, lastId) {
   return axios.get(
     `/hashtag/${encodeURIComponent(data)}?lastId=${lastId || 0}`,
@@ -107,6 +108,7 @@ function* loadHashtagPosts(action) {
   }
 }
 
+// 게시글 추가하기
 function addPostAPI(data) {
   // FormData는 { content: data } 이런식으로 작성하면 x. 바로 전달해야 한다.
   return axios.post('/post', data);
@@ -134,6 +136,7 @@ function* addPost(action) {
   }
 }
 
+// 게시글 삭제하기
 function removePostAPI(data) {
   return axios.delete(`/post/${data}`);
 }
@@ -159,6 +162,7 @@ function* removePost(action) {
   }
 }
 
+// 댓글 작성하기
 function addCommentAPI(data) {
   return axios.post(`/post/${data.postId}/comment`, data); // POST /post/1/comment
 }
@@ -180,6 +184,7 @@ function* addComment(action) {
   }
 }
 
+// 게시글 좋아요
 function likePostAPI(data) {
   return axios.patch(`/post/${data}/like`);
 }
@@ -201,6 +206,7 @@ function* likePost(action) {
   }
 }
 
+// 게시글 좋아요 취소
 function unlikePostAPI(data) {
   return axios.delete(`/post/${data}/like`);
 }
@@ -222,6 +228,7 @@ function* unlikePost(action) {
   }
 }
 
+// 사진 업로드
 function uploadImagesAPI(data) {
   return axios.post(`/post/images`, data); // FromData 는 그대로 전달하기
 }
@@ -243,6 +250,7 @@ function* uploadImages(action) {
   }
 }
 
+// 게시글 리트윗
 function retweetAPI(data) {
   return axios.post(`/post/${data}/retweet`);
 }
@@ -264,6 +272,7 @@ function* retweet(action) {
   }
 }
 
+// 특정 게시글 가져오기
 function loadPostAPI(data) {
   return axios.get(`/post/${data}`);
 }

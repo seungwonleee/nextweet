@@ -22,7 +22,7 @@ const Signup = () => {
     (state) => state.user,
   );
 
-  // push 대신 replace 사용시 이전페이지 기록 삭제
+  // 로그인 정보 있으면 홈으로 페이지 라우팅(push 대신 replace 사용시 이전페이지 기록 삭제)
   useEffect(() => {
     if (me && me.id) {
       router.replace('/');
@@ -30,6 +30,7 @@ const Signup = () => {
   }, [me && me.id]);
 
   useEffect(() => {
+    // 회원가입 성공시 홈으로 페이지 라우팅
     if (signUpDone) {
       alert('회원가입에 성공했습니다.');
       router.replace('/');

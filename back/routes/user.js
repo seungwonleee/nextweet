@@ -11,7 +11,7 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 router.get('/', async (req, res, next) => {
   console.log(req.headers);
   try {
-    // 사용자가 로그인 되어있는 경우
+    // 사용자가 로그인 되어있는 경우 사용자 정보 DB에서 검색
     if (req.user) {
       const fullUserWithoutPassoword = await User.findOne({
         where: { id: req.user.id },
@@ -38,6 +38,7 @@ router.get('/', async (req, res, next) => {
       });
       res.status(200).json(fullUserWithoutPassoword);
     } else {
+      // 사용자가 로그인 되어있지 않은 경우 null 응답
       res.status(200).json(null);
     }
   } catch (error) {
@@ -46,21 +47,25 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// signin 로그인
+// POST /user/login 로그인 (passport local 로그인)
 router.post('/login', isNotLoggedIn, (req, res, next) => {
+  //passport에서 done하면 콜백함수 실행
   passport.authenticate('local', (err, user, info) => {
-    //서버 에러
+    // 서버 에러
     if (err) {
       console.error(err);
-      // error 처리 미들웨어는 따로 작성하지 않아도 기본적으로 내장되어있다.
+      // error 처리 미들웨어로 이동
       return next(err);
     }
+
     //client 에러
     if (info) {
       return res.status(401).send(info.reason);
     }
-    //로그인 성공
+
+    //로그인
     return req.login(user, async (loginErr) => {
+      // passport 자체 로그인 에러 처리
       if (loginErr) {
         console.error(loginErr);
         return next(loginErr);
@@ -88,13 +93,13 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
           },
         ],
       });
-      //cookie와 사용자 정보를 보낸다.
+      //cookie와 사용자 정보 응답
       return res.status(200).json(fullUserWithoutPassoword);
     });
   })(req, res, next);
 });
 
-// signup 회원가입
+// POST /user 회원가입
 router.post('/', isNotLoggedIn, async (req, res, next) => {
   try {
     // 중복 email 체크
@@ -117,6 +122,7 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
       return res.status(403).send('이미 사용중인 닉네임 입니다.');
     }
 
+    // 비밀번호 암호화해서 저장
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
     await User.create({
       email: req.body.email,
@@ -132,10 +138,12 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
 
 router.post('/logout', isLoggedIn, (req, res) => {
   req.logout();
+  // 세션에 저장된 cookie와 id 삭제
   req.session.destroy();
-  res.send('ok');
+  res.send('logout success');
 });
 
+// PATCH /user/nickname 닉네임 수정
 router.patch('/nickname', isLoggedIn, async (req, res, next) => {
   try {
     await User.update(
@@ -153,6 +161,7 @@ router.patch('/nickname', isLoggedIn, async (req, res, next) => {
   }
 });
 
+// PATCH /user/:userId/follow 팔로우 하기
 router.patch('/:userId/follow', isLoggedIn, async (req, res, next) => {
   // PATCH /user/1/follow
   try {
@@ -168,6 +177,7 @@ router.patch('/:userId/follow', isLoggedIn, async (req, res, next) => {
   }
 });
 
+// DELETE /user/userId/follow 팔로우 취소하기
 router.delete('/:userId/follow', isLoggedIn, async (req, res, next) => {
   // DELETE /user/1/follow
   try {
@@ -183,6 +193,7 @@ router.delete('/:userId/follow', isLoggedIn, async (req, res, next) => {
   }
 });
 
+// DELETE /user/follower/:userId 팔로워 삭제하기
 router.delete('/follower/:userId', isLoggedIn, async (req, res, next) => {
   // DELETE /user/follower/2
   try {
@@ -198,6 +209,7 @@ router.delete('/follower/:userId', isLoggedIn, async (req, res, next) => {
   }
 });
 
+// GET /user/followers 팔로워 목록 가져오기
 router.get('/followers', isLoggedIn, async (req, res, next) => {
   // GET /user/followers
   try {
@@ -213,6 +225,7 @@ router.get('/followers', isLoggedIn, async (req, res, next) => {
   }
 });
 
+// GET /user/followings 팔로잉 목록 가져오기
 router.get('/followings', isLoggedIn, async (req, res, next) => {
   // GET /user/followings
   try {
@@ -228,6 +241,7 @@ router.get('/followings', isLoggedIn, async (req, res, next) => {
   }
 });
 
+// GET /user/:userId/posts 사용자별 게시글 불러오기
 router.get('/:userId/posts', async (req, res, next) => {
   //GET /user/1/posts
   try {
@@ -290,6 +304,7 @@ router.get('/:userId/posts', async (req, res, next) => {
   }
 });
 
+// GET /user/:id 특정 사용자 정보 가져오기
 router.get('/:id', async (req, res, next) => {
   // GET /user/3
   try {

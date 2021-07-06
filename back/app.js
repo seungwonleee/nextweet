@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const path = require('path');
 const compression = require('compression');
+const helmet = require('helmet');
 
 const db = require('./models');
 const userRouter = require('./routes/user');
@@ -28,6 +29,7 @@ db.sequelize
 //passport 설정
 passportConfig();
 
+app.use(helmet());
 // compress all responses
 app.use(compression());
 // req.body
@@ -46,8 +48,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Access-Control-Allow-Origin
-// 다른 도메인간(프론트에서 전달된) cookie를 전달받고자 할 때 credentials: true 작성해야 한다.
-// 프론트쪽에서 cookie를 전달하기 위해서는 withCredentials: true 를 설정해야 한다.
+// 백엔드 서버에서 다른 도메인간(프론트에서 전달된) cookie를 전달받고자 할 때 cors 옵션으로 credentials: true 작성해야 한다.
+// 프론트쪽에서는 cookie를 백엔드 서버로 전달하기 위해서 withCredentials: true 를 설정해야 한다. ex) axios.defaults.withCredentials = true;
 app.use(
   cors({
     origin: 'http://localhost:3060',

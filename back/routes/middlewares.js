@@ -1,3 +1,4 @@
+// 로그인 체크 미들웨어
 exports.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
