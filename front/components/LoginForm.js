@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { Form, Input, Button } from 'antd';
 import styled from 'styled-components';
+import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import useInput from './hooks/useInput';
 import { LOG_IN_REQUEST } from '../reducers/user';
+import useInput from './hooks/useInput';
 
 const FormWrapper = styled(Form)`
   padding: 10px;
@@ -12,6 +12,21 @@ const FormWrapper = styled(Form)`
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
+`;
+
+const LoginButton = styled(Button)`
+  width: 49%;
+`;
+
+const SignUpButton = styled(Button)`
+  width: 49%;
+  float: right;
+`;
+
+const GoogleLoginButton = styled(Button)`
+  width: 100%;
+  color: black;
+  margin-top: 4px;
 `;
 
 const LoginForm = () => {
@@ -63,16 +78,28 @@ const LoginForm = () => {
         />
       </div>
       <ButtonWrapper>
-        <Button type="primary" htmlType="submit" loading={logInLoading}>
+        <LoginButton type="primary" htmlType="submit" loading={logInLoading}>
           로그인
-        </Button>
+        </LoginButton>
         <Link href="/signup">
           <a>
-            <Button>회원가입</Button>
+            <SignUpButton>회원가입</SignUpButton>
+          </a>
+        </Link>
+        <Link href="http://localhost:3065/user/auth/google">
+          <a>
+            <GoogleLoginButton>
+              <span style={{ color: '#4384F4' }}>G</span>
+              <span style={{ color: '#EA4335' }}>o</span>
+              <span style={{ color: '#FBBC08' }}>o</span>
+              <span style={{ color: '#4384F4' }}>g</span>
+              <span style={{ color: '#34A853' }}>l</span>
+              <span style={{ color: '#EA4335' }}>e</span>
+              <span>로 시작하기</span>
+            </GoogleLoginButton>
           </a>
         </Link>
       </ButtonWrapper>
-      <a href="http://localhost:3065/user/auth/google">Sign In with Google</a>
     </FormWrapper>
   );
 };
