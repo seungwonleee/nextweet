@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false, //필수
       },
+      googleId: {
+        type: DataTypes.STRING(100),
+        allowNull: true, //default 값 null
+      },
     },
     {
       charset: 'utf8',
