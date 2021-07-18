@@ -1,18 +1,33 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Form, Input, Button, Checkbox } from 'antd';
+import { LockOutlined, MessageOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { END } from 'redux-saga';
-import AppLayout from '../components/AppLayout';
+import AppLayout from '../components/AppLayout/AppLayout';
 import useInput from '../components/hooks/useInput';
 import { SIGN_UP_REQUEST, LOAD_MY_INFO_REQUEST } from '../reducers/user';
 import wrapper from '../store/configureStore';
 
 const ErrorMessage = styled.div`
   color: red;
+`;
+
+const Title = styled.h1`
+  text-align: center;
+  padding-top: 2rem;
+
+  a {
+    color: ${(props) => props.theme.colors.black};
+  }
+`;
+
+const SubTitle = styled.h2`
+  text-align: center;
 `;
 
 const Signup = () => {
@@ -84,6 +99,16 @@ const Signup = () => {
       <Head>
         <title>회원가입 | nextweet</title>
       </Head>
+      <Title>
+        <Link href="/">
+          <a>
+            <MessageOutlined /> Nextweet
+          </a>
+        </Link>
+      </Title>
+      <SubTitle>
+        <LockOutlined /> 회원가입
+      </SubTitle>
       <Form onFinish={handleSubmit}>
         <div>
           <label htmlFor="user-email">이메일</label>

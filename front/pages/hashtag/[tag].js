@@ -8,7 +8,7 @@ import { LOAD_HASHTAG_POSTS_REQUEST } from '../../reducers/post';
 import PostCard from '../../components/PostCard';
 import wrapper from '../../store/configureStore';
 import { LOAD_MY_INFO_REQUEST } from '../../reducers/user';
-import AppLayout from '../../components/AppLayout';
+import AppLayout from '../../components/AppLayout/AppLayout';
 
 const Hashtag = () => {
   const dispatch = useDispatch();

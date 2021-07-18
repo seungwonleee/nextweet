@@ -9,6 +9,10 @@ const { Meta } = Card;
 
 const CardWrapper = styled(Card)`
   padding: 10px;
+
+  .profile-nickname {
+    color: ${(props) => props.theme.colors.black};
+  }
 `;
 
 const UserProfile = () => {
@@ -55,17 +59,23 @@ const UserProfile = () => {
       >
         <Meta
           avatar={
-            <Link href={`/user/${me.id}`}>
+            <Link href="/profile">
               <a>
                 <Avatar>{me.nickname[0]}</Avatar>
               </a>
             </Link>
           }
-          title={me.nickname}
+          title={
+            <Link href="/profile">
+              <a className="profile-nickname">{me.nickname}</a>
+            </Link>
+          }
+          description={
+            <Button onClick={handleLogout} loading={logOutLoading}>
+              로그아웃
+            </Button>
+          }
         />
-        <Button onClick={handleLogout} loading={logOutLoading}>
-          로그아웃
-        </Button>
       </CardWrapper>
     </>
   );
