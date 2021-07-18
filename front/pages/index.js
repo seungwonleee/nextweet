@@ -16,17 +16,6 @@ const Home = () => {
     (state) => state.post,
   );
 
-  // useEffect(() => {
-  //   // 사용자 정보 요청
-  //   dispatch({
-  //     type: LOAD_MY_INFO_REQUEST,
-  //   });
-  //   // 게시글 정보 요청
-  //   dispatch({
-  //     type: LOAD_POSTS_REQUEST,
-  //   });
-  // }, []);
-
   useEffect(() => {
     function hanldeScroll() {
       if (
@@ -79,6 +68,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     context.store.dispatch({
       type: LOAD_POSTS_REQUEST,
     });
+    // saga request 가 끝날때까지 대기
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
   },
