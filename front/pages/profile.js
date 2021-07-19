@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { END } from 'redux-saga';
@@ -18,22 +18,12 @@ import UserProfile from '../components/UserProfile';
 
 const Profile = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const { me } = useSelector((state) => state.user);
 
   const isMobileOrTablet = useMediaQuery({
     query: '(max-width: 768px)',
   });
-
-  useEffect(() => {
-    dispatch({
-      type: LOAD_FOLLOWERS_REQUEST,
-    });
-    dispatch({
-      type: LOAD_FOLLOWINGS_REQUEST,
-    });
-  }, []);
 
   useEffect(() => {
     if (!(me && me.id)) {
@@ -60,8 +50,6 @@ const Profile = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    // console.log('getServerSideProps start');
-    // console.log(context.req.headers);
     const cookie = context.req ? context.req.headers.cookie : '';
     axios.defaults.headers.Cookie = '';
     if (context.req && cookie) {
@@ -69,6 +57,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
+    });
+    context.store.dispatch({
+      type: LOAD_FOLLOWINGS_REQUEST,
+    });
+    context.store.dispatch({
+      type: LOAD_FOLLOWERS_REQUEST,
     });
     context.store.dispatch(END);
     // console.log('getServerSideProps end');

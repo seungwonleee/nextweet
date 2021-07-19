@@ -7,6 +7,7 @@ import { ADD_COMMENT_REQUEST } from '../reducers/post';
 
 const CommentForm = ({ post }) => {
   const dispatch = useDispatch();
+  const { me } = useSelector((state) => state.user);
   const id = useSelector((state) => state.user.me?.id);
   const { addCommentDone, addCommentLoading } = useSelector(
     (state) => state.post,
@@ -20,6 +21,9 @@ const CommentForm = ({ post }) => {
   }, [addCommentDone]);
 
   const handleSubmit = useCallback(() => {
+    if (!me) {
+      return alert('로그인 후 이용 가능합니다.');
+    }
     dispatch({
       type: ADD_COMMENT_REQUEST,
       data: {

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Card, List } from 'antd';
-import { StopOutlined } from '@ant-design/icons';
+import { Button, List } from 'antd';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { REMOVE_FOLLOWER_REQUEST, UNFOLLOW_REQUEST } from '../reducers/user';
@@ -26,7 +25,7 @@ const FollowList = ({ header, data }) => {
   return (
     <List
       style={{ marginBottom: '20px' }}
-      grid={{ gutter: 4, xs: 2, md: 3 }}
+      // grid={{ gutter: 4, xs: 2, md: 3 }}
       size="small"
       header={<div>{header}</div>}
       loadMore={
@@ -38,13 +37,8 @@ const FollowList = ({ header, data }) => {
       dataSource={data}
       renderItem={(item) => (
         <List.Item style={{ marginTop: '20px' }}>
-          <Card
-            actions={[
-              <StopOutlined key="stop" onClick={cancelFollowing(item.id)} />,
-            ]}
-          >
-            <Card.Meta description={item.nickname} />
-          </Card>
+          <List.Item.Meta title={item.nickname} description={item.email} />
+          <Button onClick={cancelFollowing(item.id)}>삭제</Button>
         </List.Item>
       )}
     />

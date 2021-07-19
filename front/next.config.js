@@ -3,18 +3,18 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 module.exports = withBundleAnalyzer({
-  distDir: '.next',
+  compress: true,
   webpack(config, { webpack }) {
     const prod = process.env.NODE_ENV === 'production';
-    const plugins = [
-      ...config.plugins,
-      new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /^\.\/ko$/), // moment locale ko 만 설치
-    ];
     return {
       ...config,
       mode: prod ? 'production' : 'development',
       devtool: prod ? 'hidden-source-map' : 'eval',
-      plugins,
+      plugins: [
+        ...config.plugins,
+        // moment locale ko 만 설치
+        new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /^\.\/ko$/),
+      ],
     };
   },
 });

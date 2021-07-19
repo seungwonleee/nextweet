@@ -167,6 +167,7 @@ const PostCard = ({ post }) => {
           </>
         )}
       </Card>
+      {/* 댓글 작성 */}
       {commentFormOpened && (
         <>
           <CommentForm post={post} />
