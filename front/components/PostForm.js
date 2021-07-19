@@ -12,6 +12,7 @@ const { TextArea } = Input;
 
 const PostForm = () => {
   const { imagePaths, addPostDone } = useSelector((state) => state.post);
+  const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const [text, setText, resetText] = useInput('');
@@ -23,6 +24,9 @@ const PostForm = () => {
   }, [addPostDone]);
 
   const handleSubmit = useCallback(() => {
+    if (!me) {
+      return alert('로그인 후 이용 가능합니다.');
+    }
     if (!text || !text.trim()) {
       return alert('게시글을 작성하세요.');
     }
@@ -40,6 +44,9 @@ const PostForm = () => {
 
   const imageInput = useRef();
   const handleImageUpload = useCallback(() => {
+    if (!me) {
+      return alert('로그인 후 이용 가능합니다.');
+    }
     imageInput.current.click();
   }, [imageInput.current]);
 

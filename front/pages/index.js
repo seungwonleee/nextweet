@@ -11,7 +11,7 @@ import wrapper from '../store/configureStore';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { me } = useSelector((state) => state.user);
+  // const { me } = useSelector((state) => state.user);
   const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector(
     (state) => state.post,
   );
@@ -41,7 +41,7 @@ const Home = () => {
 
   return (
     <AppLayout>
-      {me && <PostForm />}
+      <PostForm />
       {mainPosts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
