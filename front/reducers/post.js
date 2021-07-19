@@ -80,6 +80,14 @@ export const LOAD_HASHTAG_POSTS_REQUEST = 'LOAD_HASHTAG_POSTS_REQUEST';
 export const LOAD_HASHTAG_POSTS_SUCCESS = 'LOAD_HASHTAG_POSTS_SUCCESS';
 export const LOAD_HASHTAG_POSTS_FAILURE = 'LOAD_HASHTAG_POSTS_FAILURE';
 
+export const UPDATE_COMMENT_REQUEST = 'UPDATE_COMMENT_REQUEST';
+export const UPDATE_COMMENT_SUCCESS = 'UPDATE_COMMENT_SUCCESS';
+export const UPDATE_COMMENT_FAILURE = 'UPDATE_COMMENT_FAILURE';
+
+export const DELETE_COMMENT_REQUEST = 'DELETE_COMMENT_REQUEST';
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
+export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
+
 // 이전 상태를 액션을 통해 다음 상태로 만들어내는 함수
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -231,6 +239,42 @@ const reducer = (state = initialState, action) =>
       case LOAD_POST_FAILURE:
         draft.loadPostLoading = false;
         draft.loadPostError = action.error;
+        break;
+      case UPDATE_COMMENT_REQUEST:
+        draft.updateCommentLoading = true;
+        draft.updateCommentDone = false;
+        draft.updateCommentError = null;
+        break;
+      case UPDATE_COMMENT_SUCCESS: {
+        const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+        const comment = post.Comments.find((v) => v.id === action.data.id);
+        comment.content = action.data.content;
+        draft.updateCommentLoading = false;
+        draft.updateCommentDone = true;
+        break;
+      }
+      case UPDATE_COMMENT_FAILURE:
+        draft.updateCommentLoading = false;
+        draft.updateCommentError = action.error;
+        break;
+      case DELETE_COMMENT_REQUEST:
+        draft.deleteCommentLoading = true;
+        draft.deleteCommentDone = false;
+        draft.deleteCommentError = null;
+        break;
+      case DELETE_COMMENT_SUCCESS: {
+        const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+        const commentList = post.Comments.filter(
+          (v) => v.id !== action.data.CommentId,
+        );
+        post.Comments = commentList;
+        draft.deleteCommentLoading = false;
+        draft.deleteCommentDone = true;
+        break;
+      }
+      case DELETE_COMMENT_FAILURE:
+        draft.deleteCommentLoading = false;
+        draft.deleteCommentError = action.error;
         break;
       default:
         break;

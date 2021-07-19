@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Button, Card, Avatar, Popover, List, Comment } from 'antd';
+import { Button, Card, Avatar, Popover } from 'antd';
 import {
   RetweetOutlined,
   HeartOutlined,
@@ -21,6 +21,7 @@ import {
   RETWEET_REQUEST,
 } from '../reducers/post';
 import FollowButton from './FollowButton';
+import CommentList from './CommentList';
 
 const { Meta } = Card;
 
@@ -167,52 +168,13 @@ const PostCard = ({ post }) => {
           </>
         )}
       </Card>
-      {/* 댓글 작성 */}
+
       {commentFormOpened && (
         <>
+          {/* 댓글 작성 폼 */}
           <CommentForm post={post} />
-          <List
-            header={
-              post.Comments.length >= 1
-                ? `${post.Comments.length}개의 댓글`
-                : '댓글 없음'
-            }
-            itemLayout="horizontal"
-            dataSource={post.Comments}
-            renderItem={(item) => (
-              <List.Item>
-                <Comment
-                  author={
-                    <Link href={`/user/${item.User.id}`}>
-                      <a>{item.User.nickname}</a>
-                    </Link>
-                  }
-                  avatar={
-                    <Link href={`/user/${item.User.id}`}>
-                      <a>
-                        <Avatar>{item.User.nickname[0]}</Avatar>
-                      </a>
-                    </Link>
-                  }
-                  content={
-                    <>
-                      <div>{item.content}</div>
-                      <br />
-                      <div
-                        style={{
-                          float: 'right',
-                          fontSize: '0.3rem',
-                          color: '#808080',
-                        }}
-                      >
-                        {moment(item.createdAt).format('LLL')}
-                      </div>
-                    </>
-                  }
-                />
-              </List.Item>
-            )}
-          />
+          {/* 댓글 목록 */}
+          <CommentList post={post} />
         </>
       )}
     </div>

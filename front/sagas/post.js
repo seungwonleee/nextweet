@@ -35,6 +35,12 @@ import {
   LOAD_USER_POSTS_FAILURE,
   LOAD_HASHTAG_POSTS_SUCCESS,
   LOAD_HASHTAG_POSTS_FAILURE,
+  UPDATE_COMMENT_REQUEST,
+  UPDATE_COMMENT_SUCCESS,
+  UPDATE_COMMENT_FAILURE,
+  DELETE_COMMENT_REQUEST,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_FAILURE,
 } from '../reducers/post';
 
 import { REMOVE_POST_OF_ME, ADD_POST_TO_ME } from '../reducers/user';
@@ -294,6 +300,52 @@ function* loadPost(action) {
   }
 }
 
+// 댓글 수정(업데이트)
+function updateCommentAPI(data) {
+  return axios.patch(`/post/${data.postId}/comment`, data); // PATCH /patch/1/comment
+}
+
+function* updateComment(action) {
+  try {
+    const result = yield call(updateCommentAPI, action.data);
+    yield put({
+      type: UPDATE_COMMENT_SUCCESS,
+      data: result.data,
+    });
+    alert('댓글을 수정했습니다.');
+  } catch (err) {
+    console.error(err);
+    alert(err.response.data);
+    yield put({
+      type: UPDATE_COMMENT_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// 댓글 삭제
+function deleteCommentAPI(data) {
+  return axios.post(`/post/${data.postId}/comment`, data); // POST /post/1/comment
+}
+
+function* deleteComment(action) {
+  try {
+    const result = yield call(deleteCommentAPI, action.data);
+    yield put({
+      type: DELETE_COMMENT_SUCCESS,
+      data: result.data,
+    });
+    alert('댓글을 삭제했습니다.');
+  } catch (err) {
+    console.error(err);
+    alert(err.response.data);
+    yield put({
+      type: DELETE_COMMENT_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function* watchLoadPosts() {
   yield takeLatest(LOAD_POSTS_REQUEST, loadPosts);
 }
@@ -338,6 +390,14 @@ function* watchLoadPost() {
   yield takeLatest(LOAD_POST_REQUEST, loadPost);
 }
 
+function* watchUpdateComment() {
+  yield takeLatest(UPDATE_COMMENT_REQUEST, updateComment);
+}
+
+function* watchDeleteComment() {
+  yield takeLatest(DELETE_COMMENT_REQUEST, deleteComment);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -351,5 +411,7 @@ export default function* postSaga() {
     fork(watchUploadImages),
     fork(watchRetweet),
     fork(watchLoadPost),
+    fork(watchUpdateComment),
+    fork(watchDeleteComment),
   ]);
 }
