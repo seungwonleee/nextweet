@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      modify: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+      },
       // belongsTo를 사용하면 속해있는 모델의 Id 컬럼 생성
       // UserId:{}
       // PostId:{}

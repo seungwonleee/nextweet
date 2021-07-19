@@ -97,32 +97,79 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
   }
 });
 
-// 게시글별 댓글 작성
+// 게시글별 댓글 작성, 삭제
 router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
   try {
-    const post = await Post.findOne({
-      where: { id: req.params.postId },
-    });
-    //없는 게시글에 댓글 작성할 경우
-    if (!post) {
-      return res.status(403).send('존재하지 않는 게시글입니다.');
+    // 댓글 작성
+    if (!req.body.commentId) {
+      const post = await Post.findOne({
+        where: { id: req.params.postId },
+      });
+      //없는 게시글에 댓글 작성할 경우
+      if (!post) {
+        return res.status(403).send('존재하지 않는 게시글입니다.');
+      }
+      //생성과 동시에 데이터가 comment에 담긴다.
+      const comment = await Comment.create({
+        content: req.body.content,
+        PostId: req.params.postId,
+        UserId: req.user.id,
+      });
+      const fullComment = await Comment.findOne({
+        where: { id: comment.id },
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'nickname'],
+          },
+        ],
+      });
+      res.status(201).json(fullComment);
+    } else {
+      // 댓글 삭제
+      const deleteComment = await Comment.destroy({
+        where: { id: req.body.commentId },
+      });
+      // 없는 댓글을 삭제할 경우
+      if (!deleteComment) {
+        return res.status(403).send('존재하지 않는 댓글입니다.');
+      }
+
+      res.status(201).json({
+        PostId: req.body.postId,
+        CommentId: req.body.commentId,
+      });
     }
-    //생성과 동시에 데이터가 comment에 담긴다.
-    const comment = await Comment.create({
-      content: req.body.content,
-      PostId: req.params.postId,
-      UserId: req.user.id,
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 게시글의 댓글 수정(업데이트)
+router.patch('/:postId/comment', isLoggedIn, async (req, res, next) => {
+  try {
+    // 게시글 댓글 전체 조회
+    const comments = await Comment.findAll({
+      where: { PostId: req.body.postId },
     });
-    const fullComment = await Comment.findOne({
-      where: { id: comment.id },
-      include: [
-        {
-          model: User,
-          attributes: ['id', 'nickname'],
-        },
-      ],
+    // 특정 댓글만 조회
+    const comment = comments.find(
+      (v) => v.dataValues.id === req.body.commentId
+    );
+    // 없는 댓글을 수정할 경우
+    if (!comment) {
+      return res.status(403).send('존재하지 않는 댓글입니다.');
+    }
+    // 30자 이상 제한
+    if (req.body.updateComment.length > 30) {
+      return res.status(403).send('30글자 이상 입력할 수 없습니다.');
+    }
+    // 댓글 업데이트
+    const updateComment = await comment.update({
+      content: req.body.updateComment,
     });
-    res.status(201).json(fullComment);
+    res.status(201).json(updateComment);
   } catch (error) {
     console.error(error);
     next(error);
