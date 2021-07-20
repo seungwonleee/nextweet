@@ -97,6 +97,43 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
   }
 });
 
+// 게시글 수정(업데이트)
+router.patch('/:postId', isLoggedIn, async (req, res, next) => {
+  // PATCH /post/1
+  const hashtags = req.body.content.match(/#[^\s#]+/g);
+  try {
+    await Post.update(
+      {
+        content: req.body.content,
+      },
+      {
+        where: {
+          id: req.params.postId,
+          UserId: req.user.id,
+        },
+      }
+    );
+    const post = await Post.findOne({ where: { id: req.params.postId } });
+    if (hashtags) {
+      const result = await Promise.all(
+        hashtags.map((tag) =>
+          Hashtag.findOrCreate({
+            where: { name: tag.slice(1).toLowerCase() },
+          })
+        )
+      ); // [[item1, true], [item2, true]]
+      await post.setHashtags(result.map((v) => v[0]));
+    }
+    res.status(200).json({
+      PostId: parseInt(req.params.postId, 10),
+      content: req.body.content,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 // 게시글별 댓글 작성, 삭제
 router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
   try {

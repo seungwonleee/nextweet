@@ -19,6 +19,7 @@ import {
   LIKE_POST_REQUEST,
   UNLIKE_POST_REQUEST,
   RETWEET_REQUEST,
+  UPDATE_POST_REQUEST,
 } from '../reducers/post';
 import FollowButton from './FollowButton';
 import CommentList from './CommentList';
@@ -33,6 +34,8 @@ const PostCard = ({ post }) => {
   const liked = post.Likers.find((v) => v.id === id);
   const { removePostLoading } = useSelector((state) => state.post);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
+
+  const [modify, setModify] = useState(false);
 
   const handleLike = useCallback(() => {
     dispatch({
@@ -69,6 +72,27 @@ const PostCard = ({ post }) => {
     });
   }, [id]);
 
+  const handleModifyPost = useCallback(() => {
+    setModify(true);
+  }, []);
+
+  const handleCancelModifyPost = useCallback(() => {
+    setModify(false);
+  }, []);
+
+  const handleSavePost = useCallback(
+    (modifyText) => () => {
+      dispatch({
+        type: UPDATE_POST_REQUEST,
+        data: {
+          PostId: post.id,
+          content: modifyText,
+        },
+      });
+    },
+    [post],
+  );
+
   return (
     <div style={{ marginBottom: '20px' }}>
       <Card
@@ -91,7 +115,9 @@ const PostCard = ({ post }) => {
               <Button.Group>
                 {id && post.User.id === id ? (
                   <>
-                    <Button>수정</Button>
+                    {!post.RetweetId && (
+                      <Button onClick={handleModifyPost}>수정</Button>
+                    )}
                     <Button
                       type="danger"
                       loading={removePostLoading}
@@ -140,7 +166,13 @@ const PostCard = ({ post }) => {
                   <a style={{ color: 'black' }}>{post.Retweet.User.nickname}</a>
                 </Link>
               }
-              description={<PostCardContent postData={post.Retweet.content} />}
+              description={
+                <PostCardContent
+                  postData={post.Retweet.content}
+                  handleCancelModifyPost={handleCancelModifyPost}
+                  handleSavePost={handleSavePost}
+                />
+              }
             />
           </Card>
         ) : (
@@ -163,7 +195,14 @@ const PostCard = ({ post }) => {
                   <a style={{ color: 'black' }}>{post.User.nickname}</a>
                 </Link>
               }
-              description={<PostCardContent postData={post.content} />}
+              description={
+                <PostCardContent
+                  modify={modify}
+                  postData={post.content}
+                  handleCancelModifyPost={handleCancelModifyPost}
+                  handleSavePost={handleSavePost}
+                />
+              }
             />
           </>
         )}

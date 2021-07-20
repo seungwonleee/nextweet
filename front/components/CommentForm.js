@@ -37,7 +37,13 @@ const CommentForm = ({ post }) => {
   return (
     <Form onFinish={handleSubmit}>
       <Form.Item style={{ position: 'relative', margin: 0 }}>
-        <Input.TextArea value={commentText} onChange={setCommentText} row={4} />
+        <Input.TextArea
+          value={commentText}
+          onChange={setCommentText}
+          row={4}
+          maxLength={15}
+          placeholder="댓글 (15자)"
+        />
         <Button
           style={{
             position: 'absolute',

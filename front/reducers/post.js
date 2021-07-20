@@ -32,6 +32,15 @@ export const initialState = {
   loadPostLoading: false,
   loadPostDone: false,
   loadPostError: null,
+  updateCommentLoading: false,
+  updateCommentDone: false,
+  updateCommentError: null,
+  deleteCommentLoading: false,
+  deleteCommentDone: false,
+  deleteCommentError: null,
+  updatePostLoading: false,
+  updatePostDone: false,
+  updatePostError: null,
 };
 
 export const LIKE_POST_REQUEST = 'LIKE_POST_REQUEST';
@@ -87,6 +96,10 @@ export const UPDATE_COMMENT_FAILURE = 'UPDATE_COMMENT_FAILURE';
 export const DELETE_COMMENT_REQUEST = 'DELETE_COMMENT_REQUEST';
 export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
 export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
+
+export const UPDATE_POST_REQUEST = 'UPDATE_POST_REQUEST';
+export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';
+export const UPDATE_POST_FAILURE = 'UPDATE_POST_FAILURE';
 
 // 이전 상태를 액션을 통해 다음 상태로 만들어내는 함수
 const reducer = (state = initialState, action) =>
@@ -276,6 +289,23 @@ const reducer = (state = initialState, action) =>
         draft.deleteCommentLoading = false;
         draft.deleteCommentError = action.error;
         break;
+
+      case UPDATE_POST_REQUEST:
+        draft.updatePostLoading = true;
+        draft.updatePostDone = false;
+        draft.updatePostError = null;
+        break;
+      case UPDATE_POST_SUCCESS:
+        draft.mainPosts.find((v) => v.id === action.data.PostId).content =
+          action.data.content;
+        draft.updatePostLoading = false;
+        draft.updatePostDone = true;
+        break;
+      case UPDATE_POST_FAILURE:
+        draft.updatePostLoading = false;
+        draft.updatePostError = action.error;
+        break;
+
       default:
         break;
     }

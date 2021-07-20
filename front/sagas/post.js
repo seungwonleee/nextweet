@@ -41,6 +41,9 @@ import {
   DELETE_COMMENT_REQUEST,
   DELETE_COMMENT_SUCCESS,
   DELETE_COMMENT_FAILURE,
+  UPDATE_POST_REQUEST,
+  UPDATE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
 } from '../reducers/post';
 
 import { REMOVE_POST_OF_ME, ADD_POST_TO_ME } from '../reducers/user';
@@ -346,6 +349,29 @@ function* deleteComment(action) {
   }
 }
 
+// 게시글 수정(업데이트)
+function updatePostAPI(data) {
+  return axios.patch(`/post/${data.PostId}`, data); // PATCH /post/1
+}
+
+function* updatePost(action) {
+  try {
+    const result = yield call(updatePostAPI, action.data);
+    yield put({
+      type: UPDATE_POST_SUCCESS,
+      data: result.data,
+    });
+    alert('게시글을 수정했습니다.');
+  } catch (err) {
+    console.error(err);
+    alert(err.response.data);
+    yield put({
+      type: UPDATE_POST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function* watchLoadPosts() {
   yield takeLatest(LOAD_POSTS_REQUEST, loadPosts);
 }
@@ -398,6 +424,10 @@ function* watchDeleteComment() {
   yield takeLatest(DELETE_COMMENT_REQUEST, deleteComment);
 }
 
+function* watchUpdatePost() {
+  yield takeLatest(UPDATE_POST_REQUEST, updatePost);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -413,5 +443,6 @@ export default function* postSaga() {
     fork(watchLoadPost),
     fork(watchUpdateComment),
     fork(watchDeleteComment),
+    fork(watchUpdatePost),
   ]);
 }

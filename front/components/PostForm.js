@@ -78,8 +78,8 @@ const PostForm = () => {
       <TextArea
         value={text}
         onChange={setText}
-        maxLength={140}
-        placeholder="어떤 신기한 일이 있었나요?"
+        maxLength={30}
+        placeholder="어떤 신기한 일이 있었나요?(30자)"
       />
       <div>
         <input
