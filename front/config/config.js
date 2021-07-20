@@ -1,4 +1,4 @@
 // server 요청 주소
-const backUrl = 'http://3.37.49.11';
+const backUrl = 'http://api.nextweet.site';
 
 export default backUrl;

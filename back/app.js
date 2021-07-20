@@ -50,6 +50,11 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      domain: process.env.NODE_ENV === 'production' && '.nextweet.site',
+    },
   })
 );
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -61,7 +66,7 @@ app.use(passport.session());
 // 프론트쪽에서는 cookie를 백엔드 서버로 전달하기 위해서 withCredentials: true 를 설정해야 한다. ex) axios.defaults.withCredentials = true;
 app.use(
   cors({
-    origin: ['http://localhost:3060', 'http://13.124.191.124'],
+    origin: 'http://nextweet.site',
     credentials: true,
   })
 );
