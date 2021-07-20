@@ -71,6 +71,10 @@ app.use('/post', postRouter);
 app.use('/posts', postsRouter);
 app.use('/hashtag', hashtagRouter);
 
+app.get('/', (req, res) => {
+  res.send('test working');
+});
+
 // 404 응답 처리 미들웨어
 app.use(function (req, res, next) {
   res.status(404).send('해당 주소로 접근할 수 없습니다.');
