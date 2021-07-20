@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
+import styled from 'styled-components';
 import PostImages from './PostImages';
 import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
@@ -27,6 +28,12 @@ import CommentList from './CommentList';
 const { Meta } = Card;
 
 moment.locale('ko');
+
+const CreatedAt = styled.div`
+  float: right;
+  font-size: 0.5rem;
+  color: #808080;
+`;
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
@@ -148,11 +155,7 @@ const PostCard = ({ post }) => {
               )
             }
           >
-            <div
-              style={{ float: 'right', fontSize: '0.5rem', color: '#808080' }}
-            >
-              {moment(post.createdAt).format('LLL')}
-            </div>
+            <CreatedAt>{moment(post.createdAt).format('LLL')}</CreatedAt>
             <Meta
               avatar={
                 <Link href={`/user/${post.Retweet.User.id}`}>
@@ -177,11 +180,7 @@ const PostCard = ({ post }) => {
           </Card>
         ) : (
           <>
-            <div
-              style={{ float: 'right', fontSize: '0.5rem', color: '#808080' }}
-            >
-              {moment(post.createdAt).format('LLL')}
-            </div>
+            <CreatedAt>{moment(post.createdAt).format('LLL')}</CreatedAt>
             <Meta
               avatar={
                 <Link href={`/user/${post.User.id}`}>

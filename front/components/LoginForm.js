@@ -27,6 +27,25 @@ const GoogleLoginButton = styled(Button)`
   width: 100%;
   color: black;
   margin-top: 4px;
+
+  span :nth-child(1) {
+    color: #4384f4;
+  }
+  span :nth-child(2) {
+    color: #ea4335;
+  }
+  span :nth-child(3) {
+    color: #fbbc08;
+  }
+  span :nth-child(4) {
+    color: #4384f4;
+  }
+  span :nth-child(5) {
+    color: #34a853;
+  }
+  span :nth-child(6) {
+    color: #ea4335;
+  }
 `;
 
 const LoginForm = () => {
@@ -89,12 +108,12 @@ const LoginForm = () => {
         <Link href="http://localhost:3065/user/auth/google">
           <a>
             <GoogleLoginButton>
-              <span style={{ color: '#4384F4' }}>G</span>
-              <span style={{ color: '#EA4335' }}>o</span>
-              <span style={{ color: '#FBBC08' }}>o</span>
-              <span style={{ color: '#4384F4' }}>g</span>
-              <span style={{ color: '#34A853' }}>l</span>
-              <span style={{ color: '#EA4335' }}>e</span>
+              <span>G</span>
+              <span>o</span>
+              <span>o</span>
+              <span>g</span>
+              <span>l</span>
+              <span>e</span>
               <span>로 시작하기</span>
             </GoogleLoginButton>
           </a>

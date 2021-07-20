@@ -17,7 +17,6 @@ const PostImages = ({ images }) => {
     return (
       <>
         <img
-          role="presentation"
           // style={{ maxHeight: '232px', maxWidth: '232px' }}
           src={`http://localhost:3065/${images[0].src}`}
           alt={images[0].src}
@@ -32,14 +31,12 @@ const PostImages = ({ images }) => {
     return (
       <>
         <img
-          role="presentation"
           style={{ width: '50%', display: 'inline-block' }}
           src={`http://localhost:3065/${images[0].src}`}
           alt={images[0].src}
           onClick={onZoom}
         />
         <img
-          role="presentation"
           style={{ width: '50%', display: 'inline-block' }}
           src={`http://localhost:3065/${images[1].src}`}
           alt={images[1].src}
@@ -54,14 +51,12 @@ const PostImages = ({ images }) => {
     <>
       <div>
         <img
-          role="presentation"
           width="50%"
           src={`http://localhost:3065/${images[0].src}`}
           alt={images[0].src}
           onClick={onZoom}
         />
         <div
-          role="presentation"
           style={{
             display: 'inline-block',
             width: '50%',

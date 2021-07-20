@@ -3,8 +3,14 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Input } from 'antd';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 const { TextArea } = Input;
+
+const ModifyButton = styled.button`
+  border: none;
+  cursor: pointer;
+`;
 
 const PostCardContent = ({
   postData,
@@ -31,21 +37,9 @@ const PostCardContent = ({
       {modify ? (
         <>
           <TextArea rows={2} value={modifyText} onChange={handleModifyText} />
-          <span
-            role="presentation"
-            onClick={handleCancelModifyPost}
-            style={{ cursor: 'pointer' }}
-          >
-            취소
-          </span>
+          <ModifyButton onClick={handleCancelModifyPost}>취소</ModifyButton>
           <span> | </span>
-          <span
-            role="presentation"
-            onClick={handleSavePost(modifyText)}
-            style={{ cursor: 'pointer' }}
-          >
-            완료
-          </span>
+          <ModifyButton onClick={handleSavePost(modifyText)}>완료</ModifyButton>
         </>
       ) : (
         postData.split(/(#[^\s#]+)/g).map((text) => {

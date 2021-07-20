@@ -2,7 +2,21 @@ import React from 'react';
 import { Button, List } from 'antd';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import { REMOVE_FOLLOWER_REQUEST, UNFOLLOW_REQUEST } from '../reducers/user';
+
+const ListWrapper = styled(List)`
+  margin-bottom: 20px;
+`;
+
+const ListItem = styled(List.Item)`
+  margin-top: 20px;
+`;
+
+const ButtonWrapper = styled.div`
+  text-align: center;
+  margin: 10px 0;
+`;
 
 const FollowList = ({ header, data }) => {
   const dispatch = useDispatch();
@@ -23,23 +37,22 @@ const FollowList = ({ header, data }) => {
   };
 
   return (
-    <List
-      style={{ marginBottom: '20px' }}
+    <ListWrapper
       // grid={{ gutter: 4, xs: 2, md: 3 }}
       size="small"
       header={<div>{header}</div>}
       loadMore={
-        <div style={{ textAlign: 'center', margin: '10px 0' }}>
+        <ButtonWrapper>
           <Button>더 보기</Button>
-        </div>
+        </ButtonWrapper>
       }
       bordered
       dataSource={data}
       renderItem={(item) => (
-        <List.Item style={{ marginTop: '20px' }}>
+        <ListItem>
           <List.Item.Meta title={item.nickname} description={item.email} />
           <Button onClick={cancelFollowing(item.id)}>삭제</Button>
-        </List.Item>
+        </ListItem>
       )}
     />
   );

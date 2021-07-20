@@ -2,8 +2,21 @@ import React, { useCallback, useEffect } from 'react';
 import { Form, Input, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import useInput from './hooks/useInput';
 import { ADD_COMMENT_REQUEST } from '../reducers/post';
+
+const FormItem = styled(Form.Item)`
+  position: relative;
+  margin: 0;
+`;
+
+const SubmitButton = styled(Button)`
+  position: absolute;
+  right: 0;
+  bottom: -40px;
+  z-index: 20;
+`;
 
 const CommentForm = ({ post }) => {
   const dispatch = useDispatch();
@@ -36,7 +49,7 @@ const CommentForm = ({ post }) => {
 
   return (
     <Form onFinish={handleSubmit}>
-      <Form.Item style={{ position: 'relative', margin: 0 }}>
+      <FormItem>
         <Input.TextArea
           value={commentText}
           onChange={setCommentText}
@@ -44,20 +57,14 @@ const CommentForm = ({ post }) => {
           maxLength={15}
           placeholder="댓글 (15자)"
         />
-        <Button
-          style={{
-            position: 'absolute',
-            right: 0,
-            bottom: '-40px',
-            zIndex: '20',
-          }}
+        <SubmitButton
           type="primary"
           htmlType="submit"
           loading={addCommentLoading}
         >
           댓글쓰기
-        </Button>
-      </Form.Item>
+        </SubmitButton>
+      </FormItem>
     </Form>
   );
 };

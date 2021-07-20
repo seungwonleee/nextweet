@@ -63,7 +63,7 @@ const MobileToggleMenu = () => {
       >
         <div>
           <Link href="/">
-            <a className="menu-route" role="presentation" onClick={onClose}>
+            <a className="menu-route" onClick={onClose}>
               <HomeOutlined /> 홈으로
             </a>
           </Link>
@@ -74,18 +74,14 @@ const MobileToggleMenu = () => {
           <>
             <div>
               <Link href="/profile">
-                <a className="menu-route" role="presentation" onClick={onClose}>
+                <a className="menu-route" onClick={onClose}>
                   <UserOutlined /> 내 정보
                 </a>
               </Link>
             </div>
             <br />
             <div>
-              <span
-                role="presentation"
-                onClick={handleLogout}
-                className="menu-route"
-              >
+              <span onClick={handleLogout} className="menu-route">
                 <LogoutOutlined /> 로그아웃
               </span>
             </div>
@@ -95,7 +91,7 @@ const MobileToggleMenu = () => {
           <>
             <div>
               <Link href="/signin">
-                <a className="menu-route" role="presentation" onClick={onClose}>
+                <a className="menu-route" onClick={onClose}>
                   <UserOutlined /> 로그인
                 </a>
               </Link>
@@ -103,7 +99,7 @@ const MobileToggleMenu = () => {
             <br />
             <div>
               <Link href="/signup">
-                <a className="menu-route" role="presentation" onClick={onClose}>
+                <a className="menu-route" onClick={onClose}>
                   <UserAddOutlined /> 회원가입
                 </a>
               </Link>

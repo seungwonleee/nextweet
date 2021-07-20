@@ -4,12 +4,23 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { Avatar, List, Comment, Input } from 'antd';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import {
   DELETE_COMMENT_REQUEST,
   UPDATE_COMMENT_REQUEST,
 } from '../reducers/post';
 
 const { TextArea } = Input;
+
+const CreatedAt = styled.div`
+  font-size: 0.3rem;
+  color: #808080;
+`;
+
+const ModifyButton = styled.button`
+  border: none;
+  cursor: pointer;
+`;
 
 const CommentList = ({ post }) => {
   const dispatch = useDispatch();
@@ -118,14 +129,9 @@ const CommentList = ({ post }) => {
                   <>
                     <div>{item.content}</div>
                     <br />
-                    <div
-                      style={{
-                        fontSize: '0.3rem',
-                        color: '#808080',
-                      }}
-                    >
+                    <CreatedAt>
                       {moment(item.createdAt).format('LLL')}
-                    </div>
+                    </CreatedAt>
                   </>
                 )}
               </>
@@ -140,46 +146,35 @@ const CommentList = ({ post }) => {
                   <>
                     {modify.fix && modify.commentId === item.id ? (
                       <div>
-                        <span
+                        <ModifyButton
                           id={item.id}
-                          role="presentation"
                           onClick={handleCancelModifyComment}
-                          style={{ cursor: 'pointer' }}
                         >
                           취소
-                        </span>
+                        </ModifyButton>
                         <span> | </span>
-                        <span
-                          id={item.id}
-                          role="presentation"
-                          onClick={handleSaveComment}
-                          style={{ cursor: 'pointer' }}
-                        >
+                        <ModifyButton id={item.id} onClick={handleSaveComment}>
                           완료
-                        </span>
+                        </ModifyButton>
                       </div>
                     ) : (
                       // 일반 메뉴
                       <div>
-                        <span
+                        <ModifyButton
                           id={item.id}
                           data-content={item.content}
-                          role="presentation"
                           onClick={handleModifyComment}
-                          style={{ cursor: 'pointer' }}
                         >
                           수정
-                        </span>
+                        </ModifyButton>
                         <span> | </span>
-                        <span
+                        <ModifyButton
                           id={item.id}
                           data-commentid={item.id}
-                          role="presentation"
                           onClick={handleRemoveComment}
-                          style={{ cursor: 'pointer' }}
                         >
                           삭제
-                        </span>
+                        </ModifyButton>
                       </div>
                     )}
                   </>

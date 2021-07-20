@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import { Form, Input, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import {
   UPLOAD_IMAGES_REQUEST,
   REMOVE_IMAGE,
@@ -9,6 +10,14 @@ import {
 import useInput from './hooks/useInput';
 
 const { TextArea } = Input;
+
+const FormWrapper = styled(Form)`
+  margin: 10px 0 20px;
+`;
+
+const SubmitButton = styled(Button)`
+  float: right;
+`;
 
 const PostForm = () => {
   const { imagePaths, addPostDone } = useSelector((state) => state.post);
@@ -70,11 +79,7 @@ const PostForm = () => {
   });
 
   return (
-    <Form
-      style={{ margin: '10px 0 20px' }}
-      encType="multipart/form-data"
-      onFinish={handleSubmit}
-    >
+    <FormWrapper encType="multipart/form-data" onFinish={handleSubmit}>
       <TextArea
         value={text}
         onChange={setText}
@@ -91,9 +96,9 @@ const PostForm = () => {
           onChange={handleChangeImages}
         />
         <Button onClick={handleImageUpload}>이미지 업로드</Button>
-        <Button type="primary" style={{ float: 'right' }} htmlType="submit">
+        <SubmitButton type="primary" htmlType="submit">
           트윗
-        </Button>
+        </SubmitButton>
       </div>
       <div>
         {imagePaths.map((value, index) => (
@@ -109,7 +114,7 @@ const PostForm = () => {
           </div>
         ))}
       </div>
-    </Form>
+    </FormWrapper>
   );
 };
 

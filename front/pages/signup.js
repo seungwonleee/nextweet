@@ -30,6 +30,10 @@ const SubTitle = styled.h2`
   text-align: center;
 `;
 
+const ButtonWrapper = styled.div`
+  margin-top: 1rem;
+`;
+
 const Signup = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -83,6 +87,9 @@ const Signup = () => {
   const handleSubmit = useCallback(() => {
     if (password !== passwordCheck) {
       return setPasswordError(true);
+    }
+    if (password.length < 6) {
+      return alert('비밀번호는 최소 6자리 이상이어야 합니다.');
     }
     if (!term) {
       return setTermError(true);
@@ -162,11 +169,11 @@ const Signup = () => {
           </Checkbox>
           {termError && <ErrorMessage>약관에 동의하셔야 합니다.</ErrorMessage>}
         </div>
-        <div style={{ marginTop: 10 }}>
+        <ButtonWrapper>
           <Button type="primary" htmlType="submit" loading={signUpLoading}>
             가입하기
           </Button>
-        </div>
+        </ButtonWrapper>
       </Form>
     </AppLayout>
   );
