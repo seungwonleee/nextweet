@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "next -p 3060",
-    "build": "cross-env NODE_ENV=production ANALYZE=true next build"
+    "build": "cross-env NODE_ENV=production ANALYZE=true next build",
+    "start": "cross-env NODE_ENV=production next start -p 80"
   },
   "author": "seungwon",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "moment": "^2.29.1",
     "next": "^10.2.0",
     "next-redux-wrapper": "^6.0.2",
+    "pm2": "^5.1.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

@@ -5,6 +5,7 @@ import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOG_IN_REQUEST } from '../reducers/user';
 import useInput from './hooks/useInput';
+import backUrl from '../config/config';
 
 const FormWrapper = styled(Form)`
   padding: 10px;
@@ -105,7 +106,7 @@ const LoginForm = () => {
             <SignUpButton>회원가입</SignUpButton>
           </a>
         </Link>
-        <Link href="http://localhost:3065/user/auth/google">
+        <Link href={`${backUrl}/user/auth/google`}>
           <a>
             <GoogleLoginButton>
               <span>G</span>

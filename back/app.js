@@ -61,7 +61,7 @@ app.use(passport.session());
 // 프론트쪽에서는 cookie를 백엔드 서버로 전달하기 위해서 withCredentials: true 를 설정해야 한다. ex) axios.defaults.withCredentials = true;
 app.use(
   cors({
-    origin: 'http://localhost:3060',
+    origin: ['http://localhost:3060', 'http://13.124.191.124'],
     credentials: true,
   })
 );
@@ -86,6 +86,6 @@ app.use(function (err, req, res, next) {
   res.status(500).send('오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
 });
 
-app.listen(3065, () => {
+app.listen(80, () => {
   console.log('server running...');
 });
