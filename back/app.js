@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const path = require('path');
 const compression = require('compression');
 const helmet = require('helmet');
+const hpp = require('hpp');
 
 const db = require('./models');
 const userRouter = require('./routes/user');
@@ -29,7 +30,15 @@ db.sequelize
 //passport 설정
 passportConfig();
 
-app.use(helmet());
+if (process.env.NODE_ENV === 'production') {
+  app.use(helmet());
+  app.use(hpp());
+  // 로그 조금더 자세히 확인 가능(접속자 ip 등등)
+  app.use(morgan('combined'));
+} else {
+  app.use(morgan('dev'));
+}
+
 // compress all responses
 app.use(compression());
 // req.body
@@ -56,8 +65,6 @@ app.use(
     credentials: true,
   })
 );
-// 프론트쪽 요청 확인
-app.use(morgan('dev'));
 
 app.use('/user', userRouter);
 app.use('/post', postRouter);
