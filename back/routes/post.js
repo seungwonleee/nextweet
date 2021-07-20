@@ -6,6 +6,7 @@ const router = express.Router();
 
 const { Post, Image, Comment, User, Hashtag } = require('../models');
 const { isLoggedIn } = require('./middlewares');
+const { uploadImage } = require('../middlewares/upload');
 
 try {
   fs.accessSync('uploads');
@@ -14,23 +15,23 @@ try {
   fs.mkdirSync('uploads');
 }
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, done) {
-      done(null, 'uploads');
-    },
-    filename(req, file, done) {
-      //기존 파일을 덮어쓰지 않기위해서 업로드 날짜 붙이기
-      const ext = path.extname(file.originalname); // 확장자 추출(.png)
-      const basename = path.basename(file.originalname, ext);
-      done(null, basename + '_' + new Date().getTime() + ext); // 사진명14523423.png
-    },
-    limits: { fileSize: 20 * 1024 * 1024 }, // 업로드 20MB 제한
-  }),
-});
+// const upload = multer({
+//   storage: multer.diskStorage({
+//     destination(req, file, done) {
+//       done(null, 'uploads');
+//     },
+//     filename(req, file, done) {
+//       //기존 파일을 덮어쓰지 않기위해서 업로드 날짜 붙이기
+//       const ext = path.extname(file.originalname); // 확장자 추출(.png)
+//       const basename = path.basename(file.originalname, ext);
+//       done(null, basename + '_' + new Date().getTime() + ext); // 사진명14523423.png
+//     },
+//     limits: { fileSize: 20 * 1024 * 1024 }, // 업로드 20MB 제한
+//   }),
+// });
 
 // 게시글 작성
-router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
+router.post('/', isLoggedIn, uploadImage.none(), async (req, res, next) => {
   try {
     const hashtags = req.body.content.match(/#[^\s#]+/g);
 
@@ -268,11 +269,11 @@ router.delete('/:postId', isLoggedIn, async (req, res, next) => {
 router.post(
   '/images',
   isLoggedIn,
-  upload.array('image'), // 사진 한장만 올리게 하려면 single 메서드 사용
+  uploadImage.array('image'), // 사진 한장만 올리게 하려면 single 메서드 사용
   async (req, res, next) => {
     //POST /post/images
     console.log(req.files); //업로드된 이미지 정보들이 들이었다.
-    res.json(req.files.map((v) => v.filename));
+    res.json(req.files.map((v) => v.location));
   }
 );
 
