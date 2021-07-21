@@ -31,6 +31,7 @@ db.sequelize
 passportConfig();
 
 if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
   app.use(helmet());
   app.use(hpp());
   app.use(morgan('combined')); // 로그 조금더 자세히 확인 가능(접속자 ip 등등)
@@ -61,6 +62,7 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
+    proxy: true,
     cookie: {
       httpOnly: true,
       secure: true,
