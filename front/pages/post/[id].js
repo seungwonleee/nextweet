@@ -30,9 +30,9 @@ const Post = () => {
         <meta property="og:description" content={singlePost.content} />
         <meta
           property="og:image"
-          content={singlePost.Images[0] ? singlePost.Images[0].src : ''}
+          content={singlePost.Images[0] ? singlePost.Images[0].src : 'http://nextweet.site/favicon.ico'}
         />
-        <meta property="og:url" content={`http://localhost:3060/post/${id}`} />
+        <meta property="og:url" content={`http://nextweet.site/post/${id}`} />
       </Head>
       <PostCard post={singlePost} />
     </AppLayout>
