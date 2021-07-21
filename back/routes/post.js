@@ -273,7 +273,9 @@ router.post(
   async (req, res, next) => {
     //POST /post/images
     console.log(req.files); //업로드된 이미지 정보들이 들이었다.
-    res.json(req.files.map((v) => v.location));
+    res.json(
+      req.files.map((v) => v.location.replace(/\/original\//, '/thumb/'))
+    );
   }
 );
 

@@ -7,16 +7,16 @@ exports.handler = async (event, context, callback) => {
   const Bucket = event.Records[0].s3.bucket.name; // nextweet
   // decodeURIComponent 한글 파일 문제 해결
   const Key = decodeURIComponent(event.Records[0].s3.object.key); // original/12312312_example.png
-  // console.log(Bucket, Key);
+  console.log(Bucket, Key);
   const filename = Key.split('/')[Key.split('/').length - 1];
   // 확장자 toLowerCase로 모두 소문자로 만들기
   const ext = Key.split('.')[Key.split('.').length - 1].toLowerCase();
   const requiredFormat = ext === 'jpg' ? 'jpeg' : ext;
-  // console.log('filename', filename, 'ext', ext);
+  console.log('filename', filename, 'ext', ext);
 
   try {
     const s3Object = await s3.getObject({ Bucket, Key }).promise();
-    // console.log('original', s3Object.Body.length);
+    console.log('original', s3Object.Body.length);
     // 리사이징
     const resizedImage = await sharp(s3Object.Body)
       .resize(400, 400, { fit: 'inside' })
@@ -30,7 +30,7 @@ exports.handler = async (event, context, callback) => {
         Body: resizedImage,
       })
       .promise();
-    // console.log('put', resizedImage.length);
+    console.log('put', resizedImage.length);
     return callback(null, `thumb/${filename}`);
   } catch (error) {
     console.error(error);

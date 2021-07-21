@@ -105,7 +105,7 @@ const PostForm = () => {
         {imagePaths.map((value, index) => (
           <div key={value} style={{ display: 'inline-block' }}>
             <img
-              src={value} //s3 image
+              src={value.replace(/\/thumb\//, '/original/')} //s3 image
               style={{ width: '200px' }}
               alt={value}
             />
