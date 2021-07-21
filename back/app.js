@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined')); // 로그 조금더 자세히 확인 가능(접속자 ip 등등)
   app.use(
     cors({
-      origin: 'http://nextweet.site',
+      origin: 'https://nextweet.site',
       credentials: true,
     })
   );
@@ -63,7 +63,7 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
-      secure: false,
+      secure: true,
       domain: process.env.NODE_ENV === 'production' && '.nextweet.site',
     },
   })

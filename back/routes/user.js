@@ -110,10 +110,10 @@ router.get('/auth/google', (req, res, next) => {
 // GET /user/auth/google/callback (google 로그인 redirect url)
 router.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: 'http://nextweet.site' }),
+  passport.authenticate('google', { failureRedirect: 'https://nextweet.site' }),
   // 성공시 redirect
   function (req, res) {
-    res.redirect('http://nextweet.site');
+    res.redirect('https://nextweet.site');
   }
 );
 
