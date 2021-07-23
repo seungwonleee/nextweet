@@ -71,5 +71,6 @@ export const ImgWrapper = styled.div`
   & img {
     margin: 0 auto;
     max-height: 750px;
+    width: 100%;
   }
 `;
