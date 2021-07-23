@@ -62,13 +62,23 @@ const PostForm = () => {
 
   const handleChangeImages = useCallback((e) => {
     // console.log('images', e.target.files); // image에 대한 정보
-    const fileList = Array.from(e.target.files);
-    const filteredData = fileList.find(
-      (file) => file.type !== 'image/png' && 'image/jpg' && 'image/jpeg',
-    );
-    if(filteredData){
-      return alert('png, jpg, jpeg 외 다른 형식은 업로드가 불가합니다.');
+    const fileCount = e.target.files.length;
+    if (fileCount > 4) {
+      return alert('사진은 최대 4개까지 가능합니다.');
     }
+
+    const fileList = Array.from(e.target.files);
+    const result = fileList.every(
+      (file) =>
+        file.type === 'image/jpeg' ||
+        file.type === 'image/jpg' ||
+        file.type === 'image/png',
+    );
+
+    if (!result) {
+      return alert('png, jpg, jpeg 확장자만 가능합니다.');
+    }
+
     const imageFormData = new FormData(); // multipart로 백엔드로 전송가능, 백엔드에서 multer가 처리하기 위해서는 FormData로 전송하기
     [].forEach.call(e.target.files, (file) => {
       imageFormData.append('image', file);
