@@ -15,6 +15,7 @@ db.Hashtag = require('./hashtag')(sequelize, Sequelize);
 db.Image = require('./image')(sequelize, Sequelize);
 db.Post = require('./post')(sequelize, Sequelize);
 db.User = require('./user')(sequelize, Sequelize);
+db.Report = require('./report')(sequelize, Sequelize);
 
 //생성한 model들이 반복문을 돌면서 associate를 실행하여 관계가 설정되도록 해준다.
 Object.keys(db).forEach((modelName) => {

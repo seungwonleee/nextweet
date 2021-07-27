@@ -44,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       as: 'Followings',
       foreignKey: 'FollowerId',
     });
+    db.User.hasMany(db.Report); //신고 게시물
   };
   return User;
 };

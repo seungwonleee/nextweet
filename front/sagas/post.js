@@ -44,6 +44,9 @@ import {
   UPDATE_POST_REQUEST,
   UPDATE_POST_SUCCESS,
   UPDATE_POST_FAILURE,
+  REPORT_POST_REQUEST,
+  REPORT_POST_SUCCESS,
+  REPORT_POST_FAILURE,
 } from '../reducers/post';
 
 import { REMOVE_POST_OF_ME, ADD_POST_TO_ME } from '../reducers/user';
@@ -372,6 +375,32 @@ function* updatePost(action) {
   }
 }
 
+
+// 불량 게시글 신고하기
+function reportPostAPI(data) {
+  return axios.post(`/post/${data.postId}/report`, data); // PATCH /post/1/report
+}
+
+function* reportPost(action) {
+  console.log(action.data);
+  try {
+    const result = yield call(reportPostAPI, action.data);
+    yield put({
+      type: REPORT_POST_SUCCESS,
+      data: result.data,
+    });
+    alert('해당 게시물이 신고되었습니다. 확인 후 조치하도록 하겠습니다.');
+  } catch (err) {
+    console.error(err);
+    alert(err.response.data);
+    yield put({
+      type: REPORT_POST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+
 function* watchLoadPosts() {
   yield takeLatest(LOAD_POSTS_REQUEST, loadPosts);
 }
@@ -428,6 +457,10 @@ function* watchUpdatePost() {
   yield takeLatest(UPDATE_POST_REQUEST, updatePost);
 }
 
+function* watchReportPost() {
+  yield takeLatest(REPORT_POST_REQUEST, reportPost);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -444,5 +477,6 @@ export default function* postSaga() {
     fork(watchUpdateComment),
     fork(watchDeleteComment),
     fork(watchUpdatePost),
+    fork(watchReportPost),
   ]);
 }

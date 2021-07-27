@@ -3,8 +3,9 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const router = express.Router();
+const nodemailer = require('nodemailer');
 
-const { Post, Image, Comment, User, Hashtag } = require('../models');
+const { Post, Image, Comment, User, Hashtag, Report } = require('../models');
 const { isLoggedIn } = require('./middlewares');
 const { uploadImage } = require('../middlewares/upload');
 
@@ -178,6 +179,73 @@ router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
         CommentId: req.body.commentId,
       });
     }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 불량 게시글 신고
+router.post('/:postId/report', isLoggedIn, async (req, res, next) => {
+  try {
+    // 게시글 확인
+    const post = await Post.findOne({
+      where: { id: req.params.postId },
+    });
+    //없는 게시글을 신고하는 경우
+    if (!post) {
+      return res.status(403).send('존재하지 않는 게시글입니다.');
+    }
+
+    // 신고한 게시글 확인
+    const existReport = await Report.findOne({
+      where: {
+        PostId: parseInt(req.params.postId, 10),
+        UserId: req.body.userId,
+      },
+    });
+    // 이미 신고한 게시글을 신고하는 경우
+    if (existReport) {
+      return res.status(403).send('이미 신고한 게시물입니다.');
+    }
+
+    //생성과 동시에 데이터가 Report에 담긴다.
+    await Report.create({
+      content: req.body.content,
+      PostId: parseInt(req.params.postId, 10),
+      UserId: req.body.userId,
+    });
+
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      service: 'gmail',
+      secure: true,
+      auth: {
+        user: 'reportmailbox0@gmail.com',
+        pass: process.env.GMAIL_PASSWORD,
+      },
+    });
+
+    // verify connection configuration
+    await transporter.verify();
+    await transporter.sendMail({
+      from: '"Nextweet 신고내역" <reportmailbox0@nextweet.site>',
+      to: '"Nextweet 관리자" <reportmailbox0@gmail.com>',
+      subject: 'Nextweet 게시물 신고 메일 도착',
+      html: `
+      <div>
+        <a href="${
+          process.env.NODE_ENV === 'production'
+            ? 'https://nextweet.site'
+            : 'http://localhost:3060'
+        }/post/${req.params.postId}">신고가 접수된 게시물로 바로가기</a>
+        <p>${req.body.content}</p>
+      </div>
+      `,
+    });
+
+    res.status(201).json('ok');
   } catch (error) {
     console.error(error);
     next(error);

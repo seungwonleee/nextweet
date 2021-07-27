@@ -41,6 +41,9 @@ export const initialState = {
   updatePostLoading: false,
   updatePostDone: false,
   updatePostError: null,
+  reportPostLoading: false,
+  reportPostDone: false,
+  reportPostError: null,
 };
 
 export const LIKE_POST_REQUEST = 'LIKE_POST_REQUEST';
@@ -100,6 +103,10 @@ export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
 export const UPDATE_POST_REQUEST = 'UPDATE_POST_REQUEST';
 export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';
 export const UPDATE_POST_FAILURE = 'UPDATE_POST_FAILURE';
+
+export const REPORT_POST_REQUEST = 'REPORT_POST_REQUEST';
+export const REPORT_POST_SUCCESS = 'REPORT_POST_SUCCESS';
+export const REPORT_POST_FAILURE = 'REPORT_POST_FAILURE';
 
 // 이전 상태를 액션을 통해 다음 상태로 만들어내는 함수
 const reducer = (state = initialState, action) =>
@@ -305,7 +312,21 @@ const reducer = (state = initialState, action) =>
         draft.updatePostLoading = false;
         draft.updatePostError = action.error;
         break;
-
+        
+      case REPORT_POST_REQUEST:
+        draft.reportPostLoading = true;
+        draft.reportPostDone = false;
+        draft.reportPostError = null;
+        break;
+      case REPORT_POST_SUCCESS:
+        draft.reportPostLoading = false;
+        draft.reportPostDone = true;
+         break;
+       case REPORT_POST_FAILURE:
+        draft.reportPostLoading = false;
+        draft.reportPostError = action.error;
+         break;
+  
       default:
         break;
     }

@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Button, Card, Avatar, Popover } from 'antd';
+import { Button, Card, Avatar, Popover, Modal, Input } from 'antd';
 import {
   RetweetOutlined,
   HeartOutlined,
@@ -21,11 +21,14 @@ import {
   UNLIKE_POST_REQUEST,
   RETWEET_REQUEST,
   UPDATE_POST_REQUEST,
+  REPORT_POST_REQUEST,
 } from '../reducers/post';
 import FollowButton from './FollowButton';
 import CommentList from './CommentList';
+import useInput from './hooks/useInput';
 
 const { Meta } = Card;
+const { TextArea } = Input;
 
 moment.locale('ko');
 
@@ -39,10 +42,14 @@ const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.user.me?.id);
   const liked = post.Likers.find((v) => v.id === id);
-  const { removePostLoading } = useSelector((state) => state.post);
+  const { removePostLoading, reportPostLoading, reportPostDone } = useSelector((state) => state.post);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
-
   const [modify, setModify] = useState(false);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [reportButtonVisible, setReportButtonVisible] = useState(true);
+
+  const [reportText, handleReportText] = useInput('');
 
   const handleLike = useCallback(() => {
     dispatch({
@@ -100,6 +107,44 @@ const PostCard = ({ post }) => {
     [post],
   );
 
+
+  const handleReport = useCallback(() => {
+    // console.log('신고', post.id);
+    if (!id) {
+      return alert('로그인이 필요합니다.');
+    }
+    setModalVisible(true);
+    setReportButtonVisible(false);
+  }, []);
+
+  const handleSubmitReport = useCallback(() => {
+    // console.log(id, post.id, reportText);
+    setModalVisible(false);
+    setReportButtonVisible(true);
+
+    dispatch({
+      type: REPORT_POST_REQUEST,
+      data: {
+        postId: post.id,
+        userId: id,
+        content: reportText,
+      },
+    });
+  }, [reportText]);
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setReportButtonVisible(true);
+  };
+
+  useEffect(() => {
+    if (reportPostDone) {
+      setModalVisible(false);
+      setReportButtonVisible(true);
+    }
+  }, [reportPostDone]);
+
+
   return (
     <div style={{ marginBottom: '20px' }}>
       <Card
@@ -116,6 +161,8 @@ const PostCard = ({ post }) => {
             <HeartOutlined key="heart" onClick={handleLike} />
           ),
           <MessageOutlined key="comment" onClick={onToggleComment} />,
+          <>
+          {reportButtonVisible ? (
           <Popover
             key="more"
             content={
@@ -134,13 +181,25 @@ const PostCard = ({ post }) => {
                     </Button>
                   </>
                 ) : (
-                  <Button>신고</Button>
+                  <Button onClick={handleReport}>신고</Button>
                 )}
               </Button.Group>
             }
           >
             <EllipsisOutlined />
-          </Popover>,
+          </Popover>
+           ) : null}
+           <Modal
+              title="게시글 신고"
+              visible={modalVisible}
+              onOk={handleSubmitReport}
+              onCancel={handleCloseModal}
+            >
+              <form>
+                <TextArea value={reportText} onChange={handleReportText} />
+              </form>
+            </Modal>
+          </>,
         ]}
         extra={id && <FollowButton post={post} />}
         title={

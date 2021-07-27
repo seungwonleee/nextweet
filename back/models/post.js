@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     }); // belongsToMany는 N:M 관계
     db.Post.belongsToMany(db.User, { through: 'Like', as: 'Likers' }); // Post에 좋아요 누른 사람들
     db.Post.belongsTo(db.Post, { as: 'Retweet' });
+    db.Post.hasMany(db.Report); //신고 게시물
   };
   return Post;
 };
