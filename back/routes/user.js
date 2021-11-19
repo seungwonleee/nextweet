@@ -108,12 +108,17 @@ router.get('/auth/google', (req, res, next) => {
 });
 
 // GET /user/auth/google/callback (google 로그인 redirect url)
+const googleRedirectUrl =
+  process.env.NODE_ENV === 'production'
+    ? process.env.PROD_GOOGLE_REDIRECT_URL
+    : process.env.DEV_GOOGLE_REDIRECT_URL;
+
 router.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: 'https://nextweet.site' }),
+  passport.authenticate('google', { failureRedirect: googleRedirectUrl }),
   // 성공시 redirect
   function (req, res) {
-    res.redirect('https://nextweet.site');
+    res.redirect(googleRedirectUrl);
   }
 );
 
