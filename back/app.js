@@ -105,7 +105,7 @@ app.use(function (err, req, res, next) {
   res.status(500).send('오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
 });
 
-const port = process.env.NODE_ENV === 'production' ? 80 : 3065;
+const port = 3065;
 
 app.listen(port, () => {
   console.log(`server running... port:${port} `);
