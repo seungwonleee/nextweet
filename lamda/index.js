@@ -4,7 +4,7 @@ const sharp = require('sharp');
 const s3 = new AWS.S3();
 
 exports.handler = async (event, context, callback) => {
-  const Bucket = event.Records[0].s3.bucket.name; // nextweet
+  const Bucket = event.Records[0].s3.bucket.name; // 버킷이름
   // decodeURIComponent 한글 파일 문제 해결
   const Key = decodeURIComponent(event.Records[0].s3.object.key); // original/12312312_example.png
   console.log(Bucket, Key);

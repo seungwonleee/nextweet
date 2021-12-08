@@ -312,7 +312,6 @@ const reducer = (state = initialState, action) =>
         draft.updatePostLoading = false;
         draft.updatePostError = action.error;
         break;
-        
       case REPORT_POST_REQUEST:
         draft.reportPostLoading = true;
         draft.reportPostDone = false;
@@ -321,12 +320,11 @@ const reducer = (state = initialState, action) =>
       case REPORT_POST_SUCCESS:
         draft.reportPostLoading = false;
         draft.reportPostDone = true;
-         break;
-       case REPORT_POST_FAILURE:
+        break;
+      case REPORT_POST_FAILURE:
         draft.reportPostLoading = false;
         draft.reportPostError = action.error;
-         break;
-  
+        break;
       default:
         break;
     }
