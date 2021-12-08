@@ -12,7 +12,7 @@ AWS.config.update({
 const uploadImage = multer({
   storage: multerS3({
     s3: new AWS.S3(),
-    bucket: 'nextweet',
+    bucket: process.env.S3_BUCKET,
     key(req, file, cb) {
       cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
     },
