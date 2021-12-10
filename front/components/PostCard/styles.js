@@ -23,7 +23,7 @@ export const Nickname = styled.a`
 
 export const CreatedAt = styled.div`
   float: right;
-  font-size: 0.5rem;
+  font-size: 1.2rem;
   color: #808080;
 
   @media screen and (max-width: ${({ theme }) => theme.deviceSizes.tablet}) {
