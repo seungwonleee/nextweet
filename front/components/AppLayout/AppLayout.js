@@ -1,49 +1,16 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
-
-import { Input, Row, Col } from 'antd';
+import { Row, Col } from 'antd';
 import { MessageOutlined } from '@ant-design/icons';
 import LoginForm from '../LoginForm/LoginForm';
 import UserProfile from '../UserProfile/UserProfile';
 import useInput from '../hooks/useInput';
 import MobileToggleMenu from './Sections/MobileToggleMenu';
 import Global from './commonStyles';
-
-const { Search } = Input;
-
-const SearchInput = styled(Search)`
-  vertical-align: middle;
-  width: 100%;
-`;
-
-const Menu = styled.div`
-  position: fixed;
-  padding: 1rem;
-  border-bottom: 0.1rem solid ${(props) => props.theme.colors.gray};
-  width: 100%;
-  z-index: 3;
-  font-size: ${(props) => props.theme.fontSizes.base};
-  background-color: ${(props) => props.theme.colors.white};
-  text-align: center;
-
-  a {
-    color: ${(props) => props.theme.colors.black};
-  }
-`;
-
-const Content = styled.div`
-  padding-top: 5.8rem;
-  font-size: ${(props) => props.theme.fontSizes.base};
-
-  #madeBy {
-    text-align: center;
-    padding-top: 1rem;
-  }
-`;
+import { Content, Menu, SearchInput } from './AppLayoutStyles';
 
 // 전체 레이아웃
 const AppLayout = ({ children }) => {

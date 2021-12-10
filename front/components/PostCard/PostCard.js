@@ -28,13 +28,9 @@ import {
 import FollowButton from '../FollowButton';
 import CommentList from '../CommentList/CommentList';
 import useInput from '../hooks/useInput';
-import {
-  CreatedAt,
-  StyledTextArea,
-  StyledModal,
-  StyledMeta,
-  GlobalStyle,
-} from './styles';
+import { CreatedAt, StyledTextArea, StyledModal, GlobalStyle } from './styles';
+
+const { Meta } = Card;
 
 moment.locale('ko');
 
@@ -220,7 +216,7 @@ const PostCard = ({ post }) => {
             }
           >
             <CreatedAt>{moment(post.createdAt).format('LLL')}</CreatedAt>
-            <StyledMeta
+            <Meta
               avatar={
                 <Link href={`/user/${post.Retweet.User.id}`}>
                   <a>
@@ -247,7 +243,7 @@ const PostCard = ({ post }) => {
         ) : (
           <>
             <CreatedAt>{moment(post.createdAt).format('LLL')}</CreatedAt>
-            <StyledMeta
+            <Meta
               avatar={
                 <Link href={`/user/${post.User.id}`}>
                   <a>

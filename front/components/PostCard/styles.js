@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { Card, Modal, Input } from 'antd';
+import { Modal, Input } from 'antd';
 
 export const GlobalStyle = createGlobalStyle`
 /* 팝업 삭제 수정 팝업 창 */
@@ -15,14 +15,7 @@ export const GlobalStyle = createGlobalStyle`
  
 `;
 
-const { Meta } = Card;
 const { TextArea } = Input;
-
-export const StyledMeta = styled(Meta)`
-  a {
-    color: #000000;
-  }
-`;
 
 export const CreatedAt = styled.div`
   float: right;
