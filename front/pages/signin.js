@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import { LockOutlined, MessageOutlined } from '@ant-design/icons';
 import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 import wrapper from '../store/configureStore';
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/LoginForm/LoginForm';
 import AppLayout from '../components/AppLayout/AppLayout';
 
 const Title = styled.h1`
