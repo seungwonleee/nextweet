@@ -1,24 +1,21 @@
 import React, { useCallback, useRef, useEffect } from 'react';
-import { Form, Input, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import styled from 'styled-components';
+import {
+  FormWrapper,
+  SubmitButton,
+  UploadButton,
+  ButtonWrapper,
+  StyledTextArea,
+  RemoveButton,
+  ImageWrapper,
+} from './styles';
 import {
   UPLOAD_IMAGES_REQUEST,
   REMOVE_IMAGE,
   ADD_POST_REQUEST,
-} from '../reducers/post';
-import useInput from './hooks/useInput';
+} from '../../reducers/post';
+import useInput from '../hooks/useInput';
 // import backUrl from '../config/config';
-
-const { TextArea } = Input;
-
-const FormWrapper = styled(Form)`
-  margin: 10px 0 20px;
-`;
-
-const SubmitButton = styled(Button)`
-  float: right;
-`;
 
 const PostForm = () => {
   const { imagePaths, addPostDone } = useSelector((state) => state.post);
@@ -98,13 +95,14 @@ const PostForm = () => {
 
   return (
     <FormWrapper encType="multipart/form-data" onFinish={handleSubmit}>
-      <TextArea
+      <StyledTextArea
         value={text}
         onChange={setText}
         maxLength={30}
         placeholder="어떤 신기한 일이 있었나요?(30자)"
+        autoSize={{ minRows: 3, maxRows: 3 }}
       />
-      <div>
+      <ButtonWrapper>
         <input
           type="file"
           name="image"
@@ -113,23 +111,25 @@ const PostForm = () => {
           ref={imageInput}
           onChange={handleChangeImages}
         />
-        <Button onClick={handleImageUpload}>이미지 업로드</Button>
+        <UploadButton onClick={handleImageUpload}>이미지 업로드</UploadButton>
         <SubmitButton type="primary" htmlType="submit">
           트윗
         </SubmitButton>
-      </div>
+      </ButtonWrapper>
       <div>
         {imagePaths.map((value, index) => (
-          <div key={value} style={{ display: 'inline-block' }}>
+          <ImageWrapper key={value}>
             <img
-              src={value.replace(/\/thumb\//, '/original/')} //s3 image
+              src={value.replace(/\/thumb\//, '/original/')} // s3 image
               style={{ width: '200px' }}
               alt={value}
             />
             <div>
-              <Button onClick={handleRemoveImage(index)}>제거</Button>
+              <RemoveButton onClick={handleRemoveImage(index)}>
+                제거
+              </RemoveButton>
             </div>
-          </div>
+          </ImageWrapper>
         ))}
       </div>
     </FormWrapper>

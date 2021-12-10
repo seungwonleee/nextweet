@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import axios from 'axios';
 import AppLayout from '../components/AppLayout/AppLayout';
-import PostForm from '../components/PostForm';
+import PostForm from '../components/PostForm/PostForm';
 import PostCard from '../components/PostCard';
 import { LOAD_POSTS_REQUEST } from '../reducers/post';
 import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
