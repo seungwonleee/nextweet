@@ -25,7 +25,7 @@ import {
   UPDATE_POST_REQUEST,
   REPORT_POST_REQUEST,
 } from '../../reducers/post';
-import FollowButton from '../FollowButton';
+import FollowButton from '../FollowButton/FollowButton';
 import CommentList from '../CommentList/CommentList';
 import useInput from '../hooks/useInput';
 import {

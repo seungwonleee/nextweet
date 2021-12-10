@@ -1,22 +1,9 @@
 import React from 'react';
-import { Button, List } from 'antd';
+import { Button } from 'antd';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import { REMOVE_FOLLOWER_REQUEST, UNFOLLOW_REQUEST } from '../reducers/user';
-
-const ListWrapper = styled(List)`
-  margin-bottom: 20px;
-`;
-
-const ListItem = styled(List.Item)`
-  margin-top: 20px;
-`;
-
-const ButtonWrapper = styled.div`
-  text-align: center;
-  margin: 10px 0;
-`;
+import { ListWrapper, ListItem, ButtonWrapper } from './styles';
+import { REMOVE_FOLLOWER_REQUEST, UNFOLLOW_REQUEST } from '../../reducers/user';
 
 const FollowList = ({ header, data }) => {
   const dispatch = useDispatch();
@@ -50,7 +37,7 @@ const FollowList = ({ header, data }) => {
       dataSource={data}
       renderItem={(item) => (
         <ListItem>
-          <List.Item.Meta title={item.nickname} description={item.email} />
+          <ListItem.Meta title={item.nickname} description={item.email} />
           <Button onClick={cancelFollowing(item.id)}>삭제</Button>
         </ListItem>
       )}

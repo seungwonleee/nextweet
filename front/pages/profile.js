@@ -6,8 +6,8 @@ import axios from 'axios';
 import { END } from 'redux-saga';
 import { useMediaQuery } from 'react-responsive';
 import AppLayout from '../components/AppLayout/AppLayout';
-import NicknameEditForm from '../components/NicknameEditForm';
-import FollowList from '../components/FollowList';
+import NicknameEditForm from '../components/NicknameEditForm/NicknameEditForm';
+import FollowList from '../components/FollowList/FollowList';
 import {
   LOAD_FOLLOWINGS_REQUEST,
   LOAD_FOLLOWERS_REQUEST,

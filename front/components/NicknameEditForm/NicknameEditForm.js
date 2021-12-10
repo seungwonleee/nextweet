@@ -1,17 +1,8 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Input, Form } from 'antd';
-import styled from 'styled-components';
-import useInput from './hooks/useInput';
-import { CHANGE_NICKNAME_REQUEST } from '../reducers/user';
-
-const { Search } = Input;
-
-const NicknameEditFormWrapper = styled(Form)`
-  margin-bottom: 20px;
-  border: 1px solid #d9d9d9;
-  padding: 20px;
-`;
+import useInput from '../hooks/useInput';
+import { CHANGE_NICKNAME_REQUEST } from '../../reducers/user';
+import { NicknameEditFormWrapper, StyledSearch } from './styles';
 
 const NicknameEditForm = () => {
   const { me } = useSelector((state) => state.user);
@@ -27,7 +18,7 @@ const NicknameEditForm = () => {
 
   return (
     <NicknameEditFormWrapper>
-      <Search
+      <StyledSearch
         addonBefore="닉네임"
         enterButton="수정"
         value={nickname}
