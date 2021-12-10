@@ -98,8 +98,8 @@ const PostForm = () => {
       <StyledTextArea
         value={text}
         onChange={setText}
-        maxLength={30}
-        placeholder="어떤 신기한 일이 있었나요?(30자)"
+        maxLength={200}
+        placeholder="어떤 신기한 일이 있었나요?(200자)"
         autoSize={{ minRows: 3, maxRows: 3 }}
       />
       <ButtonWrapper>

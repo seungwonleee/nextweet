@@ -42,8 +42,8 @@ const CommentForm = ({ post }) => {
           value={commentText}
           onChange={setCommentText}
           row={4}
-          maxLength={15}
-          placeholder="댓글 (15자)"
+          maxLength={50}
+          placeholder="댓글 (50자)"
           autoSize={{ minRows: 2, maxRows: 2 }}
         />
         <SubmitButton
