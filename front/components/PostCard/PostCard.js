@@ -1,20 +1,22 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Button, Card, Avatar, Popover, Modal, Input } from 'antd';
+import { Button, Card, Avatar, Popover } from 'antd';
 import {
+  UserOutlined,
   RetweetOutlined,
   HeartOutlined,
   MessageOutlined,
   EllipsisOutlined,
   HeartTwoTone,
 } from '@ant-design/icons';
+
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import styled from 'styled-components';
-import PostImages from './PostImages';
-import CommentForm from './CommentForm';
-import PostCardContent from './PostCardContent';
+
+import PostImages from '../PostImages/PostImages';
+import CommentForm from '../CommentForm';
+import PostCardContent from '../PostCardContent/PostCardContent';
 import {
   REMOVE_POST_REQUEST,
   LIKE_POST_REQUEST,
@@ -22,27 +24,21 @@ import {
   RETWEET_REQUEST,
   UPDATE_POST_REQUEST,
   REPORT_POST_REQUEST,
-} from '../reducers/post';
-import FollowButton from './FollowButton';
-import CommentList from './CommentList';
-import useInput from './hooks/useInput';
-
-const { Meta } = Card;
-const { TextArea } = Input;
+} from '../../reducers/post';
+import FollowButton from '../FollowButton';
+import CommentList from '../CommentList';
+import useInput from '../hooks/useInput';
+import { CreatedAt, StyledTextArea, StyledModal, StyledMeta } from './styles';
 
 moment.locale('ko');
-
-const CreatedAt = styled.div`
-  float: right;
-  font-size: 0.5rem;
-  color: #808080;
-`;
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.user.me?.id);
   const liked = post.Likers.find((v) => v.id === id);
-  const { removePostLoading, reportPostLoading, reportPostDone } = useSelector((state) => state.post);
+  const { removePostLoading, reportPostLoading, reportPostDone } = useSelector(
+    (state) => state.post,
+  );
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const [modify, setModify] = useState(false);
 
@@ -107,7 +103,6 @@ const PostCard = ({ post }) => {
     [post],
   );
 
-
   const handleReport = useCallback(() => {
     // console.log('신고', post.id);
     if (!id) {
@@ -144,7 +139,6 @@ const PostCard = ({ post }) => {
     }
   }, [reportPostDone]);
 
-
   return (
     <div style={{ marginBottom: '20px' }}>
       <Card
@@ -162,43 +156,47 @@ const PostCard = ({ post }) => {
           ),
           <MessageOutlined key="comment" onClick={onToggleComment} />,
           <>
-          {reportButtonVisible ? (
-          <Popover
-            key="more"
-            content={
-              <Button.Group>
-                {id && post.User.id === id ? (
-                  <>
-                    {!post.RetweetId && (
-                      <Button onClick={handleModifyPost}>수정</Button>
+            {reportButtonVisible ? (
+              <Popover
+                key="more"
+                content={
+                  <Button.Group>
+                    {id && post.User.id === id ? (
+                      <>
+                        {!post.RetweetId && (
+                          <Button onClick={handleModifyPost}>수정</Button>
+                        )}
+                        <Button
+                          type="danger"
+                          loading={removePostLoading}
+                          onClick={handleRemovePost}
+                        >
+                          삭제
+                        </Button>
+                      </>
+                    ) : (
+                      <Button onClick={handleReport}>신고</Button>
                     )}
-                    <Button
-                      type="danger"
-                      loading={removePostLoading}
-                      onClick={handleRemovePost}
-                    >
-                      삭제
-                    </Button>
-                  </>
-                ) : (
-                  <Button onClick={handleReport}>신고</Button>
-                )}
-              </Button.Group>
-            }
-          >
-            <EllipsisOutlined />
-          </Popover>
-           ) : null}
-           <Modal
+                  </Button.Group>
+                }
+              >
+                <EllipsisOutlined />
+              </Popover>
+            ) : null}
+            <StyledModal
               title="게시글 신고"
               visible={modalVisible}
               onOk={handleSubmitReport}
               onCancel={handleCloseModal}
             >
               <form>
-                <TextArea value={reportText} onChange={handleReportText} />
+                <StyledTextArea
+                  value={reportText}
+                  onChange={handleReportText}
+                  autoSize={{ minRows: 3, maxRows: 3 }}
+                />
               </form>
-            </Modal>
+            </StyledModal>
           </>,
         ]}
         extra={id && <FollowButton post={post} />}
@@ -215,17 +213,19 @@ const PostCard = ({ post }) => {
             }
           >
             <CreatedAt>{moment(post.createdAt).format('LLL')}</CreatedAt>
-            <Meta
+            <StyledMeta
               avatar={
                 <Link href={`/user/${post.Retweet.User.id}`}>
                   <a>
-                    <Avatar>{post.Retweet.User.nickname[0]}</Avatar>
+                    <Avatar icon={<UserOutlined />}>
+                      {post.Retweet.User.nickname[0]}
+                    </Avatar>
                   </a>
                 </Link>
               }
               title={
                 <Link href={`/user/${post.Retweet.User.id}`}>
-                  <a style={{ color: 'black' }}>{post.Retweet.User.nickname}</a>
+                  <a>{post.Retweet.User.nickname}</a>
                 </Link>
               }
               description={
@@ -240,11 +240,13 @@ const PostCard = ({ post }) => {
         ) : (
           <>
             <CreatedAt>{moment(post.createdAt).format('LLL')}</CreatedAt>
-            <Meta
+            <StyledMeta
               avatar={
                 <Link href={`/user/${post.User.id}`}>
                   <a>
-                    <Avatar>{post.User.nickname[0]}</Avatar>
+                    <Avatar icon={<UserOutlined />}>
+                      {post.User.nickname[0]}
+                    </Avatar>
                   </a>
                 </Link>
               }

@@ -10,7 +10,7 @@ import { LOAD_POST_REQUEST } from '../../reducers/post';
 import wrapper from '../../store/configureStore';
 
 import AppLayout from '../../components/AppLayout/AppLayout';
-import PostCard from '../../components/PostCard';
+import PostCard from '../../components/PostCard/PostCard';
 
 const Post = () => {
   const router = useRouter();
@@ -30,7 +30,11 @@ const Post = () => {
         <meta property="og:description" content={singlePost.content} />
         <meta
           property="og:image"
-          content={singlePost.Images[0] ? singlePost.Images[0].src : 'https://nextweet.site/favicon.ico'}
+          content={
+            singlePost.Images[0]
+              ? singlePost.Images[0].src
+              : 'https://nextweet.site/favicon.ico'
+          }
         />
         <meta property="og:url" content={`https://nextweet.site/post/${id}`} />
       </Head>

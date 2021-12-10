@@ -4,7 +4,7 @@ import { END } from 'redux-saga';
 import axios from 'axios';
 import AppLayout from '../components/AppLayout/AppLayout';
 import PostForm from '../components/PostForm/PostForm';
-import PostCard from '../components/PostCard';
+import PostCard from '../components/PostCard/PostCard';
 import { LOAD_POSTS_REQUEST } from '../reducers/post';
 import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 import wrapper from '../store/configureStore';

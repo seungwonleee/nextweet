@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import Link from 'next/link';
 import { Card, Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { CardWrapper, LogoutButton } from './styles';
 import { LOG_OUT_REQUEST } from '../../reducers/user';
@@ -53,7 +54,7 @@ const UserProfile = () => {
           avatar={
             <Link href="/profile">
               <a>
-                <Avatar>{me.nickname[0]}</Avatar>
+                <Avatar icon={<UserOutlined />}>{me.nickname[0]}</Avatar>
               </a>
             </Link>
           }

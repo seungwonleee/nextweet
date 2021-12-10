@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Card } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { END } from 'redux-saga';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -8,7 +9,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { LOAD_USER_POSTS_REQUEST } from '../../reducers/post';
 import { LOAD_MY_INFO_REQUEST, LOAD_USER_REQUEST } from '../../reducers/user';
-import PostCard from '../../components/PostCard';
+import PostCard from '../../components/PostCard/PostCard';
 import wrapper from '../../store/configureStore';
 import AppLayout from '../../components/AppLayout/AppLayout';
 
@@ -75,7 +76,9 @@ const User = () => {
           ]}
         >
           <Card.Meta
-            avatar={<Avatar>{userInfo.nickname[0]}</Avatar>}
+            avatar={
+              <Avatar icon={<UserOutlined />}>{userInfo.nickname[0]}</Avatar>
+            }
             title={userInfo.nickname}
           />
         </Card>

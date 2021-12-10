@@ -3,6 +3,7 @@ import Link from 'next/link';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import { Avatar, List, Comment, Input } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
@@ -110,7 +111,9 @@ const CommentList = ({ post }) => {
             avatar={
               <Link href={`/user/${item.User.id}`}>
                 <a>
-                  <Avatar>{item.User.nickname[0]}</Avatar>
+                  <Avatar icon={<UserOutlined />}>
+                    {item.User.nickname[0]}
+                  </Avatar>
                 </a>
               </Link>
             }
