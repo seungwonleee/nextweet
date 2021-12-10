@@ -1,19 +1,11 @@
 import React, { useCallback } from 'react';
 import Link from 'next/link';
-import { Card, Avatar, Button } from 'antd';
-import styled from 'styled-components';
+import { Card, Avatar } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOG_OUT_REQUEST } from '../reducers/user';
+import { CardWrapper, LogoutButton } from './styles';
+import { LOG_OUT_REQUEST } from '../../reducers/user';
 
 const { Meta } = Card;
-
-const CardWrapper = styled(Card)`
-  padding: 10px;
-
-  .profile-nickname {
-    color: ${(props) => props.theme.colors.black};
-  }
-`;
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -71,9 +63,9 @@ const UserProfile = () => {
             </Link>
           }
           description={
-            <Button onClick={handleLogout} loading={logOutLoading}>
+            <LogoutButton onClick={handleLogout} loading={logOutLoading}>
               로그아웃
-            </Button>
+            </LogoutButton>
           }
         />
       </CardWrapper>

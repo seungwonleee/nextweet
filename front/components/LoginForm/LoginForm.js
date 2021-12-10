@@ -1,53 +1,18 @@
 import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import styled from 'styled-components';
-import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOG_IN_REQUEST } from '../reducers/user';
-import useInput from './hooks/useInput';
-import backUrl from '../config/config';
-
-const FormWrapper = styled(Form)`
-  padding: 10px;
-`;
-
-const ButtonWrapper = styled.div`
-  margin-top: 10px;
-`;
-
-const LoginButton = styled(Button)`
-  width: 49%;
-`;
-
-const SignUpButton = styled(Button)`
-  width: 49%;
-  float: right;
-`;
-
-const GoogleLoginButton = styled(Button)`
-  width: 100%;
-  color: black;
-  margin-top: 4px;
-
-  span :nth-child(1) {
-    color: #4384f4;
-  }
-  span :nth-child(2) {
-    color: #ea4335;
-  }
-  span :nth-child(3) {
-    color: #fbbc08;
-  }
-  span :nth-child(4) {
-    color: #4384f4;
-  }
-  span :nth-child(5) {
-    color: #34a853;
-  }
-  span :nth-child(6) {
-    color: #ea4335;
-  }
-`;
+import { LOG_IN_REQUEST } from '../../reducers/user';
+import useInput from '../hooks/useInput';
+import backUrl from '../../config/config';
+import {
+  StyledLabel,
+  StyledInput,
+  FormWrapper,
+  ButtonWrapper,
+  LoginButton,
+  SignUpButton,
+  GoogleLoginButton,
+} from './styles';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -75,9 +40,9 @@ const LoginForm = () => {
   return (
     <FormWrapper onFinish={onSubmit}>
       <div>
-        <label htmlFor="user-email">이메일</label>
+        <StyledLabel htmlFor="user-email">이메일</StyledLabel>
         <br />
-        <Input
+        <StyledInput
           name="user-email"
           type="email"
           value={email}
@@ -87,9 +52,9 @@ const LoginForm = () => {
       </div>
 
       <div>
-        <label htmlFor="user-password">비밀번호</label>
+        <StyledLabel htmlFor="user-password">비밀번호</StyledLabel>
         <br />
-        <Input
+        <StyledInput
           name="user-password"
           type="password"
           value={password}

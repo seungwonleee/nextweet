@@ -14,7 +14,7 @@ import {
   LOAD_MY_INFO_REQUEST,
 } from '../reducers/user';
 import wrapper from '../store/configureStore';
-import UserProfile from '../components/UserProfile';
+import UserProfile from '../components/UserProfile/UserProfile';
 
 const Profile = () => {
   const router = useRouter();

@@ -7,8 +7,8 @@ import Router from 'next/router';
 
 import { Input, Row, Col } from 'antd';
 import { MessageOutlined } from '@ant-design/icons';
-import LoginForm from '../LoginForm';
-import UserProfile from '../UserProfile';
+import LoginForm from '../LoginForm/LoginForm';
+import UserProfile from '../UserProfile/UserProfile';
 import useInput from '../hooks/useInput';
 import MobileToggleMenu from './Sections/MobileToggleMenu';
 import Global from './commonStyles';
