@@ -17,10 +17,18 @@ export const GlobalStyle = createGlobalStyle`
 
 const { TextArea } = Input;
 
+export const Nickname = styled.a`
+  color: #000000;
+`;
+
 export const CreatedAt = styled.div`
   float: right;
   font-size: 0.5rem;
   color: #808080;
+
+  @media screen and (max-width: ${({ theme }) => theme.deviceSizes.tablet}) {
+    float: none;
+  }
 `;
 
 export const StyledTextArea = styled(TextArea)`

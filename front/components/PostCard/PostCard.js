@@ -28,7 +28,13 @@ import {
 import FollowButton from '../FollowButton';
 import CommentList from '../CommentList/CommentList';
 import useInput from '../hooks/useInput';
-import { CreatedAt, StyledTextArea, StyledModal, GlobalStyle } from './styles';
+import {
+  CreatedAt,
+  StyledTextArea,
+  StyledModal,
+  GlobalStyle,
+  Nickname,
+} from './styles';
 
 const { Meta } = Card;
 
@@ -215,7 +221,6 @@ const PostCard = ({ post }) => {
               )
             }
           >
-            <CreatedAt>{moment(post.createdAt).format('LLL')}</CreatedAt>
             <Meta
               avatar={
                 <Link href={`/user/${post.Retweet.User.id}`}>
@@ -227,9 +232,12 @@ const PostCard = ({ post }) => {
                 </Link>
               }
               title={
-                <Link href={`/user/${post.Retweet.User.id}`}>
-                  <a>{post.Retweet.User.nickname}</a>
-                </Link>
+                <>
+                  <Link href={`/user/${post.Retweet.User.id}`}>
+                    <Nickname>{post.Retweet.User.nickname}</Nickname>
+                  </Link>
+                  <CreatedAt>{moment(post.createdAt).format('LLL')}</CreatedAt>
+                </>
               }
               description={
                 <PostCardContent
@@ -242,7 +250,6 @@ const PostCard = ({ post }) => {
           </Card>
         ) : (
           <>
-            <CreatedAt>{moment(post.createdAt).format('LLL')}</CreatedAt>
             <Meta
               avatar={
                 <Link href={`/user/${post.User.id}`}>
@@ -254,9 +261,12 @@ const PostCard = ({ post }) => {
                 </Link>
               }
               title={
-                <Link href={`/user/${post.User.id}`}>
-                  <a style={{ color: 'black' }}>{post.User.nickname}</a>
-                </Link>
+                <>
+                  <Link href={`/user/${post.User.id}`}>
+                    <a style={{ color: 'black' }}>{post.User.nickname}</a>
+                  </Link>
+                  <CreatedAt>{moment(post.createdAt).format('LLL')}</CreatedAt>
+                </>
               }
               description={
                 <PostCardContent
