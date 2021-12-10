@@ -1,5 +1,19 @@
-import styled from 'styled-components';
-import { Button, Card, Avatar, Popover, Modal, Input } from 'antd';
+import styled, { createGlobalStyle } from 'styled-components';
+import { Card, Modal, Input } from 'antd';
+
+export const GlobalStyle = createGlobalStyle`
+/* 팝업 삭제 수정 팝업 창 */
+ .ant-popover-inner {
+   border-radius: 25px;
+ }
+
+ /* 카드 테두리 */
+ .ant-card {
+    overflow: hidden;
+    border-radius: 25px;
+  }
+ 
+`;
 
 const { Meta } = Card;
 const { TextArea } = Input;

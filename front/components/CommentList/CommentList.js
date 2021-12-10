@@ -5,23 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Avatar, List, Comment, Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import {
   DELETE_COMMENT_REQUEST,
   UPDATE_COMMENT_REQUEST,
-} from '../reducers/post';
+} from '../../reducers/post';
+import { CreatedAt, ModifyButton } from './styles';
 
 const { TextArea } = Input;
-
-const CreatedAt = styled.div`
-  font-size: 0.3rem;
-  color: #808080;
-`;
-
-const ModifyButton = styled.button`
-  border: none;
-  cursor: pointer;
-`;
 
 const CommentList = ({ post }) => {
   const dispatch = useDispatch();

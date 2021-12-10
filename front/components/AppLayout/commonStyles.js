@@ -26,6 +26,16 @@ const Global = createGlobalStyle`
   .ant-menu-item {
     border-bottom: none !important;
   }
+
+  .ant-card-bordered {
+    border-color: #D9D9D9;
+  }
+
+  /* 모든 버튼 */
+  Button.ant-btn {
+    border-radius: 25px;
+  }
+
 `;
 
 export default Global;

@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
 import PostImages from '../PostImages/PostImages';
-import CommentForm from '../CommentForm';
+import CommentForm from '../CommentForm/CommentForm';
 import PostCardContent from '../PostCardContent/PostCardContent';
 import {
   REMOVE_POST_REQUEST,
@@ -26,9 +26,15 @@ import {
   REPORT_POST_REQUEST,
 } from '../../reducers/post';
 import FollowButton from '../FollowButton';
-import CommentList from '../CommentList';
+import CommentList from '../CommentList/CommentList';
 import useInput from '../hooks/useInput';
-import { CreatedAt, StyledTextArea, StyledModal, StyledMeta } from './styles';
+import {
+  CreatedAt,
+  StyledTextArea,
+  StyledModal,
+  StyledMeta,
+  GlobalStyle,
+} from './styles';
 
 moment.locale('ko');
 
@@ -141,6 +147,7 @@ const PostCard = ({ post }) => {
 
   return (
     <div style={{ marginBottom: '20px' }}>
+      <GlobalStyle />
       <Card
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[

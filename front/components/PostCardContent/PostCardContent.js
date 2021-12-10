@@ -1,16 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { Input } from 'antd';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
-
-const { TextArea } = Input;
-
-const ModifyButton = styled.button`
-  border: none;
-  cursor: pointer;
-`;
+import { ModifyButton, StyledTextArea } from './styles';
 
 const PostCardContent = ({
   postData,
@@ -36,7 +28,11 @@ const PostCardContent = ({
     <div>
       {modify ? (
         <>
-          <TextArea rows={2} value={modifyText} onChange={handleModifyText} />
+          <StyledTextArea
+            autoSize={{ minRows: 2, maxRows: 2 }}
+            value={modifyText}
+            onChange={handleModifyText}
+          />
           <ModifyButton onClick={handleCancelModifyPost}>취소</ModifyButton>
           <span> | </span>
           <ModifyButton onClick={handleSavePost(modifyText)}>완료</ModifyButton>
