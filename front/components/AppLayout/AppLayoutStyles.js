@@ -13,6 +13,17 @@ export const SearchInput = styled(Search)`
     border-radius: 0 25px 25px 0 !important;
     border-left: none;
   }
+  .ant-input-group-addon {
+    background: transparent;
+    /* .ant-input-search-button { */
+    /* &:hover {
+        border-color: #d9d9d9;
+      } */
+    /* &:focus {
+        border-color: #d9d9d9;
+      } */
+    /* } */
+  }
 `;
 
 export const Menu = styled.div`

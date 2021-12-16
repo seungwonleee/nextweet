@@ -2,29 +2,15 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import Head from 'next/head';
 import Link from 'next/link';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import { useRouter } from 'next/router';
-
 import { LockOutlined, MessageOutlined } from '@ant-design/icons';
 import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 import wrapper from '../store/configureStore';
 import LoginForm from '../components/LoginForm/LoginForm';
 import AppLayout from '../components/AppLayout/AppLayout';
-
-const Title = styled.h1`
-  text-align: center;
-  padding-top: 2rem;
-
-  a {
-    color: ${(props) => props.theme.colors.black};
-  }
-`;
-
-const SubTitle = styled.h2`
-  text-align: center;
-`;
+import { Title, SubTitle } from '../pageStyles/signin';
 
 const SignIn = () => {
   const router = useRouter();

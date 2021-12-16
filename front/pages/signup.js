@@ -2,9 +2,8 @@ import React, { useCallback, useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Button } from 'antd';
 import { LockOutlined, MessageOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { END } from 'redux-saga';
@@ -12,27 +11,15 @@ import AppLayout from '../components/AppLayout/AppLayout';
 import useInput from '../components/hooks/useInput';
 import { SIGN_UP_REQUEST, LOAD_MY_INFO_REQUEST } from '../reducers/user';
 import wrapper from '../store/configureStore';
-
-const ErrorMessage = styled.div`
-  color: red;
-`;
-
-const Title = styled.h1`
-  text-align: center;
-  padding-top: 2rem;
-
-  a {
-    color: ${(props) => props.theme.colors.black};
-  }
-`;
-
-const SubTitle = styled.h2`
-  text-align: center;
-`;
-
-const ButtonWrapper = styled.div`
-  margin-top: 1rem;
-`;
+import {
+  ErrorMessage,
+  Title,
+  SubTitle,
+  ButtonWrapper,
+  StyledInput,
+  StyledLabel,
+  StyledCheckbox,
+} from '../pageStyles/signup';
 
 const Signup = () => {
   const router = useRouter();
@@ -118,9 +105,9 @@ const Signup = () => {
       </SubTitle>
       <Form onFinish={handleSubmit}>
         <div>
-          <label htmlFor="user-email">이메일</label>
+          <StyledLabel htmlFor="user-email">이메일</StyledLabel>
           <br />
-          <Input
+          <StyledInput
             name="user-email"
             type="email"
             value={email}
@@ -129,9 +116,9 @@ const Signup = () => {
           />
         </div>
         <div>
-          <label htmlFor="user-nickname">닉네임</label>
+          <StyledLabel htmlFor="user-nickname">닉네임</StyledLabel>
           <br />
-          <Input
+          <StyledInput
             name="user-nickname"
             value={nickname}
             required
@@ -139,9 +126,9 @@ const Signup = () => {
           />
         </div>
         <div>
-          <label htmlFor="user-password">비밀번호</label>
+          <StyledLabel htmlFor="user-password">비밀번호</StyledLabel>
           <br />
-          <Input
+          <StyledInput
             name="user-password"
             type="password"
             value={password}
@@ -152,7 +139,7 @@ const Signup = () => {
         <div>
           <label htmlFor="user-password-check">비밀번호 확인</label>
           <br />
-          <Input
+          <StyledInput
             name="user-password-check"
             type="password"
             value={passwordCheck}
@@ -164,9 +151,9 @@ const Signup = () => {
           )}
         </div>
         <div>
-          <Checkbox name="user-term" checked={term} onChange={handleTerm}>
+          <StyledCheckbox name="user-term" checked={term} onChange={handleTerm}>
             사진 활용에 동의합니다.
-          </Checkbox>
+          </StyledCheckbox>
           {termError && <ErrorMessage>약관에 동의하셔야 합니다.</ErrorMessage>}
         </div>
         <ButtonWrapper>
