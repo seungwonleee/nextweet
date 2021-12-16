@@ -209,13 +209,6 @@ router.post('/:postId/report', isLoggedIn, async (req, res, next) => {
       return res.status(403).send('이미 신고한 게시물입니다.');
     }
 
-    //생성과 동시에 데이터가 Report에 담긴다.
-    await Report.create({
-      content: req.body.content,
-      PostId: parseInt(req.params.postId, 10),
-      UserId: req.body.userId,
-    });
-
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 465,
@@ -229,7 +222,7 @@ router.post('/:postId/report', isLoggedIn, async (req, res, next) => {
 
     // verify connection configuration
     await transporter.verify();
-    await transporter.sendMail({
+    const result = await transporter.sendMail({
       from: '"Nextweet 신고내역" <reportmailbox0@nextweet.site>',
       to: '"Nextweet 관리자" <reportmailbox0@gmail.com>',
       subject: 'Nextweet 게시물 신고 메일 도착',
@@ -244,6 +237,16 @@ router.post('/:postId/report', isLoggedIn, async (req, res, next) => {
       </div>
       `,
     });
+
+    // 메일이 성공적으로 보내지면 db에 저장
+    if (!(result.rejected.length >= 1)) {
+      //생성과 동시에 데이터가 Report에 담긴다.
+      await Report.create({
+        content: req.body.content,
+        PostId: parseInt(req.params.postId, 10),
+        UserId: req.body.userId,
+      });
+    }
 
     res.status(201).json('ok');
   } catch (error) {

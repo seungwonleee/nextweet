@@ -10,10 +10,8 @@ import {
   EllipsisOutlined,
   HeartTwoTone,
 } from '@ant-design/icons';
-
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-
 import PostImages from '../PostImages/PostImages';
 import CommentForm from '../CommentForm/CommentForm';
 import PostCardContent from '../PostCardContent/PostCardContent';
@@ -118,7 +116,7 @@ const PostCard = ({ post }) => {
     }
     setModalVisible(true);
     setReportButtonVisible(false);
-  }, []);
+  }, [id]);
 
   const handleSubmitReport = useCallback(() => {
     // console.log(id, post.id, reportText);
@@ -133,7 +131,7 @@ const PostCard = ({ post }) => {
         content: reportText,
       },
     });
-  }, [reportText]);
+  }, [reportText, id]);
 
   const handleCloseModal = () => {
     setModalVisible(false);
