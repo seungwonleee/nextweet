@@ -65,6 +65,16 @@ const PostForm = () => {
     }
 
     const fileList = Array.from(e.target.files);
+
+    // 20MB 미만 업로드시 true 20MB 이상 false
+    const isUnderSize = (file) => (file.size / (1024 * 1024)).toFixed(2) < 20;
+
+    const restrictFileSize = fileList.every(isUnderSize);
+    if (!restrictFileSize) {
+      return alert('20MB 미만의 사진만 업로드 할 수 있습니다.');
+    }
+
+    // 파일 확장자 jpeg, jpg, png만 업로드 가능
     const result = fileList.every(
       (file) =>
         file.type === 'image/jpeg' ||
