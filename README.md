@@ -1,25 +1,31 @@
 ## 프로젝트
 
-Next.js를 사용하여 SSR이 가능한 트위터 클론 프로젝트
+소셜 네트워크 서비스(SNS) 프로젝트이며 Next.js를 사용하여 Server Side Rendering을 적용하였습니다.
 
-## 기능
+### 주요 기능
 
-1. 회원가입, 로그인, Google 소셜 로그인
-2. 게시글 댓글 작성, 수정, 삭제, 좋아요
-3. 게시물 신고 및 신고내역 관리자 메일 전송
-4. 해쉬태그로 게시물 검색
-5. 게시글 리트윗
-6. 인피니티 스크롤
+- 이메일 또는 Google 소셜 로그인 및 회원가입
+- 쿠키를 사용한 사용자 인증 및 데이터 관리(passport.js 사용)
+- 사용자 프로필 수정
+- 사용자 팔로잉
+- 팔로잉, 팔로워 목록
+- 게시글 및 댓글 작성, 수정, 삭제, 좋아요
+- 내가 작성한 게시글 목록
+- 게시물 신고 및 신고내역 관리자 메일로 전송(nodemailer 사용)
+- 해쉬 태그로 게시물 검색
+- 게시글 리트윗
+- 인피니티 스크롤
+- 반응형 디자인
 
-## 사용 기술
+### 사용 기술
 
 ### Front-end
 
-> Next.js, ReactJS, Redux, Redux-Saga, styled-components, Ant-Design
+> Next.js, ReactJS, Redux, Redux-Saga, styled-components, Ant-Design, RESTful API
 
 ### Back-end
 
-> Node.js, ExpressJS, Nginx, Sequelize
+> Node.js, Express.js, Nginx, Sequelize
 
 ### Database
 
